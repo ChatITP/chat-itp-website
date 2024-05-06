@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function Nav() {
   return (
-    <nav className="fixed left-0 top-0 flex w-full items-center justify-between bg-gradient-to-b p-4">
-      <h1 className="font-mono text-lg font-bold">Chat ITP</h1>
+    <nav className="z-50 fixed left-0 top-0 flex w-full items-center justify-between p-4 bg-white/25 backdrop-blur-md">
+      <h1 className="text-lg font-bold">Chat ITP</h1>
       <ul className="flex gap-4">
         <li>
           <Link href="#home">Home</Link>
