@@ -56,7 +56,7 @@ const sketch = (p5) => {
   };
 
   p5.draw = () => {
-    p5.background(100);
+    p5.background(50);
 
     for (let i = 0; i < rings.length; i++) {
       rings[i].display();
