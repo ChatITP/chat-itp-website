@@ -10,3 +10,13 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+div.footer-background{
+  background-color: gray;
+}
+
+div#socio-container{
+  position:relative; 
+  left:50%;
+  transform: translate(-50%);
+}
