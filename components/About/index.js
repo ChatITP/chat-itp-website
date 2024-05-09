@@ -10,7 +10,10 @@ export default function About() {
         student work, participate in classes, and generate new work based on the
         creative consciousness of ITP.
       </p>
-      <p>Follow us on social Media!</p>
+      {/* <p>Follow us on social Media!</p> */}
+      <button className = "btn-pos border border-white text-white font-bold p-4 w-48  hover:bg-white hover:text-black">
+        Database
+      </button>
     </div>
   );
 }
