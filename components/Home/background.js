@@ -1,5 +1,6 @@
 "use client";
 import { NextReactP5Wrapper } from "@p5-wrapper/next";
+import { motion } from "framer-motion";
 
 const sketch = (p5) => {
   class Ring {
@@ -81,8 +82,14 @@ const sketch = (p5) => {
 
 export default function Background() {
   return (
-    <div id="p5-container" className="w-full">
+    <motion.div
+      id="p5-container"
+      className="w-full"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1 }}
+    >
       <NextReactP5Wrapper sketch={sketch} />
-    </div>
+    </motion.div>
   );
 }
