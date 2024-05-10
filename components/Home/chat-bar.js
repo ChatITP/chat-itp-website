@@ -34,7 +34,7 @@ export default function ChatBar() {
   });
 
   return (
-    <div className="relative w-96 h-[350px] flex flex-col justify-between">
+    <div className="relative w-96 h-[150px] sm:h-[500px]flex flex-col justify-between">
       <AnimatePresence>
         {visible ? (
           <>
