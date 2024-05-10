@@ -1,15 +1,14 @@
 export default function About() {
   return (
-    <div id="about" className="p-24 pt-48 min-h-screen">
-      <h1 className="font-bold text-4xl pb-12">About</h1>
-      <p className="pb-12">
-        WLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div id="about" className="p-14 pt-48 min-h-screen sm:p-24 sm:pt-48">
+      <h1 className="text-center font-bold text-4xl pb-12 sm:text-left">About</h1>
+      <p className="text-center pb-12 sm:text-left">
+        We are training an ethical, open-source Large Language Model (LLM) using 20+ years of
+        student work from the International Telecommunications Program (ITP) at NYU Tisch. Our goal
+        is to reflect the creative legacy of the ITP community with a model that can reflect on the
+        history of student work, participate in classes, and generate new work based on the creative
+        consciousness of ITP.
       </p>
-      <p>Follow us on social Media!</p>
     </div>
   );
 }
