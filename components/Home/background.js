@@ -48,15 +48,19 @@ const sketch = (p5) => {
   let rings = [];
 
   p5.setup = () => {
-    p5.createCanvas(p5.windowWidth, p5.windowHeight);
-    p5.background(100);
+    let cvn = p5.createCanvas(p5.windowWidth, p5.windowHeight);
+    cvn.parent("p5-container");
+    let w = document.body.scrollWidth - 1;
+    let h = p5.windowHeight;
+    p5.resizeCanvas(w, h);
+    p5.background(0);
     for (let i = 0; i < 4; i++) {
       rings.push(new Ring(p5.width / 3, p5.height / 2, (i + 1) * (p5.height / 8)));
     }
   };
 
   p5.draw = () => {
-    p5.background(50);
+    p5.background(0);
 
     for (let i = 0; i < rings.length; i++) {
       rings[i].display();
@@ -64,7 +68,9 @@ const sketch = (p5) => {
   };
 
   p5.windowResized = () => {
-    p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+    let w = document.body.scrollWidth - 1;
+    let h = p5.windowHeight;
+    p5.resizeCanvas(w, h);
     for (let i = 0; i < 4; i++) {
       try {
         rings[i].resize(p5.width / 3, p5.height / 2, (i + 1) * (p5.height / 8));
@@ -75,7 +81,7 @@ const sketch = (p5) => {
 
 export default function Background() {
   return (
-    <div>
+    <div id="p5-container" className="w-full">
       <NextReactP5Wrapper sketch={sketch} />
     </div>
   );
