@@ -7,12 +7,14 @@ export default function Footer() {
     >
       <div id="socio-container">
         <ul className="flex gap-14">
-            <Image
-              src="/envelope.png"
-              alt="Envelope icon"
-              width={25}
-              height={25}
+        <a href="chat.itp@itp.nyu.edu" target="_blank" rel="noopener noreferrer">
+          <Image
+                src="/envelope.png"
+                alt="Envelope icon"
+                width={25}
+                height={25}
             />
+        </a>
             <a href="https://www.linkedin.com/company/chat-itp/" target="_blank" rel="noopener noreferrer">
                 <Image
                 src="/linkedin.png"

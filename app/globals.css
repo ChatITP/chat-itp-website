@@ -5,6 +5,7 @@
 body {
   color: whitesmoke;
   background-color: black;
+  overflow-x: hidden;
 }
 
 html {
@@ -26,3 +27,4 @@ div#socio-container{
   left:50%;
   transform: translate(-50%);
 }
+

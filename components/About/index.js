@@ -1,8 +1,10 @@
 export default function About() {
   return (
-    <div id="about" className="p-24 pt-48 min-h-screen">
-      <h1 className="font-bold text-4xl pb-12">About</h1>
-      <p className="pb-12">
+    <div id="about" className="p-14 pt-48 min-h-screen sm:p-24 sm:pt-48">
+      <h1 className="text-center font-bold text-4xl pb-12 sm:text-left">
+        About
+      </h1>
+      <p className="text-center pb-12 sm:text-left">
         We are training an ethical, open-source Large Language Model (LLM) using
         20+ years of student work from the International Telecommunications
         Program (ITP) at NYU Tisch. Our goal is to reflect the creative legacy
@@ -11,7 +13,7 @@ export default function About() {
         creative consciousness of ITP.
       </p>
       {/* <p>Follow us on social Media!</p> */}
-      <button className = "btn-pos border border-white text-white font-bold p-4 w-48  hover:bg-white hover:text-black">
+      <button className="btn-pos border border-white text-white font-bold p-4 w-48  hover:bg-white hover:text-black">
         Database
       </button>
     </div>
