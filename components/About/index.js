@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <div id="about" className="p-14 pt-48 min-h-screen sm:p-24 sm:pt-48">
+    <div id="about" className="p-14 pt-48 min-h-screen sm:p-24 sm:pt-48 max-w-[1024px] m-auto">
       <h1 className="text-center font-bold text-4xl pb-12 sm:text-left">About</h1>
       <p className="text-center pb-12 sm:text-left">
         We are training an ethical, open-source Large Language Model (LLM) using 20+ years of

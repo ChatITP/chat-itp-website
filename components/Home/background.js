@@ -57,9 +57,18 @@ const sketch = (p5) => {
     let cvn = p5.createCanvas(p5.windowWidth, p5.windowHeight);
     cvn.parent("p5-container");
     let w = document.body.scrollWidth - 1;
-    let h = p5.windowHeight;
+    let h = Math.max(p5.windowHeight, 640);
     p5.resizeCanvas(w, h);
     p5.background(0);
+    let x = 0;
+    let y = 0;
+    if (p5.windowWidth >= breakPoint) {
+      x = p5.width / 4;
+      y = p5.height / 2;
+    } else {
+      x = p5.width / 2;
+      y = p5.height / 2;
+    }
     for (let i = 0; i < 4; i++) {
       rings.push(new Ring(x, y, (i + 1) * (p5.height / 8), i < 2 ? c1 : c2));
     }
@@ -75,11 +84,20 @@ const sketch = (p5) => {
 
   p5.windowResized = () => {
     let w = document.body.scrollWidth - 1;
-    let h = p5.windowHeight;
+    let h = Math.max(p5.windowHeight, 640);
     p5.resizeCanvas(w, h);
     for (let i = 0; i < 4; i++) {
+      let x = 0;
+      let y = 0;
+      if (p5.windowWidth >= breakPoint) {
+        x = p5.width / 4;
+        y = p5.height / 2;
+      } else {
+        x = p5.width / 2;
+        y = p5.height / 2;
+      }
       try {
-        rings[i].resize(p5.width / 3, p5.height / 2, (i + 1) * (p5.height / 8));
+        rings[i].resize(x, y, (i + 1) * (p5.height / 8));
       } catch (e) {}
     }
   };
