@@ -3,11 +3,11 @@ export default function Footer() {
   return (
     <div
       id="footer"
-      className="left-0 top-0 flex w-full items-center justify-between p-4 bg-gray-800"
+      className="left-0 top-0 flex w-full items-center justify-between h-64 bg-[#000814]"
     >
       <div className="relative m-auto">
         <ul className="flex gap-14">
-          <a href="mailto: chat.itp@itp.nyu.edu" target="_blank" rel="noopener noreferrer">
+          <a href="mailto:chat.itp@itp.nyu.edu" target="_blank">
             <Image src="/envelope.png" alt="Envelope icon" width={25} height={25} />
           </a>
           <a
