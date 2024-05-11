@@ -3,13 +3,19 @@ import ChatBar from "./chat-bar";
 
 export default function Home() {
   return (
-    <div id="home" className="pt-[80px] min-h-screen h-screen block sm:pt-[60px]">
-      <div className="h-full min-h-full items-center place-content-around sm:flex">
-        <div className="p-10 pt-36 pb-0 sm:pb-[70px] sm:pt-10">
-          <h1 className="text-center text-6xl font-semibold pb-4 sm:text-left">Chat ITP</h1>
-          <h2 className="text-center sm:text-left">Welcome to Chat ITP! The dnkn dwa wdno djao</h2>
+    <div id="home" className="h-screen min-h-[640px] block pt-[60px]">
+      <div className="h-full min-h-full items-center place-content-around flex flex-col md:flex-row">
+        <div className="px-10 md:pt-36 lg:pl-16 md:pb-20 pt-10 md:w-[50%] md:flex-none">
+          <div className="md:w-72 m-auto lg:w-96">
+            <h1 className="text-center md:text-6xl text-5xl font-semibold pb-4 md:text-left">
+              Chat ITP
+            </h1>
+            <h2 className="text-center md:text-left">
+              Welcome to Chat ITP! The dnkn dwa wdno djao
+            </h2>
+          </div>
         </div>
-        <div className="p-10 pb-40 sm:pb-[70px]">
+        <div className="ml-auto w-full md:w-[377px] lg:w-[550px]">
           <ChatBar />
         </div>
       </div>
@@ -20,4 +26,3 @@ export default function Home() {
     </div>
   );
 }
-
