@@ -12,17 +12,29 @@ export default function SignUp() {
   }
 
   return (
-    <div>
+    <div className="m-auto w-fit max-w-[280px]">
       {sent ? (
-        <p>Thank you for subscribing to Chat ITP!</p>
+        <p className="text-lg">Thank you for subscribing to Chat ITP!</p>
       ) : (
-        <>
-          <h1>Learn more about Chat ITP</h1>
+        <div>
+          <p className="text-lg text-center">Learn more about Chat ITP:</p>
           <form action={handleSubmit}>
-            <input name="email" type="email" placeholder="Email" />
-            <button type="submit cursor-pointer">Subscribe</button>
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              className="text-lg bg-transparent border-b-[1px] border-white p-[2px] mr-4 mb-4 text-center w-full"
+            />
+            <div className="w-fit m-auto">
+              <button
+                type="submit"
+                className="cursor-pointer border-2 py-[2px] px-4 border-white text-lg"
+              >
+                Subscribe
+              </button>
+            </div>
           </form>
-        </>
+        </div>
       )}
     </div>
   );
