@@ -1,3 +1,5 @@
+import SignUp from "../SignUp";
+
 export default function About() {
   return (
     <div id="about" className="p-14 pt-48 min-h-screen sm:p-24 sm:pt-48 max-w-[1024px] m-auto">
@@ -9,6 +11,7 @@ export default function About() {
         history of student work, participate in classes, and generate new work based on the creative
         consciousness of ITP.
       </p>
+      <SignUp />
     </div>
   );
 }
