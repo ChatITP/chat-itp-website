@@ -2,18 +2,16 @@
 
 const nodemailer = require("nodemailer");
 
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: process.env.EMAIL_USERNAME,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
+
 export default async function subscribe(formData) {
   const email = formData.get("email");
-  const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: true,
-    auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
 
   transporter
     .sendMail({
