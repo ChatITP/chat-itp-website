@@ -9,14 +9,10 @@ const transporter = nodemailer.createTransport({
 });
 
 export default async function sendEmail(text) {
-  transporter
-    .sendMail({
-      to: "internal.chat.itp@gmail.com",
-      subject: `New subscriber: ${text}`,
-      text: `New subscriber: ${text}`,
-    })
-    .then(() => {})
-    .catch((error) => {
-      console.error(error);
-    });
+  await transporter.sendMail({
+    to: "internal.chat.itp@gmail.com",
+    subject: `New subscriber: ${text}`,
+    text: `New subscriber: ${text}`,
+  });
+  return;
 }
