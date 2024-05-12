@@ -11,7 +11,8 @@ export default function Home() {
               Chat ITP
             </h1>
             <h2 className="text-center md:text-left">
-              Welcome to Chat ITP! The dnkn dwa wdno djao
+              We are developing a large language model that reflects the collective creative
+              consciousness of the Interactive Telecommunications Program at New York University.
             </h2>
           </div>
         </div>

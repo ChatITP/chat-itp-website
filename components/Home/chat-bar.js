@@ -6,13 +6,12 @@ import { AnimatePresence } from "framer-motion";
 export default function ChatBar() {
   const [visible, setVisible] = useState(false);
   const messages = [
-    "Hello!",
-    "How are you?",
-    "I'm good, thanks!",
-    "What are you doing?",
-    "I'm working on a project.",
-    "That's cool! What project are you working on?",
-    "I'm working on a chat bar component.",
+    'Please describe the "creative worldview" of ITP in 2001?',
+    "What is the most common historical theme of ITP projects?",
+    "Would you like to join our ITP class discussion?",
+    "Tell me how women are commonly portrayed in ITP projects?",
+    "Could you create some representative work for the ITP of 2050.",
+    "Can you collaborate with me on game design?",
   ];
   const startIndexRef = useRef(0);
 
