@@ -21,7 +21,7 @@ const Selector = () => {
               className="cursor-pointer"
             >
               <div
-                className={`flex items-center justify-center p-2  w-[60px] h-[40px] rounded-full hover:bg-gradient-to-r from-main/70 to-purple/15 hover:border-[1.5px] hover:border-gray-600 ${
+                className={`flex items-center justify-center p-2 w-[60px] h-[40px] rounded-full hover:bg-gradient-to-r from-main/70 to-purple/15 hover:border-[1.5px] hover:border-gray-600 ${
                   activeSection === "Home"
                     ? "bg-gradient-to-r from-main/70 to-purple/15 border-[1.5px] border-gray-600"
                     : ""
@@ -39,7 +39,7 @@ const Selector = () => {
           </Link>
           <Link href="/Conversation">
             <li
-              onClick={() => handleSectionClick("Home")}
+              onClick={() => handleSectionClick("Convo")}
               className="cursor-pointer"
             >
               <div
@@ -65,7 +65,7 @@ const Selector = () => {
               className="cursor-pointer"
             >
               <div
-                className={`flex items-center justify-center p-2  w-[60px] h-[40px] rounded-full hover:bg-gradient-to-r from-main/70 to-purple/15 hover:border-[1.5px] hover:border-gray-100 ${
+                className={`flex items-center justify-center p-2 w-[60px] h-[40px] rounded-full hover:bg-gradient-to-r from-main/70 to-purple/15 hover:border-[1.5px] hover:border-gray-100 ${
                   activeSection === "Question"
                     ? "bg-gradient-to-r from-main/70 to-purple/15 border-[1.5px] border-gray-100"
                     : ""
