@@ -59,8 +59,8 @@ const Selector = () => {
               </div>
             </li>
           </Link>
-
-          <li
+        <Link href = "/Question">
+        <li
             onClick={() => handleSectionClick("Question")}
             className="cursor-pointer"
           >
@@ -80,6 +80,8 @@ const Selector = () => {
               />
             </div>
           </li>
+        </Link>
+          
         </ul>
       </div>
     </div>
