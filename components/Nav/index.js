@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Selector from "../Selector";
 
 export default function Nav() {
   return (
@@ -17,40 +18,7 @@ export default function Nav() {
       </ul>
       <ul className="flex items-center">
         <li>
-          <div className="relative">
-            <div className="bg-gradient-to-r from-white to-gray-600 opacity-45 border-[1px] rounded-3xl w-[100px] h-[20px] lg:w-[205px] lg:h-[43px]"></div>
-            <div className="absolute top-0 left-0 w-full h-full bg-white/10 rounded-3xl flex items-center justify-center">
-              <ul className="flex items-center gap-8">
-                <li>
-                  <Image
-                    src="/home.svg"
-                    alt="Home Icon"
-                    className="block object-cover w-[15px] lg:w-[20px]"
-                    width={17}
-                    height={17}
-                  />
-                </li>
-                <li>
-                  <Image
-                    src="/convo.svg"
-                    alt="Convo Icon"
-                    className="block object-cover w-[15px] lg:w-[20px]"
-                    width={17}
-                    height={17}
-                  />
-                </li>
-                <li>
-                  <Image
-                    src="/question.svg"
-                    alt="Question Icon"
-                    className="block object-cover w-[15px] lg:w-[20px]"
-                    width={17}
-                    height={17}
-                  />
-                </li>
-              </ul>
-            </div>
-          </div>
+          <Selector />
         </li>
       </ul>
     </nav>
