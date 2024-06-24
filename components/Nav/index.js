@@ -18,14 +18,14 @@ export default function Nav() {
       <ul className="flex items-center">
         <li>
           <div className="relative">
-            <div className="bg-gradient-to-r from-white to-gray-600 opacity-45 border-[1px] rounded-3xl w-[100px] h-[20px] lg:w-[177px] lg:h-[33.94px]"></div>
+            <div className="bg-gradient-to-r from-white to-gray-600 opacity-45 border-[1px] rounded-3xl w-[100px] h-[20px] lg:w-[205px] lg:h-[43px]"></div>
             <div className="absolute top-0 left-0 w-full h-full bg-white/10 rounded-3xl flex items-center justify-center">
               <ul className="flex items-center gap-8">
                 <li>
                   <Image
                     src="/home.svg"
                     alt="Home Icon"
-                    className="block object-cover w-[15px] lg:w-[17px]"
+                    className="block object-cover w-[15px] lg:w-[20px]"
                     width={17}
                     height={17}
                   />
@@ -34,7 +34,7 @@ export default function Nav() {
                   <Image
                     src="/convo.svg"
                     alt="Convo Icon"
-                    className="block object-cover w-[15px] lg:w-[17px]"
+                    className="block object-cover w-[15px] lg:w-[20px]"
                     width={17}
                     height={17}
                   />
@@ -43,7 +43,7 @@ export default function Nav() {
                   <Image
                     src="/question.svg"
                     alt="Question Icon"
-                    className="block object-cover w-[15px] lg:w-[17px]"
+                    className="block object-cover w-[15px] lg:w-[20px]"
                     width={17}
                     height={17}
                   />
