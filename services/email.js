@@ -8,11 +8,11 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export default async function sendEmail(text) {
+export default async function sendEmail(email) {
   await transporter.sendMail({
+    // to:"jl13999@nyu.edu",
     to: "internal.chat.itp@gmail.com",
-    subject: `New subscriber: ${text}`,
-    text: `New subscriber: ${text}`,
+    subject: `New subscriber: ${email}`,
+    text: `New subscriber: ${email}`,
   });
-  return;
 }
