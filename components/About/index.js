@@ -1,10 +1,11 @@
 import Card from "@/components/Card";
+import Prompt from "@/components/Prompt"
 
 export default function About() {
   return (
     <>
     <div id = "about" className = "px-40 min-h-screen">
-      <div className = "grid grid-cols-3 gap-20">
+      <div className = "grid grid-cols-3 gap-20 pb-36">
         <h1 className="text-3xl font-semibold">About ChatITP</h1>
         <div className = "grid grid-row-2 gap-16">
           <Card />
@@ -15,7 +16,14 @@ export default function About() {
           <Card />
         </div>
       </div>
+      
     </div>
+    <div id = "prompt" className="grid grid-cols-3 gap-6">
+        <Prompt />
+        <Prompt />
+        <Prompt />
+
+      </div>
     </>
     // <div id="about" className="p-14 pt-48 min-h-screen sm:p-24 sm:pt-48 max-w-[1024px] m-auto">
     //   <h1 className="text-center font-bold text-4xl pb-12 sm:text-left">About</h1>
