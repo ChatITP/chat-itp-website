@@ -7,6 +7,7 @@ export default function Page() {
     <main>
       <Home />
       <About />
+      <Post />
     </main>
   );
 }
