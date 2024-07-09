@@ -1,5 +1,5 @@
 import Card from "@/components/Card";
-import Prompt from "@/components/Prompt"
+import PromptList from "@/components/PromptList"
 
 export default function About() {
   return (
@@ -18,11 +18,8 @@ export default function About() {
       </div>
       
     </div>
-    <div id = "prompt" className="grid grid-cols-3 gap-6">
-        <Prompt />
-        <Prompt />
-        <Prompt />
-
+    <div id="prompt" >
+        <PromptList />
       </div>
     </>
     // <div id="about" className="p-14 pt-48 min-h-screen sm:p-24 sm:pt-48 max-w-[1024px] m-auto">
