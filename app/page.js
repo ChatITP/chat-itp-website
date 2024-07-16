@@ -5,9 +5,7 @@ import Post from "@/components/Post"
 export default function Page() {
   return (
     <main>
-      <Home />
-      <About />
-      <Post />
+      <h1>This is the convo page</h1>
     </main>
   );
 }
