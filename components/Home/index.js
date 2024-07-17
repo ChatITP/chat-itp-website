@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -19,7 +20,9 @@ export default function Home() {
               animation, game design, and virtual reality.
             </h2>
           </div>
-          <Button text="Start Now" />
+          <Link href="/about">
+            <Button text="Start Now" />
+          </Link>
         </div>
         <div
           id="blob"
