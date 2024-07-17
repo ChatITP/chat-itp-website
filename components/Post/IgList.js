@@ -1,5 +1,5 @@
 import React from "react";
-import IgPost from "@/components/IgPost";
+import IgPost from "@/components/Post/IgPost";
 
 const IgList = () => {
   const posts = [

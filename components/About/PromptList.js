@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Prompt from "@/components/Prompt";
+import Prompt from "@/components/About/Prompt";
 
 const PromptList = () => {
   const [prompts, setPrompts] = useState([

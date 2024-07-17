@@ -1,5 +1,5 @@
-import Card from "@/components/Card";
-import PromptList from "@/components/PromptList"
+import Card from "@/components/About/Card";
+import PromptList from "@/components/About/PromptList"
 
 export default function About() {
   return (

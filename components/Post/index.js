@@ -1,5 +1,5 @@
 import React from 'react'
-import IgList from '@/components/IgList'
+import IgList from '@/components/Post/IgList'
 
 const Post = () => {
   return (
