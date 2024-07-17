@@ -1,23 +1,20 @@
-import React from 'react'
-import Image from "next/image"
-import Input from "@/components/Nav2/input"
+import React from "react";
+import Image from "next/image";
+import Input from "@/components/Nav2/input";
 
 const Nav = () => {
   return (
-    
-    <nav className="w-[100vw] h-[61px] bg-black">
-      <div className='flex flex-row'>
-        <div>
-        <Image src = "/logo.svg" alt='logo' width={77.7} height={61}/>
-
+    <nav className="w-full h-[82px] bg-black">
+      <div className="flex flex-row items-center h-full">
+        <div className="flex-shrink-0">
+          <Image src="/logo.svg" alt="Company Logo" width={77.7} height={61} />
         </div>
-        <div className='my-auto'>
-            <Input />
+        <div className="ml-4">
+          <Input />
         </div>
       </div>
     </nav>
-   
-  )
-}
+  );
+};
 
-export default Nav
+export default Nav;
