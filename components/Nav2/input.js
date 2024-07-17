@@ -2,11 +2,10 @@
 import { useState } from "react";
 import React from "react";
 
-const Input = () => {
-  const [searchKey, setSearchKey] = useState("");
-  const [tags, setTags] = useState([]);
+const Input = ({ tags, setTags }) => {
+  const [searchKey, setSearchKey] = useState("Search Here");
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchKey.trim() !== "") {
       setTags([...tags, searchKey.trim()]);
       setSearchKey("");
@@ -27,7 +26,7 @@ const Input = () => {
           <span>{tag}</span>
           <button
             type="button"
-            className="ml-2 text-lightBlue bg-blue/40 w-4 h-4 flex items-center justify-center rounded-full"
+            className="ml-2 text-lightBlue bg-blue w-4 h-4 flex items-center justify-center rounded-full"
             onClick={() => removeTag(index)}
           >
             &times;
@@ -38,8 +37,7 @@ const Input = () => {
         className="flex-grow bg-black outline-none text-white"
         value={searchKey}
         onChange={(e) => setSearchKey(e.target.value)}
-        onKeyDown={handleKeyPress}
-        placeholder=""
+        onKeyDown={handleKeyDown}
       />
     </div>
   );

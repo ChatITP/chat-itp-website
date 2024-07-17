@@ -1,13 +1,16 @@
-import React from 'react'
+import React from "react";
+import PromptList from "@/components/Prompt/PromptList";
 
-const convo = () => {
+const Convo = ({ tags }) => {
   return (
-    <>
-    <div className='px-40 min-h-screen bg-white/35'>
-
+    <div className="min-h-screen bg-white/35">
+      <div className="mx-4 pt-4">
+      <PromptList tags={tags} />
+      </div>
+      
     </div>
-    </>
-  )
-}
+  );
+};
 
-export default convo
+export default Convo;
+

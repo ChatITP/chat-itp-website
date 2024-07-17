@@ -1,12 +1,20 @@
-import Nav2 from "@/components/Nav2"
-import Convo from "@/components/Convo"
+"use client"
+import React, { useState } from "react";
+import Nav2 from "@/components/Nav2";
+import Convo from "@/components/Convo";
 
-export default function Page() {
+const MyPage = () => {
+  const [tags, setTags] = useState([]);
+
   return (
-    <main>
-      <Nav2 />
-      <Convo />
-      {/* <h1>This is the convo page</h1> */}
-    </main>
+    <div>
+      <Nav2 tags={tags} setTags={setTags} />
+      <Convo tags={tags} />
+    </div>
   );
-}
+};
+
+export default MyPage;
+
+
+
