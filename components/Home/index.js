@@ -20,7 +20,7 @@ export default function Home() {
               animation, game design, and virtual reality.
             </h2>
           </div>
-          <Link href="/about">
+          <Link href="/">
             <Button text="Start Now" />
           </Link>
         </div>
