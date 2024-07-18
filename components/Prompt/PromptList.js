@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import {useState, React} from "react";
 import { motion } from "framer-motion";
 import Prompt from "@/components/Prompt/Prompt";
 
@@ -29,4 +29,3 @@ const PromptList = ({ tags }) => {
 };
 
 export default PromptList;
-

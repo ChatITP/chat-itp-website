@@ -5,7 +5,7 @@ const Prompt = ({ text = "text-holder", tags = [] }) => {
     const regex = new RegExp(`(${tags.join("|")})`, "gi");
     const parts = text.split(regex);
     return parts.map((part, index) =>
-      tags.includes(part.toLowerCase()) ? (
+      tags.some(tag => tag === part) ? (
         <span key={index} className="bg-blue-300">
           {part}
         </span>
@@ -23,3 +23,4 @@ const Prompt = ({ text = "text-holder", tags = [] }) => {
 };
 
 export default Prompt;
+

@@ -3,7 +3,7 @@ import { useState } from "react";
 import React from "react";
 
 const Input = ({ tags, setTags }) => {
-  const [searchKey, setSearchKey] = useState("Search Here");
+  const [searchKey, setSearchKey] = useState("");
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchKey.trim() !== "") {
@@ -38,9 +38,12 @@ const Input = ({ tags, setTags }) => {
         value={searchKey}
         onChange={(e) => setSearchKey(e.target.value)}
         onKeyDown={handleKeyDown}
+        placeholder="Search Here"
       />
     </div>
   );
 };
 
 export default Input;
+
+

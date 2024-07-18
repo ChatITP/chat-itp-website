@@ -1,6 +1,5 @@
-"use client"
+"use client";
 import React, { useState } from "react";
-import Nav2 from "@/components/Nav2";
 import Convo from "@/components/Convo";
 
 const MyPage = () => {
@@ -8,13 +7,13 @@ const MyPage = () => {
 
   return (
     <div>
-      <Nav2 tags={tags} setTags={setTags} />
-      <Convo tags={tags} />
+      <Convo tags={tags} setTags={setTags} />
     </div>
   );
 };
 
 export default MyPage;
+
 
 
 
