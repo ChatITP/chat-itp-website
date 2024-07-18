@@ -1,9 +1,20 @@
 "use client";
 import { useState, useRef } from "react";
 import React from "react";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core';
+import { Draggable } from './Draggable';
+import { DropZone } from './DropZone';
 
 const Input = ({ tags = [], setTags, phrases = [] }) => {
   const [searchKey, setSearchKey] = useState("");
+  const [items, setItems] = useState(phrases);
+  const [droppedItems, setDroppedItems] = useState([]);
   const tagsContainerRef = useRef(null);
 
   const handleKeyDown = (e) => {
@@ -43,6 +54,19 @@ const Input = ({ tags = [], setTags, phrases = [] }) => {
     );
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor)
+  );
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (over && over.id === 'drop-zone') {
+      setItems((items) => items.filter(item => item !== active.id));
+      setDroppedItems((droppedItems) => [...droppedItems, active.id]);
+    }
+  };
+
   return (
     <div className="w-full space-y-2">
       <div className="h-[38px] w-[450px] flex items-center rounded-lg border border-blue-500 pl-4 text-sm bg-black">
@@ -75,15 +99,30 @@ const Input = ({ tags = [], setTags, phrases = [] }) => {
           placeholder="Search Here"
         />
       </div>
-      <div className="flex flex-row gap-4">
-        {phrases.map((phrase, index) => (
-          <div key={index} className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-white w-full md:w-auto">
-            {highlightText(phrase, tags)}
-          </div>
-        ))}
-      </div>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <div className="flex flex-row gap-4">
+          {items.map((phrase, index) => (
+            <Draggable key={phrase} id={phrase}>
+              <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-white w-full md:w-auto cursor-move">
+                {highlightText(phrase, tags)}
+              </div>
+            </Draggable>
+          ))}
+        </div>
+        <DropZone id="drop-zone">
+          {droppedItems.map((item, index) => (
+            <div key={index} className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-white w-full md:w-auto">
+              {highlightText(item, tags)}
+            </div>
+          ))}
+        </DropZone>
+      </DndContext>
     </div>
   );
 };
 
-export default Input;
+export default Input
