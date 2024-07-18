@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl mb-4">Tag Search</h1>
+      <h1 className="text-2xl mb-4">ChatITP</h1>
       <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
     </div>
   );

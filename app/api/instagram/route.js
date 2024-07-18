@@ -1,8 +1,16 @@
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 export const GET = async (req) => {
   const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
-  const apiUrl = `https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp,media_type,permalink&access_token=IGQWRNb09yZAllqd2J3ZATVKcHZAQSi1aa1djZA0llalZAIbUE3X21QSl91NEtPLTl0TkZAHRC1NMjljdEJZALUdtek4xZAGtVTXBrU0dTcmhDSHNaS19sMlZAWOE1nNExKRzB0MEhEUF80RmRmb1pQYVcyRHpEcEYwYm51WDAZD`;
+
+  // Check if the access token is loaded correctly
+  console.log('Access Token:', accessToken);
+
+  const apiUrl = `https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp,media_type,permalink&access_token=${accessToken}`;
 
   try {
     const response = await axios.get(apiUrl);
