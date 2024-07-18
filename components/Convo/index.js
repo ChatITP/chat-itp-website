@@ -1,34 +1,22 @@
-import React from "react";
-import PromptList from "@/components/Prompt/PromptList";
-import Input from "@/components/Convo/input";
-import Image from "next/image";
+import { useState } from "react";
+import InputComponent from "@/components/Convo/input";
 
-const Convo = ({ tags, setTags }) => {
+const Home = () => {
+  const [tags, setTags] = useState([]);
+  const phrases = [
+    "What’s the most innovative theme of ITP Projects?",
+    "Describe the most innovative  3d game modeling projects from the 1980s that utilized early computer graphics.",
+    "In 2075, ITP students will use AR to redefine social interactions. Describe a project and its implications on privacy and connections.",
+    "Imagine that all the ITP student work represents the DNA of a university program. Describe a university program based on this DNA",
+    "Write an advertisement poem about ITP Spring Show.",
+  ];
+
   return (
-    <>
-      <nav className="w-full h-[82px] bg-black ">
-        <div className="flex flex-row items-center h-full">
-          <div className="flex-shrink-0">
-            <Image
-              src="/logo.svg"
-              alt="Company Logo"
-              width={77.7}
-              height={61}
-            />
-          </div>
-          <div className="ml-4">
-            <Input tags={tags} setTags={setTags} />
-          </div>
-        </div>
-      </nav>
-      <div className="min-h-screen bg-white/35">
-        <div className="mx-4 pt-4">
-          <PromptList tags={tags} />
-        </div>
-      </div>
-    </>
+    <div className="p-4">
+      <h1 className="text-2xl mb-4">Tag Search</h1>
+      <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
+    </div>
   );
 };
 
-export default Convo;
-
+export default Home;
