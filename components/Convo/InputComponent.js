@@ -7,6 +7,7 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
   const [searchKey, setSearchKey] = useState("");
   const [items, setItems] = useState(phrases);
   const [droppedItems, setDroppedItems] = useState([]);
+  const [interactionMode, setInteractionMode] = useState(null);
   const tagsContainerRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
 
@@ -61,6 +62,7 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
     const { active, over } = event;
 
     if (over && over.id === 'drop-zone') {
+      setInteractionMode('drag');
       setItems((items) => items.filter(item => item !== active.id));
       setDroppedItems((droppedItems) => [...droppedItems, active.id]);
     }
@@ -125,5 +127,11 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
 };
 
 export default InputComponent;
+
+
+
+
+
+
 
 

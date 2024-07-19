@@ -31,7 +31,6 @@ const ChatInterface = () => {
   const chatListRef = useRef(null);
 
   const handleBlockSelect = async (text) => {
-    console.log('Block selected:', text);
     if (text === '?') {
       const completeQuestion = [...selectedBlocks, text];
       await sendMessageToModel(completeQuestion);
@@ -40,9 +39,7 @@ const ChatInterface = () => {
     } else {
       const newSelectedBlocks = [...selectedBlocks, text];
       setSelectedBlocks(newSelectedBlocks);
-      console.log('Selected blocks:', newSelectedBlocks);
       const newSuggestions = await fetchSuggestionsFromBackend(newSelectedBlocks);
-      console.log('New suggestions:', newSuggestions);
       setSuggestions(newSuggestions);
     }
   };
@@ -76,7 +73,7 @@ const ChatInterface = () => {
   }, [messages]);
 
   return (
-    <div className="p-4 w-[600px] bg-black border border-white rounded-lg shadow-lg flex flex-col max-h-96">
+    <div className="p-4 w-[600px] bg-white text-black rounded-lg shadow-lg flex flex-col max-h-96">
       <div className="flex-1 overflow-y-auto mb-4" ref={chatListRef}>
         {messages.map((message, index) => (
           <div key={index} className="mb-6">
@@ -120,7 +117,7 @@ const ChatInterface = () => {
                 <LoadingDots />
               </div>
             )}
-            <div className="flex justify-end">
+            <div className="flex justify-end text-black">
               <Button onClick={handleAskAgain}>Ask Again</Button>
             </div>
           </div>
@@ -131,8 +128,3 @@ const ChatInterface = () => {
 };
 
 export default ChatInterface;
-
-
-
-
-

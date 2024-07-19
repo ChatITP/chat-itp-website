@@ -15,7 +15,7 @@ const colors = [
 const Block = ({ text, index, onSelect }) => (
   <button
     className={`py-2 px-4 rounded-full shadow-md text-sm font-semibold ${
-      text === '?' ? 'bg-white/20 text-white' : colors[index % colors.length]
+      text === '?' ? 'bg-white/20 text-black' : colors[index % colors.length]
     } text-black`}
     onClick={() => onSelect(text)}
   >
