@@ -50,7 +50,7 @@ const DropZone = ({ id, children }) => {
 
   return (
     <div
-      className="p-4 bg-black border border-gray-500 rounded-lg min-h-[200px] relative"
+      className="p-4 bg-black border border-gray-500 rounded-lg h-screen relative"
       onDoubleClick={handleDoubleClick}
       onClick={() => setSelectedChatIndex(null)} // Deselect on click outside
     >
