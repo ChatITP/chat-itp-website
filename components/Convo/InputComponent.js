@@ -9,6 +9,7 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
   const [droppedItems, setDroppedItems] = useState([]);
   const [interactionMode, setInteractionMode] = useState(null);
   const tagsContainerRef = useRef(null);
+  const dropZoneRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
 
   const sensors = useSensors(useSensor(PointerSensor));
@@ -63,8 +64,17 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
 
     if (over && over.id === 'drop-zone') {
       setInteractionMode('drag');
-      setItems((items) => items.filter(item => item !== active.id));
-      setDroppedItems((droppedItems) => [...droppedItems, active.id]);
+      const dropZoneElement = dropZoneRef.current;
+      if (dropZoneElement) {
+        const dropZoneRect = dropZoneElement.getBoundingClientRect();
+        const mouseX = event.clientX - dropZoneRect.left;
+        const mouseY = event.clientY - dropZoneRect.top;
+        const newId = `new-${active.id}-${Date.now()}`;
+        setDroppedItems((droppedItems) => [
+          ...droppedItems, 
+          { id: newId, originalId: active.id, x: mouseX, y: mouseY }
+        ]);
+      }
     }
   };
 
@@ -114,10 +124,14 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
             </Draggable>
           ))}
         </div>
-        <DropZone id="drop-zone">
+        <DropZone id="drop-zone" ref={dropZoneRef}>
           {droppedItems.map((item, index) => (
-            <div key={index} className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-white w-full md:w-auto">
-              {highlightText(item, tags)}
+            <div
+              key={index}
+              className="bg-blue border border-gray-600 rounded-lg p-4 text-white w-full md:w-auto"
+              style={{ position: 'absolute', left: item.x, top: item.y }}
+            >
+              {highlightText(item.originalId, tags)}
             </div>
           ))}
         </DropZone>
@@ -125,6 +139,8 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
     </div>
   );
 };
+
+InputComponent.displayName = 'InputComponent';
 
 export default InputComponent;
 
