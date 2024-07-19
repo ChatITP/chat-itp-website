@@ -14,6 +14,11 @@ module.exports = {
       lightBlue: "#C8DFF7",
       transparent: "transparent",
       grey: "#ABA9A9",
+      red: "#FF9C9C",
+      orange: "#FFD9A3",
+      yellow: "#FFF495",
+      green: "#B3FFA0",
+      teal: "#A9FFEF",
     },
     extend: {
       backgroundImage: {

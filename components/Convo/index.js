@@ -1,6 +1,5 @@
-import { useState } from "react";
-import InputComponent from "@/components/Convo/input";
-import Link from "next/link"
+import React, { useState } from 'react';
+import InputComponent from '@/components/Convo/input'; // Adjust path if necessary
 
 const Home = () => {
   const [tags, setTags] = useState([]);
@@ -14,10 +13,7 @@ const Home = () => {
 
   return (
     <div className="p-4">
-      <Link href="/about">
-        <h1 className="text-2xl mb-4">ChatITP</h1>
-      </Link>
-
+      <h1 className="text-2xl mb-4">ChatITP</h1>
       <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
     </div>
   );

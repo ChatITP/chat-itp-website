@@ -1,21 +1,24 @@
-"use client";
-import { useState, useRef } from "react";
-import React from "react";
-import {
-  DndContext,
-  closestCenter,
-  PointerSensor,
-  useSensor,
-  useSensors
-} from '@dnd-kit/core';
-import { Draggable } from './Draggable';
-import { DropZone } from './DropZone';
+import React, { useState, useRef, useEffect } from 'react';
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import Draggable from './Draggable'; // Ensure path is correct
+import DropZone from './DropZone'; // Ensure path is correct
 
-const Input = ({ tags = [], setTags, phrases = [] }) => {
+const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
   const [searchKey, setSearchKey] = useState("");
   const [items, setItems] = useState(phrases);
   const [droppedItems, setDroppedItems] = useState([]);
   const tagsContainerRef = useRef(null);
+  const [isClient, setIsClient] = useState(false);
+
+  const sensors = useSensors(useSensor(PointerSensor));
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchKey.trim() !== "") {
@@ -53,10 +56,6 @@ const Input = ({ tags = [], setTags, phrases = [] }) => {
       )
     );
   };
-
-  const sensors = useSensors(
-    useSensor(PointerSensor)
-  );
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -125,4 +124,6 @@ const Input = ({ tags = [], setTags, phrases = [] }) => {
   );
 };
 
-export default Input
+export default InputComponent;
+
+
