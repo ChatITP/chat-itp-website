@@ -71,7 +71,7 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
         const mouseY = event.clientY - dropZoneRect.top;
         const newId = `new-${active.id}-${Date.now()}`;
         setDroppedItems((droppedItems) => [
-          ...droppedItems, 
+          ...droppedItems,
           { id: newId, originalId: active.id, x: mouseX, y: mouseY }
         ]);
       }
@@ -143,11 +143,3 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
 InputComponent.displayName = 'InputComponent';
 
 export default InputComponent;
-
-
-
-
-
-
-
-
