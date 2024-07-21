@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 export const Message = ({ text, sender }) => {
   const messageStyles =
     sender === 'user'
-      ? 'bg-purple-50 text-black self-end'
+      ? 'bg-purple text-black self-end'
       : 'bg-neutral-100 text-black self-start';
 
   return (
