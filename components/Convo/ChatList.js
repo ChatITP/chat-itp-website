@@ -5,7 +5,7 @@ const ChatList = ({ messages }) => {
         <div
           key={index}
           className={`p-2 my-2 rounded-md ${
-            message.sender === "user" ? "bg-blue" : "bg-lightBlue"
+            message.sender === "user" ? "bg-blue" : "bg-purple"
           } `}
         >
           {message.text}
