@@ -44,12 +44,13 @@ async function request(method, url, data) {
 }
 
 async function refreshAccessToken() {
-  return await axios.post('http://localhost:3001/user/refresh', null, {
+  return await axios.post('http://localhost:8000/api/user/refresh', null, {
     withCredentials: true,
   });
 }
 
 export default request;
+
 
 
 

@@ -53,7 +53,7 @@ const DropZone = forwardRef(({ id, children }, ref) => {
 
   const sendMessageToModel = async (question) => {
     try {
-      const response = await request('POST', 'http://localhost:3001/llm/generate', {
+      const response = await request('POST', 'http://localhost:8000/api/llm/generate', {
         userPrompt: question.join(' '),
       });
       return response.data.content;

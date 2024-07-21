@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import InputComponent from '@/components/Convo/InputComponent'; // Adjust path if necessary
+import InputComponent from '@/components/Convo/InputComponent'; 
 
 const Home = () => {
   const [tags, setTags] = useState([]);

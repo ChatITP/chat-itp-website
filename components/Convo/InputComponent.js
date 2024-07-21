@@ -135,7 +135,7 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
         </div>
         <div ref={dropZoneRef}>
           <DropZone id="drop-zone" ref={dropZoneRef}>
-            <ChatWindow initialMessage={droppedMessage} />
+            {droppedItems.length > 0 && <ChatWindow initialMessage={droppedMessage} />}
             {droppedItems.map((item, index) => (
               <div
                 key={index}
