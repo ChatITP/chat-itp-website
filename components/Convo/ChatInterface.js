@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import request from '/app/lib/request.js'; 
-import { Button } from '@/components/Convo/Button'; // Adjust this path if necessary
+import { Button } from '@/components/Convo/Button'; 
 import LoadingDots from '@/components/Convo/LoadingDots';
 import BlockSelector from './BlockSelector';
-import Block from './Block'; // Ensure this path is correct
+import Block from './Block'; 
 
 const DottedLine = () => (
   <svg width="32" height="2" className="mx-1">

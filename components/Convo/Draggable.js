@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 
-const Draggable = ({ id, children, isDropped }) => {
+const Draggable = ({ id, children, isDropped, data }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useDraggable({
     id,
+    data,
   });
 
   const style = {
@@ -24,15 +25,16 @@ export default Draggable;
 // import React from 'react';
 // import { useDraggable } from '@dnd-kit/core';
 
-// const Draggable = ({ id, children, isDropped }) => {
+// const Draggable = ({ id, children, isDropped, data }) => {
 //   const { attributes, listeners, setNodeRef, transform, transition } = useDraggable({
 //     id,
+//     data,
 //   });
 
 //   const style = {
 //     transform: `translate3d(${transform?.x}px, ${transform?.y}px, 0)`,
 //     transition,
-//     backgroundColor: isDropped ? 'blue' : 'transparent',
+//     display: isDropped ? 'none' : 'block',
 //   };
 
 //   return (
@@ -43,6 +45,8 @@ export default Draggable;
 // };
 
 // export default Draggable;
+
+
 
 
 
