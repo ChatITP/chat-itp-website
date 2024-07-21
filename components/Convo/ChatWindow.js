@@ -10,11 +10,22 @@ const ChatWindow = ({ initialMessage }) => {
   const [hasSentInitialMessage, setHasSentInitialMessage] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
 
+  const removeDuplicates = (messages) => {
+    const seen = new Set();
+    return messages.filter((message) => {
+      const isDuplicate = seen.has(message.text);
+      seen.add(message.text);
+      return !isDuplicate;
+    });
+  };
+
   const handleSendMessage = async (message) => {
-    setMessages((prevMessages) => [
-      ...prevMessages,
+    let newMessages = [
+      ...messages,
       { text: message, sender: "user" },
-    ]);
+    ];
+    newMessages = removeDuplicates(newMessages);
+    setMessages(newMessages);
     setLoading(true);
     setCurrentMessage("");
 
@@ -27,17 +38,21 @@ const ChatWindow = ({ initialMessage }) => {
         }
       );
 
-      setMessages((prevMessages) => [
-        ...prevMessages,
+      newMessages = [
+        ...newMessages,
         { text: response.data.content, sender: "ai" },
-      ]);
+      ];
+      newMessages = removeDuplicates(newMessages);
+      setMessages(newMessages);
       setLoading(false);
     } catch (error) {
       console.error("Error sending message:", error);
-      setMessages((prevMessages) => [
-        ...prevMessages,
+      newMessages = [
+        ...newMessages,
         { text: "Failed to get a response from the model.", sender: "ai" },
-      ]);
+      ];
+      newMessages = removeDuplicates(newMessages);
+      setMessages(newMessages);
       setLoading(false);
     }
   };
