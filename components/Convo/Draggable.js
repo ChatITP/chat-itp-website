@@ -46,9 +46,3 @@ export default Draggable;
 
 // export default Draggable;
 
-
-
-
-
-
-
