@@ -16,7 +16,7 @@ const ChatInterface = () => {
   const sendMessageToModel = async () => {
     setLoading(true);
     try {
-      const response = await request('POST', 'http://localhost:8000/api/llm/generate', {
+      const response = await request('POST', process.env.NEXT_PUBLIC_API_URL+'/llm/generate', {
         userPrompt: prompt,
       });
       setAnswer(response.data.content);

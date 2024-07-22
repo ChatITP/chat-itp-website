@@ -7,7 +7,6 @@ dotenv.config();
 export const GET = async (req) => {
   const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
 
-  // Check if the access token is loaded correctly
   console.log('Access Token:', accessToken);
 
   const apiUrl = `https://graph.instagram.com/me/media?fields=id,caption,media_url,timestamp,media_type,permalink&access_token=${accessToken}`;

@@ -13,7 +13,7 @@ const DottedLine = () => (
 
 const fetchSuggestionsFromBackend = async (selectedBlocks) => {
   try {
-    const response = await request('POST', 'http://localhost:8000/api/llm/suggestions', { selectedBlocks });
+    const response = await request('POST', process.env.NEXT_PUBLIC_API_URL+'/llm/suggestions', { selectedBlocks });
     console.log('Fetched suggestions:', response.data);
     return response.data;
   } catch (error) {
@@ -48,7 +48,7 @@ const ChatInterface = () => {
     setLoading(true);
     setShowSuggestions(false);
     try {
-      const response = await request('POST', 'http://localhost:8000/api/llm/generate', {
+      const response = await request('POST', process.env.NEXT_PUBLIC_API_URL+'/llm/generate', {
         userPrompt: question.join(' '),
       });
       setMessages([...messages, { question, answer: response.data.content }]);
