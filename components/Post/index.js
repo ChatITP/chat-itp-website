@@ -33,6 +33,12 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center px-40 pt-[370px]">
+      <Image src = "/background.svg"
+      alt = "background img"
+      width = {1440}
+      height = {1217}
+      className=''>
+      </Image>
       <h1 className="text-3xl font-bold mb-[66px] ">Follow Our Digital Journal!</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {media.length > 0 ? media.map((item) => (
