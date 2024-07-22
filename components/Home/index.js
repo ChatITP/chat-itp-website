@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <div
         id="home"
-        className="h-screen min-h-[640px] block pt-[60px] relative"
+        className="h-screen min-h-[640px] block pt-[60px] relative z-10"
       >
         <div className="relative z-10 h-full min-h-full items-center place-content-center flex flex-col pb-16">
           <div className="w-[244px] h-[107px] pb-7">
@@ -26,7 +26,7 @@ export default function Home() {
         </div>
         <div
           id="blob"
-          className="absolute inset-0 flex items-center justify-center z-0"
+          className="absolute inset-0 flex items-center justify-center z-5"
         >
           <div className="w-1/3 h-auto">
             <Image
