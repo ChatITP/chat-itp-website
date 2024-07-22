@@ -3,7 +3,7 @@ export default function Footer() {
   return (
     <div
       id="footer"
-      className="left-0 top-0 flex w-full items-center justify-between h-64 bg-[#000814]"
+      className="left-0 top-0 flex w-full items-center justify-between h-64 bg-black"
     >
       <div className="relative m-auto">
         <ul className="flex gap-14">
