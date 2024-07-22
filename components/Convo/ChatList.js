@@ -20,10 +20,21 @@ export const Message = ({ text, sender }) => {
 const ChatList = ({ messages }) => {
   const userMessages = messages.filter(message => message.sender === 'user');
   const otherMessages = messages.filter(message => message.sender !== 'user');
+  const userMessagesRef = useRef(null);
+
+  useEffect(() => {
+    if (userMessagesRef.current) {
+      userMessagesRef.current.scrollTop = userMessagesRef.current.scrollHeight;
+    }
+  }, [userMessages]);
 
   return (
     <div className="chat-list flex flex-col h-full">
-      <div className="user-messages bg-grey/60 text-white p-2 rounded-t-md">
+      <div
+        className="user-messages bg-white/60 text-black p-2 rounded-t-md overflow-auto"
+        style={{ height: '110px' }}
+        ref={userMessagesRef}
+      >
         {userMessages.map((message, index) => (
           <div key={index} className="p-2 my-2 rounded-md">
             {message.text}
@@ -42,6 +53,7 @@ const ChatList = ({ messages }) => {
 };
 
 export default ChatList;
+
 
 
 

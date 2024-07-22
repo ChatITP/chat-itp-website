@@ -9,6 +9,7 @@ const ChatWindow = ({ initialMessage }) => {
   const chatListRef = useRef(null);
   const [hasSentInitialMessage, setHasSentInitialMessage] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
+  const [showInput, setShowInput] = useState(false);
 
   const removeDuplicates = (messages) => {
     const seen = new Set();
@@ -29,7 +30,7 @@ const ChatWindow = ({ initialMessage }) => {
     try {
       const response = await request(
         "POST",
-        process.env.NEXT_PUBLIC_API_URL+"/llm/generate",
+        process.env.NEXT_PUBLIC_API_URL + "/llm/generate",
         {
           userPrompt: message,
         }
@@ -52,6 +53,16 @@ const ChatWindow = ({ initialMessage }) => {
       setMessages(newMessages);
       setLoading(false);
     }
+  };
+
+  const handleRegenerate = () => {
+    if (messages.length > 0) {
+      handleSendMessage("Regenerate: " + messages[messages.length - 1].text);
+    }
+  };
+
+  const handleAskFollowup = () => {
+    setShowInput(true);
   };
 
   useEffect(() => {
@@ -80,11 +91,12 @@ const ChatWindow = ({ initialMessage }) => {
   const handleSendButtonClick = () => {
     if (currentMessage.trim() !== "") {
       handleSendMessage(currentMessage);
+      setShowInput(false); // Hide the input after sending the message
     }
   };
 
   return (
-    <div className="flex flex-col h-96 w-[600px]  bg-white rounded-lg border-2 border-white shadow-md">
+    <div className="flex flex-col h-96 w-[600px] bg-grey2 rounded-lg border-2 border-grey2 shadow-md">
       <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
         <ChatList messages={messages} />
       </div>
@@ -93,22 +105,38 @@ const ChatWindow = ({ initialMessage }) => {
           <LoadingDots />
         </div>
       )}
-      <div className="flex items-center mt-2">
-        <input
-          type="text"
-          value={currentMessage}
-          onChange={handleInputChange}
-          onKeyDown={handleInputKeyDown}
-          className="text-black flex-1 p-2 border border-blue rounded-md"
-          placeholder="Type a message..."
-        />
+      <div className="flex justify-end items-center mb-2 space-x-2 mr-2">
         <button
-          onClick={handleSendButtonClick}
-          className="ml-2 p-2 bg-blue text-white rounded-md"
+          onClick={handleRegenerate}
+          className="p-2 bg-blue text-white rounded-md"
         >
-          Send
+          Regenerate
+        </button>
+        <button
+          onClick={handleAskFollowup}
+          className="p-2 bg-blue text-white rounded-md"
+        >
+          Ask follow-up
         </button>
       </div>
+      {showInput && (
+        <div className="flex items-center mb-2">
+          <input
+            type="text"
+            value={currentMessage}
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            className="text-black flex-1 p-2 border border-blue rounded-md"
+            placeholder="Type a message..."
+          />
+          <button
+            onClick={handleSendButtonClick}
+            className="ml-2 p-2 bg-blue text-white rounded-md"
+          >
+            Send
+          </button>
+        </div>
+      )}
     </div>
   );
 };
