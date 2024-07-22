@@ -91,9 +91,9 @@ const DropZone = forwardRef(({ id, children }, ref) => {
   return (
     <div
       ref={setNodeRef}
-      className="p-4 bg-black border border-gray-500 rounded-lg h-screen relative"
+      className="bg-gray2 rounded-lg h-screen relative z-10"
       onDoubleClick={handleDoubleClick}
-      onClick={() => setSelectedChatIndex(null)} // Deselect on click outside
+      onClick={() => setSelectedChatIndex(null)} 
     >
       {children}
       {chatInterfaces.map((chat, index) => (
@@ -101,7 +101,7 @@ const DropZone = forwardRef(({ id, children }, ref) => {
           key={chat.id}
           className="chat-interface-container"
           onClick={(e) => {
-            e.stopPropagation(); // Prevent click from propagating to parent
+            e.stopPropagation(); 
             setSelectedChatIndex(index);
           }}
         >

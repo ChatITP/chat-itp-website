@@ -118,7 +118,7 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
       >
-        <div className="flex flex-row gap-4">
+        <div className="flex overflow-x-auto scrollbar-hide space-x-4 h-[120px]">
           {items.map((phrase, index) => (
             <Draggable
               key={phrase}
@@ -127,13 +127,13 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
               position={droppedItems.find(item => item.originalId === phrase) || { x: 0, y: 0 }}
               data={{ text: phrase }}
             >
-              <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-white w-full md:w-auto cursor-move">
+              <div className="border 0 rounded-lg p-4 text-white/80 w-[310px] cursor-move text-sm  hover:bg-white/20 z-100">
                 {highlightText(phrase, tags)}
               </div>
             </Draggable>
           ))}
         </div>
-        <div ref={dropZoneRef}>
+        <div ref={dropZoneRef} className="z-40">
           <DropZone id="drop-zone" ref={dropZoneRef}>
             {droppedItems.length > 0 && <ChatWindow initialMessage={droppedMessage} />}
             {droppedItems.map((item, index) => (
