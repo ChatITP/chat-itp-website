@@ -84,7 +84,7 @@ const ChatWindow = ({ initialMessage }) => {
   };
 
   return (
-    <div className="flex flex-col h-96 w-[600px] p-2 bg-white rounded-lg border border-neutral-300 shadow-md">
+    <div className="flex flex-col h-96 w-[600px]  bg-white rounded-lg border-2 border-white shadow-md">
       <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
         <ChatList messages={messages} />
       </div>
