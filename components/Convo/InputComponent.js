@@ -83,7 +83,7 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
 
   return (
     <div className="w-full space-y-2">
-      <div className="h-[38px] w-[450px] flex items-center rounded-lg border border-blue-500 pl-4 text-sm bg-black">
+      <div className="h-[38px] w-[450px] flex items-center rounded-lg border border-blue pl-4 text-sm bg-black">
         <div
           ref={tagsContainerRef}
           className="flex overflow-x-auto scrollbar-hide space-x-2 max-w-[360px]"

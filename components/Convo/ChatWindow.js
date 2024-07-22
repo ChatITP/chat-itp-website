@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ChatList from "./ChatList";
 import LoadingDots from "./LoadingDots";
 import request from "/app/lib/request";
+import Image from "next/image";
 
 const ChatWindow = ({ initialMessage }) => {
   const [messages, setMessages] = useState([]);
@@ -56,8 +57,13 @@ const ChatWindow = ({ initialMessage }) => {
   };
 
   const handleRegenerate = () => {
-    if (messages.length > 0) {
-      handleSendMessage("Regenerate: " + messages[messages.length - 1].text);
+    const lastUserMessage = messages
+      .slice()
+      .reverse()
+      .find((message) => message.sender === "user");
+
+    if (lastUserMessage) {
+      handleSendMessage("Regenerate: " + lastUserMessage.text);
     }
   };
 
@@ -85,18 +91,19 @@ const ChatWindow = ({ initialMessage }) => {
   const handleInputKeyDown = (e) => {
     if (e.key === "Enter" && currentMessage.trim() !== "") {
       handleSendMessage(currentMessage);
+      setShowInput(false);
     }
   };
 
   const handleSendButtonClick = () => {
     if (currentMessage.trim() !== "") {
       handleSendMessage(currentMessage);
-      setShowInput(false); // Hide the input after sending the message
+      setShowInput(false);
     }
   };
 
   return (
-    <div className="flex flex-col h-96 w-[600px] bg-gray2 rounded-lg border-2 border-gray2 shadow-md">
+    <div className="flex flex-col h-[324px] w-[669px] bg-white/30 rounded-2xl border-[3px] border-lightBlue shadow-md">
       <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
         <ChatList messages={messages} />
       </div>
@@ -105,22 +112,43 @@ const ChatWindow = ({ initialMessage }) => {
           <LoadingDots />
         </div>
       )}
-      <div className="flex justify-end items-center mb-2 space-x-2 mr-2">
-        <button
-          onClick={handleRegenerate}
-          className="p-2 bg-blue text-white rounded-md"
-        >
-          Regenerate
-        </button>
-        <button
-          onClick={handleAskFollowup}
-          className="p-2 bg-blue text-white rounded-md"
-        >
-          Ask follow-up
-        </button>
-      </div>
+      {!showInput && (
+        <div className="flex justify-end items-center mb-2 space-x-2 mr-10">
+          <div className="flex flex-row">
+            <button
+              onClick={handleRegenerate}
+              className="p-2 text-sm font-semibold text-white rounded-md"
+            >
+              Regenerate
+            </button>
+            <Image
+              src="/switch.svg"
+              alt="switch icon"
+              width={12}
+              height={12}
+              className="my-auto"
+            />
+          </div>
+
+          <div className="flex flex-row">
+            <button
+              onClick={handleAskFollowup}
+              className="p-2 text-sm font-semibold text-white rounded-md"
+            >
+              Ask followup
+            </button>
+            <Image
+              src="/tasks.svg"
+              alt="tasks icon"
+              width={12}
+              height={12}
+              className="my-auto"
+            />
+          </div>
+        </div>
+      )}
       {showInput && (
-        <div className="flex items-center mb-2">
+        <div className="flex items-center mb-2 mx-2">
           <input
             type="text"
             value={currentMessage}
@@ -142,4 +170,3 @@ const ChatWindow = ({ initialMessage }) => {
 };
 
 export default ChatWindow;
-

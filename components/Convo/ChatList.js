@@ -36,7 +36,7 @@ const getTextColorClass = (text) => {
     case '?':
       return 'text-gray2';
     default:
-      return 'text-black';
+      return 'text-white/80';
   }
 };
 
@@ -54,7 +54,7 @@ const ChatList = ({ messages }) => {
   return (
     <div className="chat-list flex flex-col h-full">
       <div
-        className="user-messages bg-white/60 text-black p-2 rounded-t-md overflow-auto"
+        className="user-messages bg-gray/40 text-white/80 pt-3 px-5 rounded-t-2xl overflow-auto text-base"
         style={{ height: '110px' }}
         ref={userMessagesRef}
       >
@@ -64,9 +64,9 @@ const ChatList = ({ messages }) => {
           </div>
         ))}
       </div>
-      <div className="other-messages flex-1 overflow-auto p-2 bg-gray2 rounded-b-md text-white">
+      <div className="other-messages flex-1 overflow-auto p-2 mb-5 rounded-b-2xl text-white/75">
         {otherMessages.map((message, index) => (
-          <div key={index} className={`p-2 my-2 rounded-md ${getTextColorClass(message.text)}`}>
+          <div key={index} className={`p-2 my-2 rounded-md text-white`}>
             {message.text}
           </div>
         ))}
