@@ -9,12 +9,11 @@ const Home = () => {
     "In 2075, ITP students will use AR to redefine social interactions. Describe a project and its implications on privacy and connections.",
     "Imagine that all the ITP student work represents the DNA of a university program. Describe a university program based on this DNA",
     "Write an advertisement poem about ITP Spring Show.",
-    "Design the “ITP version” of these common objects: Toaster, bubble tea, supercomputer, paper clip, pet chihuahua, underpants.",
+    // "Design the “ITP version” of these common objects: Toaster, bubble tea, supercomputer, paper clip, pet chihuahua, underpants.",
   ];
 
   return (
-    <div className="bg-gray p-4">
-      <h1 className="text-2xl mb-4">ChatITP</h1>
+    <div className="bg-gray2">
       <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
     </div>
   );

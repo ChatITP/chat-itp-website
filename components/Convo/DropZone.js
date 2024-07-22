@@ -91,7 +91,7 @@ const DropZone = forwardRef(({ id, children }, ref) => {
   return (
     <div
       ref={setNodeRef}
-      className="bg-gray2 rounded-lg h-screen relative z-10"
+      className="rounded-lg h-screen relative z-10"
       onDoubleClick={handleDoubleClick}
       onClick={() => setSelectedChatIndex(null)} 
     >

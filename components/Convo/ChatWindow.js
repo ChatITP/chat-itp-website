@@ -11,6 +11,7 @@ const ChatWindow = ({ initialMessage }) => {
   const [hasSentInitialMessage, setHasSentInitialMessage] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
   const [showInput, setShowInput] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
 
   const removeDuplicates = (messages) => {
     const seen = new Set();
@@ -102,8 +103,17 @@ const ChatWindow = ({ initialMessage }) => {
     }
   };
 
+  const handleClick = () => {
+    setIsSelected(!isSelected);
+  };
+
   return (
-    <div className="flex flex-col h-[324px] w-[669px] bg-white/30 rounded-2xl border-[3px] border-lightBlue shadow-md">
+    <div
+      onClick={handleClick}
+      className={`flex flex-col h-[324px] w-[669px] bg-gray/30 rounded-2xl border-[3px] shadow-md ${
+        isSelected ? "border-white" : "border-lightBlue"
+      }`}
+    >
       <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
         <ChatList messages={messages} />
       </div>
@@ -154,7 +164,7 @@ const ChatWindow = ({ initialMessage }) => {
             value={currentMessage}
             onChange={handleInputChange}
             onKeyDown={handleInputKeyDown}
-            className="text-black flex-1 p-2 border border-blue rounded-md"
+            className="text-black bg-gray2 flex-1 p-2 border border-blue rounded-md"
             placeholder="Type a message..."
           />
           <button
@@ -170,3 +180,4 @@ const ChatWindow = ({ initialMessage }) => {
 };
 
 export default ChatWindow;
+
