@@ -164,7 +164,7 @@ const ChatWindow = ({ initialMessage }) => {
             value={currentMessage}
             onChange={handleInputChange}
             onKeyDown={handleInputKeyDown}
-            className="text-black bg-gray2 flex-1 p-2 border border-blue rounded-md"
+            className="text-white bg-gray2 flex-1 p-2 border border-blue rounded-md"
             placeholder="Type a message..."
           />
           <button
