@@ -5,8 +5,17 @@
 body {
   color: whitesmoke;
   background-color: black;
+  font-family: NYU Perstare;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

@@ -1,11 +1,19 @@
-import Home from "../components/Home";
-import About from "../components/About";
+"use client";
+import React, { useState } from "react";
+import Convo from "@/components/Convo";
 
-export default function Page() {
+const MyPage = () => {
+  const [tags, setTags] = useState([]);
+
   return (
-    <main>
-      <Home />
-      <About />
-    </main>
+    <div>
+      <Convo tags={tags} setTags={setTags} />
+    </div>
   );
-}
+};
+
+export default MyPage;
+
+
+
+
