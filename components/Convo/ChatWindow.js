@@ -30,6 +30,33 @@ const ChatWindow = ({ initialMessage }) => {
       onDragEnd(event);
     }
   };
+
+  const handleClick = () => {
+    setIsSelected((prev) => !prev);
+  };
+
+  const handleMouseDown = (e) => {
+    window.initialMouseX = e.clientX;
+    window.initialMouseY = e.clientY;
+  };
+
+  const checkPrompt = (e, actionType) => {
+    const threshold = 5;
+    const movedX = Math.abs(e.clientX - window.initialMouseX);
+    const movedY = Math.abs(e.clientY - window.initialMouseY);
+
+    if (movedX < threshold && movedY < threshold) {
+      if (actionType === "regenerate") {
+        handleRegenerate();
+      } else if (actionType === "askFollowup") {
+        handleAskFollowup();
+      } else if (actionType === "select"){
+        handleClick();
+      }
+    }
+  };
+  
+
   const removeDuplicates = (messages) => {
     const seen = new Set();
     return messages.filter((message) => {
@@ -85,7 +112,7 @@ const ChatWindow = ({ initialMessage }) => {
     }
   };
 
-  const handleAskFollowup = () => {
+  const handleAskFollowup = (e) => {
     setShowInput(true);
   };
 
@@ -120,92 +147,94 @@ const ChatWindow = ({ initialMessage }) => {
     }
   };
 
-  const handleClick = (e) => {
-    e.stopPropagation();
-    setIsSelected((prev) => !prev);
-  };
-
+  
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div
-        ref={setNodeRef}
-        style={{
-          transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-        }}
-        {...attributes}
-        {...listeners}
-        onClick={handleClick}
-        className={`flex flex-col h-[324px] w-[669px] ${
-          showInput ? "h-[444px]" : "h-[324px]"
-        } bg-gray/30 rounded-2xl border-[3px] shadow-md ${
-          isSelected ? "border-lightBlue" : "border-none"
-        }`}
-      >
-        <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
-          <ChatList messages={messages} />
-        </div>
-        {loading && (
-          <div className="flex justify-center items-center my-2">
-            <LoadingDots />
-          </div>
-        )}
-        {!showInput && (
-          <div className="flex justify-end items-center mb-2 space-x-2 mr-10">
-            <div className="flex flex-row">
-              <button
-                onClick={handleRegenerate}
-                className="p-2 text-sm font-semibold text-white rounded-md"
-              >
-                Regenerate
-              </button>
-              <Image
-                src="/switch.svg"
-                alt="switch icon"
-                width={12}
-                height={12}
-                className="my-auto"
-              />
-            </div>
-
-            <div className="flex flex-row">
-              <button
-                onClick={handleAskFollowup}
-                className="p-2 text-sm font-semibold text-white rounded-md"
-              >
-                Ask followup
-              </button>
-              <Image
-                src="/tasks.svg"
-                alt="tasks icon"
-                width={12}
-                height={12}
-                className="my-auto"
-              />
-            </div>
-          </div>
-        )}
-        <div className=" bg-gray/40">
-          {showInput && (
-            <div className="flex h-[120px]  items-center mb-2 mx-4">
-              <input
-                type="text"
-                value={currentMessage}
-                onChange={handleInputChange}
-                onKeyDown={handleInputKeyDown}
-                className="text-white bg-gray/0 flex-1 p-2  rounded-md"
-                placeholder="Type a message..."
-              />
-              <button
-                onClick={handleSendButtonClick}
-                className="ml-2 p-2 bg-blue text-white rounded-md"
-              >
-                Send
-              </button>
-            </div>
-          )}
-        </div>
+    <div
+      ref={setNodeRef}
+      style={{
+        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
+      }}
+      {...attributes}
+      {...listeners}
+      onClick={handleClick}
+        onMouseDown={handleMouseDown}
+        onMouseUp={(e) => checkPrompt(e, "select")}
+      className={`flex flex-col h-[324px] w-[669px] ${
+        showInput ? "h-[444px]" : "h-[324px]"
+      } bg-gray/30 rounded-2xl border-[3px] shadow-md ${
+        isSelected ? "border-lightBlue" : "border-none"
+      }`}
+    >
+      <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
+        <ChatList messages={messages} />
       </div>
-    </DndContext>
+      {loading && (
+        <div className="flex justify-center items-center my-2">
+          <LoadingDots />
+        </div>
+      )}
+      {!showInput && (
+        <div className="flex justify-end items-center mb-2 space-x-2 mr-10">
+          <div className="flex flex-row">
+            <button
+              onClick={handleClick}
+              onMouseDown={handleMouseDown}
+              onMouseUp={(e) => checkPrompt(e, "regenerate")}
+              className="p-2 text-sm font-semibold text-white rounded-md"
+            >
+              Regenerate
+            </button>
+            <Image
+              src="/switch.svg"
+              alt="switch icon"
+              width={12}
+              height={12}
+              className="my-auto"
+            />
+          </div>
+
+          <div className="flex flex-row">
+            <button
+              onClick={handleClick}
+              onMouseDown={handleMouseDown}
+              onMouseUp={(e) => checkPrompt(e, "askFollowup")}
+              className="p-2 text-sm font-semibold text-white rounded-md"
+            >
+              Ask followup
+            </button>
+            <Image
+              src="/tasks.svg"
+              alt="tasks icon"
+              width={12}
+              height={12}
+              className="my-auto"
+            />
+          </div>
+        </div>
+      )}
+      <div className="bg-gray/40">
+        {showInput && (
+          <div className="flex h-[120px] items-center mb-2 mx-4">
+            <input
+              type="text"
+              value={currentMessage}
+              onChange={handleInputChange}
+              onKeyDown={handleInputKeyDown}
+              className="text-white bg-gray/0 flex-1 p-2 rounded-md"
+              placeholder="Type a message..."
+            />
+            <button
+              onClick={handleSendButtonClick}
+              className="ml-2 p-2 bg-blue text-white rounded-md"
+            >
+              Send
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  </DndContext>
   );
 };
 
