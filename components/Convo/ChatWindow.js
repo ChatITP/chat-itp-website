@@ -110,7 +110,9 @@ const ChatWindow = ({ initialMessage }) => {
   return (
     <div
       onClick={handleClick}
-      className={`flex flex-col h-[324px] w-[669px] bg-gray/30 rounded-2xl border-[3px] shadow-md ${
+      className={`flex flex-col h-[324px] w-[669px] ${
+        showInput ? "h-[444px]" : "h-[324px]"
+      } bg-gray/30 rounded-2xl border-[3px] shadow-md ${
         isSelected ? "border-white" : "border-lightBlue"
       }`}
     >
@@ -157,27 +159,28 @@ const ChatWindow = ({ initialMessage }) => {
           </div>
         </div>
       )}
-      {showInput && (
-        <div className="flex items-center mb-2 mx-2">
-          <input
-            type="text"
-            value={currentMessage}
-            onChange={handleInputChange}
-            onKeyDown={handleInputKeyDown}
-            className="text-white bg-gray2 flex-1 p-2 border border-blue rounded-md"
-            placeholder="Type a message..."
-          />
-          <button
+      <div className=" bg-gray/40">
+        {showInput && (
+          <div className="flex h-[120px]  items-center mb-2 mx-4">
+            <input
+              type="text"
+              value={currentMessage}
+              onChange={handleInputChange}
+              onKeyDown={handleInputKeyDown}
+              className="text-white bg-gray/0 flex-1 p-2  rounded-md"
+              placeholder="Type a message..."
+            />
+            <button
             onClick={handleSendButtonClick}
             className="ml-2 p-2 bg-blue text-white rounded-md"
           >
             Send
           </button>
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default ChatWindow;
-
