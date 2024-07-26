@@ -15,11 +15,11 @@ const Home = () => {
   ];
 
   return (
-    <DndProvider backend={HTML5Backend}>
+     <DndProvider backend={HTML5Backend}>
     <div className="bg-gray2">
       <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
     </div>
-    </DndProvider >
+    </DndProvider>
   );
 };
 
