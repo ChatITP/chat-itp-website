@@ -3,7 +3,11 @@ import ChatList from "./ChatList";
 import LoadingDots from "./LoadingDots";
 import request from "/app/lib/request";
 import Image from "next/image";
-import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
+import { useDrag, useDrop } from "react-dnd";
+
+const ItemType = {
+  CHAT_WINDOW: "chatWindow",
+};
 
 const ChatWindow = ({ initialMessage }) => {
   const [messages, setMessages] = useState([]);
@@ -13,57 +17,53 @@ const ChatWindow = ({ initialMessage }) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [showInput, setShowInput] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
-  const [position, setPosition] = useState({ x:0, y:0});
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: "chat-window",
-  });
+  const initialMousePosition = useRef({ x: 0, y: 0 });
 
-  useEffect(() => {
-    if (transform) {
-      setPosition({ x: transform.x, y: transform.y });
-    }
-  }, [transform]);
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemType.CHAT_WINDOW,
+    item: { id: "chat-window" },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
 
-  const handleDragEnd = (event) => {
-    if (onDragEnd) {
-      onDragEnd(event);
-    }
-  };
-
-  const handleClick = () => {
-    setIsSelected((prev) => !prev);
-  };
+  const [, drop] = useDrop(() => ({
+    accept: ItemType.CHAT_WINDOW,
+    drop: (item, monitor) => {
+      const delta = monitor.getDifferenceFromInitialOffset();
+      setPosition((prevPosition) => ({
+        x: prevPosition.x + delta.x,
+        y: prevPosition.y + delta.y,
+      }));
+    },
+  }));
 
   const handleMouseDown = (e) => {
-    window.initialMouseX = e.clientX;
-    window.initialMouseY = e.clientY;
+    initialMousePosition.current = { x: e.clientX, y: e.clientY };
   };
 
-  const checkPrompt = (e, actionType) => {
+  const handleMouseUp = (e, actionType) => {
     const threshold = 5;
-    const movedX = Math.abs(e.clientX - window.initialMouseX);
-    const movedY = Math.abs(e.clientY - window.initialMouseY);
+    const movedX = Math.abs(e.clientX - initialMousePosition.current.x);
+    const movedY = Math.abs(e.clientY - initialMousePosition.current.y);
 
     if (movedX < threshold && movedY < threshold) {
       if (actionType === "regenerate") {
         handleRegenerate();
       } else if (actionType === "askFollowup") {
         handleAskFollowup();
-      } else if (actionType === "select"){
+      } else if (actionType === "select") {
         handleClick();
+      } else if (actionType === "send") {
+        handleSendButtonClick();
       }
     }
   };
-  
 
-  const removeDuplicates = (messages) => {
-    const seen = new Set();
-    return messages.filter((message) => {
-      const isDuplicate = seen.has(message.text);
-      seen.add(message.text);
-      return !isDuplicate;
-    });
+  const handleClick = () => {
+    setIsSelected((prev) => !prev);
   };
 
   const handleSendMessage = async (message) => {
@@ -102,6 +102,7 @@ const ChatWindow = ({ initialMessage }) => {
   };
 
   const handleRegenerate = () => {
+    setIsSelected(false);
     const lastUserMessage = messages
       .slice()
       .reverse()
@@ -112,7 +113,7 @@ const ChatWindow = ({ initialMessage }) => {
     }
   };
 
-  const handleAskFollowup = (e) => {
+  const handleAskFollowup = () => {
     setShowInput(true);
   };
 
@@ -128,6 +129,15 @@ const ChatWindow = ({ initialMessage }) => {
       chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
     }
   }, [messages]);
+
+  const removeDuplicates = (messages) => {
+    const seen = new Set();
+    return messages.filter((message) => {
+      const isDuplicate = seen.has(message.text);
+      seen.add(message.text);
+      return !isDuplicate;
+    });
+  };
 
   const handleInputChange = (e) => {
     setCurrentMessage(e.target.value);
@@ -147,94 +157,91 @@ const ChatWindow = ({ initialMessage }) => {
     }
   };
 
-  
   return (
-    <DndContext onDragEnd={handleDragEnd}>
-    <div
-      ref={setNodeRef}
-      style={{
-        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-      }}
-      {...attributes}
-      {...listeners}
-      onClick={handleClick}
+    <div ref={drag}>
+      <div
+        ref={(node) => drag(drop(node))}
+        style={{
+          transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
+          opacity: isDragging ? 0.5 : 1,
+        }}
         onMouseDown={handleMouseDown}
-        onMouseUp={(e) => checkPrompt(e, "select")}
-      className={`flex flex-col h-[324px] w-[669px] ${
-        showInput ? "h-[444px]" : "h-[324px]"
-      } bg-gray/30 rounded-2xl border-[3px] shadow-md ${
-        isSelected ? "border-lightBlue" : "border-none"
-      }`}
-    >
-      <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
-        <ChatList messages={messages} />
-      </div>
-      {loading && (
-        <div className="flex justify-center items-center my-2">
-          <LoadingDots />
+        onMouseUp={(e) => handleMouseUp(e, "select")}
+        className={`flex flex-col h-[324px] w-[669px] ${
+          showInput ? "h-[444px]" : "h-[324px]"
+        } bg-gray/30 rounded-2xl border-[3px] shadow-md ${
+          isSelected ? "border-lightBlue" : "border-none"
+        } ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+      >
+        <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
+          <ChatList messages={messages} />
         </div>
-      )}
-      {!showInput && (
-        <div className="flex justify-end items-center mb-2 space-x-2 mr-10">
-          <div className="flex flex-row">
-            <button
-              onClick={handleClick}
-              onMouseDown={handleMouseDown}
-              onMouseUp={(e) => checkPrompt(e, "regenerate")}
-              className="p-2 text-sm font-semibold text-white rounded-md"
-            >
-              Regenerate
-            </button>
-            <Image
-              src="/switch.svg"
-              alt="switch icon"
-              width={12}
-              height={12}
-              className="my-auto"
-            />
-          </div>
-
-          <div className="flex flex-row">
-            <button
-              onClick={handleClick}
-              onMouseDown={handleMouseDown}
-              onMouseUp={(e) => checkPrompt(e, "askFollowup")}
-              className="p-2 text-sm font-semibold text-white rounded-md"
-            >
-              Ask followup
-            </button>
-            <Image
-              src="/tasks.svg"
-              alt="tasks icon"
-              width={12}
-              height={12}
-              className="my-auto"
-            />
-          </div>
-        </div>
-      )}
-      <div className="bg-gray/40">
-        {showInput && (
-          <div className="flex h-[120px] items-center mb-2 mx-4">
-            <input
-              type="text"
-              value={currentMessage}
-              onChange={handleInputChange}
-              onKeyDown={handleInputKeyDown}
-              className="text-white bg-gray/0 flex-1 p-2 rounded-md"
-              placeholder="Type a message..."
-            />
-            <button
-              onClick={handleSendButtonClick}
-              className="ml-2 p-2 bg-blue text-white rounded-md"
-            >
-              Send
-            </button>
+        {loading && (
+          <div className="flex justify-center items-center my-2">
+            <LoadingDots />
           </div>
         )}
+        {!showInput && (
+          <div className="flex justify-end items-center mb-2 space-x-2 mr-10">
+            <div className="flex flex-row">
+              <button
+                onMouseDown={handleMouseDown}
+                onMouseUp={(e) => handleMouseUp(e, "regenerate")}
+                className="p-2 text-sm font-semibold text-white rounded-md"
+              >
+                Regenerate
+              </button>
+              <Image
+                src="/switch.svg"
+                alt="switch icon"
+                width={12}
+                height={12}
+                className="my-auto"
+              />
+            </div>
+
+            <div className="flex flex-row">
+              <button
+                onMouseDown={handleMouseDown}
+                onMouseUp={(e) => handleMouseUp(e, "askFollowup")}
+                className="p-2 text-sm font-semibold text-white rounded-md"
+              >
+                Ask followup
+              </button>
+              <Image
+                src="/tasks.svg"
+                alt="tasks icon"
+                width={12}
+                height={12}
+                className="my-auto"
+              />
+            </div>
+          </div>
+        )}
+        <div className="bg-gray/40">
+          {showInput && (
+            <div className="flex h-[120px] items-center mb-2 mx-4">
+              <input
+                type="text"
+                value={currentMessage}
+                onChange={handleInputChange}
+                onKeyDown={handleInputKeyDown}
+                className="text-white bg-gray/0 flex-1 p-2 rounded-md"
+                placeholder="Type a message..."
+              />
+              <button
+                onMouseDown={handleMouseDown}
+                onMouseUp={(e) => handleMouseUp(e, "send")}
+                onClick={handleSendButtonClick}
+                className="ml-2 p-2 bg-blue text-white rounded-md"
+              >
+                Send
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
-  </DndContext>
   );
 };
 

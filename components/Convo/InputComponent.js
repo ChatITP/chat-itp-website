@@ -1,8 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDrag, useDrop } from 'react-dnd';
 import ChatWindow from "./ChatWindow";
 import DropZone from "./DropZone";
 import Image from "next/image";
 import Link from "next/link";
+
+const ItemType = {
+  PHRASE: 'phrase',
+};
 
 const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
   const [searchKey, setSearchKey] = useState("");
@@ -14,10 +19,6 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
   useEffect(() => {
     setIsClient(true);
   }, []);
-
-  if (!isClient) {
-    return null;
-  }
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchKey.trim() !== "") {
@@ -64,6 +65,36 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
   const clearTags = () => {
     setTags([]);
   };
+
+  const Phrase = ({ phrase }) => {
+    const [{ isDragging }, drag] = useDrag(() => ({
+      type: ItemType.PHRASE,
+      item: { phrase },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
+    }));
+
+    return (
+      <div
+        ref={drag}
+        className={`border border-white/50 rounded-lg p-4 text-white/80 cursor-pointer text-sm hover:bg-white/20 ${isDragging ? 'opacity-50' : ''}`}
+        style={{ width: "316px" }}
+        onClick={() => handleClick(phrase)}
+      >
+        {highlightText(phrase, tags)}
+      </div>
+    );
+  };
+
+  const [, drop] = useDrop({
+    accept: ItemType.PHRASE,
+    drop: (item) => setClickedItem(item.phrase),
+  });
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div className="w-full space-y-2">
@@ -120,18 +151,11 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
 
       <div className="flex gap-6 p-2">
         {items.map((phrase, index) => (
-          <div
-            key={phrase}
-            className="border border-white/50 rounded-lg p-4 text-white/80 cursor-pointer text-sm hover:bg-white/20"
-            style={{ width: "316px" }}
-            onClick={() => handleClick(phrase)}
-          >
-            {highlightText(phrase, tags)}
-          </div>
+          <Phrase key={index} phrase={phrase} />
         ))}
       </div>
       <DropZone>
-        <div className="flex justify-center pt-6 h-full">
+        <div ref={drop} className="flex justify-center pt-6 h-full">
           {clickedItem && <ChatWindow initialMessage={clickedItem} />}
         </div>
       </DropZone>
@@ -142,3 +166,6 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
 InputComponent.displayName = "InputComponent";
 
 export default InputComponent;
+
+
+
