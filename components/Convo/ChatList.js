@@ -17,28 +17,6 @@ export const Message = ({ text, sender }) => {
   );
 };
 
-const getTextColorClass = (text) => {
-  switch (text.toLowerCase()) {
-    case 'what':
-      return 'text-red';
-    case 'is':
-      return 'text-yellow';
-    case 'the most common':
-      return 'text-blue';
-    case 'historical':
-      return 'text-yellow';
-    case 'theme':
-      return 'text-green';
-    case 'of':
-      return 'text-gray';
-    case 'itp projects':
-      return 'text-lightBlue';
-    case '?':
-      return 'text-gray2';
-    default:
-      return 'text-white/80';
-  }
-};
 
 const ChatList = ({ messages }) => {
   const userMessages = messages.filter(message => message.sender === 'user');
@@ -59,7 +37,7 @@ const ChatList = ({ messages }) => {
         ref={userMessagesRef}
       >
         {userMessages.map((message, index) => (
-          <div key={index} className={`p-2 my-2 rounded-md ${getTextColorClass(message.text)}`}>
+          <div key={index} className={`p-2 my-2 rounded-md `}>
             {message.text}
           </div>
         ))}
