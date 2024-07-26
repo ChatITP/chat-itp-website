@@ -18,7 +18,7 @@ export default function About() {
             />
           </div>
           <div className="grid grid-row-2 gap-16">
-          <Card
+            <Card
               topic="Community Driven"
               des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc."
             />

@@ -1,10 +1,11 @@
 "use client";
 import { NextReactP5Wrapper } from "@p5-wrapper/next";
+import { useState, useEffect } from "react";
+
 const sketch = (p5) => {
   var circles = [];
-  var circleNum = 8;
-  var initialRadius = 5;
-  var noiseOffsets = [];
+  var circleNum = 10;
+  var initialRadius = 30;
   let x, y;
 
   class Circle {
@@ -20,45 +21,44 @@ const sketch = (p5) => {
       p5.ellipse(this.x, this.y, this.d);
     }
 
-    update(noiseFactor) {
-      this.d = initialRadius + p5.noise(noiseFactor) * 400;
-    }
+    update(noiseFactor) {}
   }
 
   p5.setup = () => {
-    let cvn = p5.createCanvas(800, 1000);
+    let w = document.body.clientWidth - 1;
+    let h = Math.max(p5.windowHeight * 2, 640 * 2);
+    let cvn = p5.createCanvas(w, h);
     cvn.parent("p5-container");
-    let w = document.body.scrollWidth - 1;
-    let h = Math.max(p5.windowHeight, 640);
-    p5.resizeCanvas(w, h);
-    p5.background(0);
-    x = 330;
-    y = 400;
+    x = 300;
+    y = p5.windowHeight / 2 + 100;
+    console.log(p5.windowHeight);
 
     for (var i = 0; i < circleNum; i++) {
-      let radius = initialRadius + i * 20;
-      let noiseOffset = p5.random(1000);
-      noiseOffsets.push(noiseOffset);
+      let radius = initialRadius + i * 90;
       circles[i] = new Circle(x, y, radius);
     }
   };
 
   p5.draw = () => {
-    p5.background(0);
+    p5.clear();
     p5.fill(255);
     p5.ellipse(x, y, 10);
 
     for (var i = 0; i < circleNum; i++) {
-      circles[i].update(noiseOffsets[i]);
       circles[i].show();
-      noiseOffsets[i] += 0.01;
     }
+  };
+
+  p5.windowResized = () => {
+    let w = document.body.clientWidth - 1;
+    let h = Math.max(p5.windowHeight * 2, 640 * 2);
+    p5.resizeCanvas(w, h);
   };
 };
 
 export default function Ring() {
   return (
-    <div id="p5-container" className="">
+    <div id="p5-container" className="absolute top-[calc(100vh/2)]">
       <NextReactP5Wrapper sketch={sketch} />
     </div>
   );
