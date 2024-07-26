@@ -70,7 +70,7 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
       <div className="flex flex-row gap-4 bg-gray px-2 pt-4 pb-2">
         <Link href="/about">
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="logo icon"
             width={70}
             height={61}
