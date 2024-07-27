@@ -13,28 +13,28 @@ export default function About() {
         <Ring />
         <div className="relative">
           <h1 className="absolute text-4xl font-semibold left-[96px] top-[50px]">About ChatITP</h1>
-          <div className="w-fit grid grid-cols-2 gap-16 absolute right-40">
-            <div className="grid grid-row-2 gap-16">
+          <div className="w-fit grid grid-cols-2 gap-10 absolute right-20">
+            <div className="grid grid-row-2 gap-10">
               <Card
                 topic="Community Driven"
-                des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc."
+                des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh ur bibendum cras"
                 Icon={FaPeopleGroup}
               />
               <Card
                 topic="Open Source"
-                des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc."
+                des="Lorem ipsum dolor sit amet dipiscing elit. Et nibh urna in proin dui purus bibendum cras"
                 Icon={FaCode}
               />
             </div>
-            <div className="grid grid-rows-2 gap-16">
+            <div className="grid grid-rows-2 gap-10">
               <Card
                 topic="Living Data"
-                des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc."
+                des="or sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras"
                 Icon={FaDatabase}
               />
               <Card
                 topic="Placeholder"
-                des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc."
+                des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus"
                 Icon={FaCompass}
               />
             </div>
