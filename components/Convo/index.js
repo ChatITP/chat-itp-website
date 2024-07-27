@@ -11,7 +11,7 @@ const Home = () => {
     "In 2075, ITP students will use AR to redefine social interactions. Describe a project and its implications on privacy and connections.",
     "Imagine that all the ITP student work represents the DNA of a university program. Describe a university program based on this DNA",
     "Write an advertisement poem about ITP Spring Show.",
-    "Write an advertisement poem about ITP Spring Show.",
+    "How did ITP projects evolve in terms of multimedia storytelling from the 2000s to the 2010s?",
     "Design the “ITP version” of these common objects: Toaster, bubble tea, supercomputer, paper clip, pet chihuahua, underpants.",
   ];
 

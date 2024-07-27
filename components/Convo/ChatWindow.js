@@ -18,7 +18,7 @@ const ChatWindow = ({ initialMessage }) => {
   const [showInput, setShowInput] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-
+  const [showMessage, setShowMessage] = useState(true);
   const initialMousePosition = useRef({ x: 0, y: 0 });
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -157,6 +157,10 @@ const ChatWindow = ({ initialMessage }) => {
     }
   };
 
+  const toggleShowMessage = () => {
+    setShowMessage((prev) => !prev);
+  };
+
   return (
     <div ref={drag}>
       <div
@@ -167,21 +171,25 @@ const ChatWindow = ({ initialMessage }) => {
         }}
         onMouseDown={handleMouseDown}
         onMouseUp={(e) => handleMouseUp(e, "select")}
-        className={`flex flex-col h-[324px] w-[669px] ${
-          showInput ? "h-[444px]" : "h-[324px]"
-        } bg-gray/30 rounded-2xl border-[3px] shadow-md ${
+        className={`flex flex-col w-[669px]  rounded-2xl border-[3px] shadow-md ${
           isSelected ? "border-lightBlue" : "border-none"
-        } ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+        } ${isDragging ? "cursor-grabbing" : "cursor-grab"} ${
+          showMessage ? "h-[324px]" : "h-[120px] "
+        }`}
       >
         <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
-          <ChatList messages={messages} />
+          <ChatList
+            messages={messages}
+            showMessage={showMessage}
+            toggleShowMessage={toggleShowMessage}
+          />
         </div>
         {loading && (
           <div className="flex justify-center items-center my-2">
             <LoadingDots />
           </div>
         )}
-        {!showInput && (
+        {showMessage && !showInput && (
           <div className="flex justify-end items-center mb-2 space-x-2 mr-10">
             <div className="flex flex-row">
               <button
@@ -218,6 +226,7 @@ const ChatWindow = ({ initialMessage }) => {
             </div>
           </div>
         )}
+
         <div className="bg-gray/40">
           {showInput && (
             <div className="flex h-[120px] items-center mb-2 mx-4">
