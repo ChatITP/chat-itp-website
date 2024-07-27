@@ -6,7 +6,7 @@ const Card = ({ topic = "topic holder", des = "description holder", Icon = FaPeo
   return (
     <div
       id="Card"
-      className="flex flex-col justify-center w-[300px] h-[200px] px-8 bg-gradient-to-r backdrop-blur-sm from-white/20 to-white/10 rounded-lg"
+      className="flex flex-col justify-center w-[300px] h-[180px] px-8 bg-gradient-to-r backdrop-blur-sm from-white/15 to-white/5 rounded-lg"
     >
       <div className="flex items-center pb-4">
         <div className="bg-[#6CA2D9] relative w-12 h-12 rounded-xl">

@@ -1,5 +1,5 @@
 import Card from "@/components/About/Card";
-import PromptList from "@/components/Prompt/PromptList";
+
 import Ring from "@/components/About/Ring";
 import { FaCompass } from "react-icons/fa6";
 import { FaPeopleGroup } from "react-icons/fa6";
@@ -12,8 +12,8 @@ export default function About() {
       <div id="about" className="min-h-[calc(max(100vh,640px))] max-w-[1440px] m-auto">
         <Ring />
         <div className="relative">
-          <h1 className="absolute text-4xl font-semibold left-[96px] top-[50px]">About ChatITP</h1>
-          <div className="w-fit grid grid-cols-2 gap-10 absolute right-20">
+          <h1 className="absolute text-4xl font-semibold left-[96px] top-[214px]">About ChatITP</h1>
+          <div className="w-fit grid grid-cols-2 gap-10 absolute right-20 top-1/2 transform translate-y-1/2">
             <div className="grid grid-row-2 gap-10">
               <Card
                 topic="Community Driven"
@@ -40,9 +40,6 @@ export default function About() {
             </div>
           </div>
         </div>
-      </div>
-      <div id="prompt">
-        <PromptList />
       </div>
     </>
   );
