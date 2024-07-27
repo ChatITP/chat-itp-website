@@ -8,19 +8,34 @@ const sketch = (p5) => {
   let circles = [];
   let x, y;
 
+  //circle class
   class Circle {
     constructor(d, opacity) {
       this.d = d;
       this.opacity = opacity;
+      this.xDrift = 0;
+      this.yDrift = 0;
     }
 
     show() {
       p5.noFill();
       p5.stroke(255, this.opacity);
-      p5.ellipse(x, y, this.d);
+      p5.ellipse(x + this.xDrift, y + this.yDrift, this.d);
     }
 
-    update(noiseFactor) {}
+    update() {
+      let mouseX = p5.mouseX;
+      let mouseY = p5.mouseY;
+      let distance = p5.dist(x, y, mouseX, mouseY);
+      let angle = p5.atan2(mouseY - y, mouseX - x);
+
+      let maxDistance = p5.dist(0, 0, p5.width, p5.height);
+      let targetX = p5.cos(angle) * p5.min(distance / maxDistance, 1) * (this.d / 4);
+      let targetY = p5.sin(angle) * p5.min(distance / maxDistance, 1) * (this.d / 4);
+
+      this.xDrift += (targetX - this.xDrift) * 0.05;
+      this.yDrift += (targetY - this.yDrift) * 0.05;
+    }
   }
 
   p5.setup = () => {
@@ -47,6 +62,7 @@ const sketch = (p5) => {
 
     for (var i = 0; i < diameters.length; i++) {
       circles[i].show();
+      circles[i].update();
     }
   };
 

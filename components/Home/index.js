@@ -12,7 +12,7 @@ export default function Home() {
             We are training an ethical, open-source LLM using 20+ years of ITP/NYU student work -
             including video, sculpture, writing, animation, game design, and virtual reality.
           </h2>
-          <div className="pb-40">
+          <div className="pb-10">
             <Link href="/">
               <Button>
                 <div className="flex items-center">

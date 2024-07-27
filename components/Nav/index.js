@@ -2,9 +2,25 @@ import Link from "next/link";
 
 export default function Nav() {
   return (
-    <nav className="z-50 flex justify-end px-40 pt-8">
-      <h1 className = "text-base  ">credit →</h1>
-      
+    <nav className="z-50 flex justify-between items-center px-24 h-16 fixed border-b-[1px] border-offWhite/15 w-full backdrop-blur-md bg-background/80">
+      <div className="text-2xl font-bold text-offWhite">Chat ITP</div>
+      <ul className="flex space-x-16 text-offWhite font-light">
+        <li>
+          <Link href="/">
+            <div>Try Chat ITP</div>
+          </Link>
+        </li>
+        <li>
+          <Link href="#about">
+            <div>About</div>
+          </Link>
+        </li>
+        <li>
+          <Link href="/credits">
+            <div>Credits</div>
+          </Link>
+        </li>
+      </ul>
     </nav>
   );
 }

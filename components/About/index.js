@@ -1,6 +1,10 @@
 import Card from "@/components/About/Card";
 import PromptList from "@/components/Prompt/PromptList";
 import Ring from "@/components/About/Ring";
+import { FaCompass } from "react-icons/fa6";
+import { FaPeopleGroup } from "react-icons/fa6";
+import { FaDatabase } from "react-icons/fa6";
+import { FaCode } from "react-icons/fa6";
 
 export default function About() {
   return (
@@ -14,20 +18,24 @@ export default function About() {
               <Card
                 topic="Community Driven"
                 des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc."
+                Icon={FaPeopleGroup}
               />
               <Card
                 topic="Open Source"
                 des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc."
+                Icon={FaCode}
               />
             </div>
             <div className="grid grid-rows-2 gap-16">
               <Card
-                topic="Community Driven"
+                topic="Living Data"
                 des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc."
+                Icon={FaDatabase}
               />
               <Card
-                topic="Community Driven"
+                topic="Placeholder"
                 des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc."
+                Icon={FaCompass}
               />
             </div>
           </div>
