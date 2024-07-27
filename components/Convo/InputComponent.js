@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop } from "react-dnd";
 import ChatWindow from "./ChatWindow";
 import DropZone from "./DropZone";
 import Image from "next/image";
 import Link from "next/link";
 
 const ItemType = {
-  PHRASE: 'phrase',
+  PHRASE: "phrase",
 };
 
 const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
@@ -78,8 +78,10 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
     return (
       <div
         ref={drag}
-        className={`border border-white/50 rounded-lg p-4 text-white/80 cursor-pointer text-sm hover:bg-white/20 ${isDragging ? 'opacity-50' : ''}`}
-        style={{ width: "316px" }}
+        className={`border border-white/50 rounded-lg p-4 text-white/80 cursor-pointer text-sm hover:bg-white/20 ${
+          isDragging ? "opacity-50" : ""
+        }`}
+        style={{ minWidth: "316px", whiteSpace: "normal" }}
         onClick={() => handleClick(phrase)}
       >
         {highlightText(phrase, tags)}
@@ -149,7 +151,7 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
         </div>
       </div>
 
-      <div className="flex gap-6 p-2">
+      <div className="flex gap-6 p-2 overflow-x-auto whitespace-nowrap max-w-[1440px]">
         {items.map((phrase, index) => (
           <Phrase key={index} phrase={phrase} />
         ))}
@@ -166,6 +168,3 @@ const InputComponent = ({ tags = [], setTags, phrases = [] }) => {
 InputComponent.displayName = "InputComponent";
 
 export default InputComponent;
-
-
-
