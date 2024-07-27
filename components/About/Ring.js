@@ -1,24 +1,23 @@
 "use client";
 import { NextReactP5Wrapper } from "@p5-wrapper/next";
-import { useState, useEffect } from "react";
 
 const sketch = (p5) => {
-  var circles = [];
-  var circleNum = 10;
-  var initialRadius = 30;
+  const diameters = [50, 140, 270, 320, 410, 500, 590, 680, 770, 860];
+  const opacities = [150, 130, 230, 130, 110, 90, 70, 50, 30, 30];
+
+  let circles = [];
   let x, y;
 
   class Circle {
-    constructor(x, y, d) {
-      this.x = x;
-      this.y = y;
+    constructor(d, opacity) {
       this.d = d;
+      this.opacity = opacity;
     }
 
     show() {
       p5.noFill();
-      p5.stroke(200);
-      p5.ellipse(this.x, this.y, this.d);
+      p5.stroke(255, this.opacity);
+      p5.ellipse(x, y, this.d);
     }
 
     update(noiseFactor) {}
@@ -26,39 +25,42 @@ const sketch = (p5) => {
 
   p5.setup = () => {
     let w = document.body.clientWidth - 1;
-    let h = Math.max(p5.windowHeight * 2, 640 * 2);
+    let h = Math.max(p5.windowHeight, 640) * 2;
     let cvn = p5.createCanvas(w, h);
     cvn.parent("p5-container");
-    x = 300;
-    y = p5.windowHeight / 2 + 100;
-    console.log(p5.windowHeight);
-
-    for (var i = 0; i < circleNum; i++) {
-      let radius = initialRadius + i * 90;
-      circles[i] = new Circle(x, y, radius);
+    // Find the center of the circles
+    x = 301 + p5.max(0, w - 1440) / 2;
+    y = h / 2 + 100;
+    // initalize the circles
+    for (var i = 0; i < diameters.length; i++) {
+      circles[i] = new Circle(diameters[i], opacities[i]);
     }
   };
 
   p5.draw = () => {
     p5.clear();
-    p5.fill(255);
-    p5.ellipse(x, y, 10);
+    // center circle with blur
+    for (let i = 0; i < 10; i++) {
+      p5.fill(255, p5.max(255 - i * 30, 0));
+      p5.circle(x, y, 10 + i);
+    }
 
-    for (var i = 0; i < circleNum; i++) {
+    for (var i = 0; i < diameters.length; i++) {
       circles[i].show();
     }
   };
 
   p5.windowResized = () => {
     let w = document.body.clientWidth - 1;
-    let h = Math.max(p5.windowHeight * 2, 640 * 2);
-    p5.resizeCanvas(w, h);
+    let h = Math.max(p5.windowHeight, 640) * 2;
+    x = 300 + p5.max(0, w - 1440) / 2;
+    y = h / 2 + 100;
   };
 };
 
 export default function Ring() {
   return (
-    <div id="p5-container" className="absolute top-[calc(100vh/2)]">
+    <div id="p5-container" className="absolute top-0 left-0">
       <NextReactP5Wrapper sketch={sketch} />
     </div>
   );

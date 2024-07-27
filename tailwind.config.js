@@ -8,6 +8,8 @@ module.exports = {
   theme: {
     colors: {
       white: "#ffffff",
+      offWhite: "#e5e5e5",
+      background: "#0d0d0d",
       black: "#000000",
       purple: "#743AA4",
       blue: "#6CA2D9",
@@ -21,15 +23,15 @@ module.exports = {
       green: "#B3FFA0",
       teal: "#A9FFEF",
     },
-    
+
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      boxShadow:{
-        'glow': '0 0 8px rgba(207, 231, 255, 0.6), 0 0 12px rgba(207, 231, 255, 0.8), 0 0 16px rgba(207, 231, 255, 1)',
-      }
+      boxShadow: {
+        glow: "0 0 8px rgba(207, 231, 255, 0.6), 0 0 12px rgba(207, 231, 255, 0.8), 0 0 16px rgba(207, 231, 255, 1)",
+      },
     },
   },
   plugins: [],
