@@ -2,21 +2,16 @@ import Home from "@/components/Home";
 import About from "@/components/About";
 import Post from "@/components/Post";
 import Nav from "@/components/Nav";
-import Ring from "@/components/About/Ring.js";
-
+import PromptList from "@/components/Prompt/PromptList";
 
 export default function Page() {
   return (
-    <main className="relative">
+    <main>
       <Nav />
-      
       <Home />
-      <div className="absolute inset-0 z-15 left-0 top-[400px]">
-          <Ring />
-        </div>
       <About />
-      
-      <Post />
+      <PromptList />
+      {/* <Post /> */}
     </main>
   );
 }
