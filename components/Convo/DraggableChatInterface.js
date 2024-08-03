@@ -55,7 +55,7 @@ const DraggableChatInterface = ({ id, initialX, initialY, isSelected, onDeselect
         top: position.y,
         cursor: isDragging ? 'grabbing' : 'grab',
         zIndex: 1,
-        border: isSelected ? '2px solid blue' : 'none',
+        border: isSelected ? '1px solid lightBlue' : 'none',
         borderRadius: '0.5rem',
         overflow: 'hidden',
       }}
