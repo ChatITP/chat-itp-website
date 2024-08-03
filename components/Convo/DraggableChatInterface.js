@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ChatInterface from './ChatInterface'; // Adjust the path if necessary
+import ChatInterface from './ChatInterface'; 
 
-const DraggableChatInterface = ({ id, initialX, initialY, isSelected, onClick }) => {
+const DraggableChatInterface = ({ id, initialX, initialY, isSelected, onDeselect }) => {
   const [position, setPosition] = useState({ x: initialX, y: initialY });
   const [isDragging, setIsDragging] = useState(false);
   const positionRef = useRef(position);
@@ -42,13 +42,18 @@ const DraggableChatInterface = ({ id, initialX, initialY, isSelected, onClick })
     setIsDragging(true);
   };
 
+  const handleDoubleClick = (event) => {
+    event.stopPropagation();
+    onDeselect();
+  };
+
   return (
     <div
       style={{
         position: 'absolute',
         left: position.x,
         top: position.y,
-        cursor: 'pointer',
+        cursor: isDragging ? 'grabbing' : 'grab',
         zIndex: 1,
         border: isSelected ? '2px solid blue' : 'none',
         borderRadius: '0.5rem',
@@ -56,10 +61,7 @@ const DraggableChatInterface = ({ id, initialX, initialY, isSelected, onClick })
       }}
       className={`${isSelected ? 'shadow-lg' : ''}`}
       onMouseDown={handleMouseDown}
-      onClick={(e) => {
-        e.stopPropagation();
-        onClick();
-      }}
+      onDoubleClick={handleDoubleClick}
     >
       <ChatInterface />
     </div>
@@ -67,4 +69,5 @@ const DraggableChatInterface = ({ id, initialX, initialY, isSelected, onClick })
 };
 
 export default DraggableChatInterface;
+
 

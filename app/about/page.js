@@ -3,6 +3,8 @@ import About from "@/components/About";
 import Post from "@/components/Post";
 import Nav from "@/components/Nav";
 import Ring from "@/components/About/Ring.js";
+import Footer from "@/components/Footer"
+
 
 
 export default function Page() {
@@ -17,6 +19,7 @@ export default function Page() {
       <About />
       
       <Post />
+      <Footer />
     </main>
   );
 }
