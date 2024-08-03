@@ -9,11 +9,13 @@ import { FaCode } from "react-icons/fa6";
 export default function About() {
   return (
     <>
-      <div id="about" className="min-h-[calc(max(100vh,640px))] max-w-[1440px] m-auto">
+      <div id="about" className="min-h-[640px] max-w-[1440px] m-auto">
         <Ring />
-        <div className="relative">
-          <h1 className="absolute text-4xl font-semibold left-[96px] top-[214px]">About ChatITP</h1>
-          <div className="w-fit grid grid-cols-2 gap-10 absolute right-20 top-1/2 transform translate-y-1/2">
+        <div className="relative h-full">
+          <h1 className="absolute text-4xl font-semibold lg:left-[96px] top-[80px] left-[calc(50%-202px)]">
+            About ChatITP
+          </h1>
+          <div className="m-auto lg:m-0 pt-40 w-fit grid md:grid-cols-2 md:grid-rows-none grid-rows-2 gird-cols-none gap-10 relative lg:mr-24 lg:ml-auto">
             <div className="grid grid-row-2 gap-10">
               <Card
                 topic="Community Driven"

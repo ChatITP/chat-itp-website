@@ -2,7 +2,7 @@ import Home from "@/components/Home";
 import About from "@/components/About";
 import Post from "@/components/Post";
 import Nav from "@/components/Nav";
-import PromptList from "@/components/Prompt/PromptList";
+import PromptSection from "@/components/Prompt";
 
 export default function Page() {
   return (
@@ -10,7 +10,7 @@ export default function Page() {
       <Nav />
       <Home />
       <About />
-      <PromptList />
+      <PromptSection />
       {/* <Post /> */}
     </main>
   );

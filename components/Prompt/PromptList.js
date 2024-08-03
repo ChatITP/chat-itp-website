@@ -28,7 +28,7 @@ const PromptList = ({ tags }) => {
   };
 
   return (
-    <motion.div className="relative w-full overflow-hidden mb-20 flex" animate="move">
+    <motion.div className="relative w-full overflow-hidden flex" animate="move">
       <motion.div className="flex" variants={motions}>
         {prompts.map((prompt) => (
           <div key={prompt.id} className="flex-grow">
