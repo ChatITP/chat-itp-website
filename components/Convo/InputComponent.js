@@ -16,7 +16,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   const tagsContainerRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
   const [showInput, setShowInput] = useState(false);
-  const [tags, setTags] = useState(["performance", "Traditional", "innovative", "Arduino", "C++", "3D modeling", "Futuristic", ...initialTags]);
+  const [tags, setTags] = useState(["performance", "Traditional", "Innovative", "Arduino", "C++", "3D modeling", "Futuristic", ...initialTags]);
   const [selectedTags, setSelectedTags] = useState([]);
 
   useEffect(() => {
@@ -67,6 +67,14 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
     );
   };
 
+  const countHighlights = (text, highlights) => {
+    if (!highlights.length) return 0;
+    const escapedHighlights = highlights.map(escapeRegExp);
+    const regex = new RegExp(`(${escapedHighlights.join("|")})`, "gi");
+    const matches = text.match(regex);
+    return matches ? matches.length : 0;
+  };
+
   const handleTagClick = (tag) => {
     setSelectedTags((prevSelectedTags) =>
       prevSelectedTags.includes(tag)
@@ -115,6 +123,8 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   if (!isClient) {
     return null;
   }
+
+  const sortedItems = items.sort((a, b) => countHighlights(b, selectedTags) - countHighlights(a, selectedTags));
 
   return (
     <div className="w-full space-y-2">
@@ -193,7 +203,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
       </div>
 
       <div className="flex gap-6 p-2 overflow-x-auto whitespace-nowrap max-w-[1440px]">
-        {items.map((phrase, index) => (
+        {sortedItems.map((phrase, index) => (
           <Phrase key={index} phrase={phrase} />
         ))}
       </div>
@@ -209,4 +219,3 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
 InputComponent.displayName = "InputComponent";
 
 export default InputComponent;
-
