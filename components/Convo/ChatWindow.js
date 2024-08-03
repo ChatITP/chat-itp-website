@@ -148,6 +148,9 @@ const ChatWindow = ({ initialMessage }) => {
       handleSendMessage(currentMessage);
       setShowInput(false);
     }
+    if (e.key === "Delete") {
+      console.log("delete is pressed")
+    }
   };
 
   const handleSendButtonClick = () => {

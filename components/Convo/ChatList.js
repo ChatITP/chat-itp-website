@@ -26,11 +26,6 @@ const ChatList = ({ messages, showMessage, toggleShowMessage }) => {
   const userMessages = messages.filter((message) => message.sender === "user");
   const otherMessages = messages.filter((message) => message.sender !== "user");
   const userMessagesRef = useRef(null);
-  // const [showMessage, setShowMessage] = useState(true);
-
-  // const toggleShowMessage = () => {
-  //   setShowMessage((prev) => !prev);
-  // };
 
   useEffect(() => {
     if (userMessagesRef.current) {
