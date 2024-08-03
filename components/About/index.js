@@ -9,7 +9,7 @@ import { FaCode } from "react-icons/fa6";
 export default function About() {
   return (
     <>
-      <div id="about" className="min-h-[640px] max-w-[1440px] m-auto">
+      <div className="min-h-[640px] max-w-[1440px] m-auto">
         <Ring />
         <div className="relative h-full">
           <h1 className="absolute text-4xl font-semibold lg:left-[96px] top-[80px] left-[calc(50%-202px)]">

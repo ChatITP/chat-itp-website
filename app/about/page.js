@@ -6,7 +6,7 @@ import PromptSection from "@/components/Prompt";
 
 export default function Page() {
   return (
-    <main>
+    <main id="about" className="min-w-[360px]">
       <Nav />
       <Home />
       <About />
