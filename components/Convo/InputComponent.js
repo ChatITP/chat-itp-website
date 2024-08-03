@@ -4,6 +4,7 @@ import ChatWindow from "./ChatWindow";
 import DropZone from "./DropZone";
 import Image from "next/image";
 import Link from "next/link";
+import Switch from "./Switch";
 
 const ItemType = {
   PHRASE: "phrase",
@@ -200,6 +201,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
             </div>
           </div>
         </div>
+        <Switch currentPage="Workspace"/>
       </div>
 
       <div className="flex gap-6 p-2 overflow-x-auto whitespace-nowrap max-w-[1440px]">
