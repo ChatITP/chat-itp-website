@@ -18,9 +18,9 @@ const Prompt = ({ text = "text-holder", tags = [] }) => {
   return (
     <div
       id="prompt"
-      className="w-[500px] h-[91px] border-[1.5px] border-offWhite/20 px-6 pt-4 rounded-xl mr-4"
+      className="w-[270px] sm:w-[500px] h-[147px] sm:h-[91px] border-[1.5px] border-offWhite/20 px-6 rounded-xl mr-4 flex items-center"
     >
-      <p className="text-sm text-left">{getHighlightedText(text, tags)}</p>
+      <p className="text-sm">{getHighlightedText(text, tags)}</p>
     </div>
   );
 };

@@ -39,13 +39,14 @@ const sketch = (p5) => {
   }
 
   p5.setup = () => {
-    let w = document.body.clientWidth - 1;
+    let w = document.getElementById("about").scrollWidth - 1;
     let h = Math.max(p5.windowHeight, 640) * 2;
     let cvn = p5.createCanvas(w, h);
     cvn.parent("p5-container");
     // Find the center of the circles
-    x = 301 + p5.max(0, w - 1440) / 2;
-    y = h / 2 + 210;
+    x = 298 + p5.max(0, w - 1440) / 2;
+    y = h / 2 + 74;
+    if (p5.windowWidth < 1024) x = w / 2;
     // initalize the circles
     for (var i = 0; i < diameters.length; i++) {
       circles[i] = new Circle(diameters[i], opacities[i]);
@@ -67,11 +68,12 @@ const sketch = (p5) => {
   };
 
   p5.windowResized = () => {
-    let w = document.body.clientWidth - 1;
+    let w = document.getElementById("about").scrollWidth - 1;
     let h = Math.max(p5.windowHeight, 640) * 2;
     p5.resizeCanvas(w, h);
-    x = 300 + p5.max(0, w - 1440) / 2;
-    y = h / 2 + 210;
+    x = 298 + p5.max(0, w - 1440) / 2;
+    y = h / 2 + 74;
+    if (p5.windowWidth < 1024) x = w / 2;
   };
 };
 
