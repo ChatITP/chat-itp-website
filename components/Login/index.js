@@ -119,7 +119,9 @@ const Login = () => {
         {loginState.isLoading ? <div>...</div> : <button type="submit">Login</button>}
       </form>
       <Link href="/register">
-        <div className="mt-4 text-sm font-medium w-fit underline">Register</div>
+        <div className="mt-4 text-sm font-medium w-fit underline">
+          Don&apos;t have an account? Register
+        </div>
       </Link>
       {loginState.error && (
         <div className="mt-4 text-sm font-medium text-red">{loginState.message}</div>
