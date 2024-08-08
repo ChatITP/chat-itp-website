@@ -1,43 +1,68 @@
-import { atom, useSetRecoilState } from "recoil";
 import axios from "axios";
-
-const authState = atom({
-  key: "authState",
-  default: {
-    isAuthenticated: false,
-    isLoading: false,
-    error: false,
-    message: "",
-  },
-});
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function AuthWrapper({ children }) {
-  const setAuthState = useSetRecoilState(authState);
+  const [authState, setAuthState] = useState({
+    isAuthenticated: false,
+    isLoading: true,
+    needRedirect: false,
+  });
 
-  authenticate();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (authState.needRedirect) {
+      router.push("/login");
+    }
+  }, [authState.needRedirect, router]);
 
   async function authenticate() {
+    setAuthState({
+      isAuthenticated: false,
+      isLoading: true,
+      needRedirect: false,
+    });
     try {
-      setAuthState({
-        isAuthenticated: true,
-        isLoading: false,
-        error: false,
-        message: "Logging in...",
-      });
       await axios.get(process.env.NEXT_PUBLIC_API_URL + "/user/verify", {
         withCredentials: true,
       });
       setAuthState({
         isAuthenticated: true,
         isLoading: false,
-        error: false,
-        message: "Successfully logged in!",
+        needRedirect: false,
       });
-    } catch (error) {}
+    } catch (error) {
+      try {
+        await axios.post(process.env.NEXT_PUBLIC_API_URL + "/user/refresh", {
+          withCredentials: true,
+        });
+        setAuthState({
+          isAuthenticated: true,
+          isLoading: false,
+          needRedirect: false,
+        });
+      } catch (error) {
+        setAuthState({
+          isAuthenticated: false,
+          isLoading: false,
+          needRedirect: true,
+        });
+      }
+    }
   }
 
-  return children;
+  useEffect(() => {
+    authenticate();
+  }, []);
+
+  console.log(authState);
+
+  if (authState.isLoading) {
+    return <div>Loading...</div>;
+  } else if (authState.isAuthenticated) {
+    return <>{children}</>;
+  }
 }
 
 export default AuthWrapper;
-export { authState };
