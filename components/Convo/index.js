@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import InputComponent from '@/components/Convo/InputComponent'; 
+import React, { useState } from "react";
+import InputComponent from "@/components/Convo/InputComponent";
+import Block from "@/components/Block";
 
 const Home = () => {
   const [tags, setTags] = useState([]);
@@ -15,6 +16,7 @@ const Home = () => {
   return (
     <div className="bg-gray2">
       <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
+      <Block />
     </div>
   );
 };
