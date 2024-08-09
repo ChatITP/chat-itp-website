@@ -1,7 +1,12 @@
 import React from "react";
+import AssociationPrompt from "./AssociationPrompt";
 
-const index = () => {
-  return <div>index</div>;
+const Block = () => {
+  return (
+    <div className="w-[400px]">
+      <AssociationPrompt />
+    </div>
+  );
 };
 
-export default index;
+export default Block;

@@ -16,7 +16,9 @@ const Home = () => {
   return (
     <div className="bg-gray2">
       <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
-      <Block />
+      <div className="absolute top-96 left-20 z-50">
+        <Block />
+      </div>
     </div>
   );
 };
