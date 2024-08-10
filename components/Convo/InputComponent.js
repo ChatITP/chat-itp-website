@@ -44,6 +44,8 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   useEffect(() => {
     setIsClient(true);
     generateRandomDefaultTags();
+    randomizePhrases(); // Shuffle phrases on each refresh
+
   }, []);
 
   const randomizePhrases = () => {
@@ -55,14 +57,16 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
     const shuffledTags = [...defaultTagsPool].sort(() => 0.5 - Math.random());
     setDefaultTags(shuffledTags.slice(0, 5));
     setSelectedTags([]);
-    randomizePhrases(); // Shuffle phrases on each refresh
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchKey.trim() !== "") {
-      const newTags = [...personalizedTags, searchKey.trim()];
-      setPersonalizedTags(newTags);
-      setSelectedTags(newTags);
+      const newTag = searchKey.trim();
+      const newPersonalizedTags = [...personalizedTags, newTag];
+      const updatedSelectedTags = [...selectedTags, newTag];
+  
+      setPersonalizedTags(newPersonalizedTags);
+      setSelectedTags(updatedSelectedTags);
       setSearchKey("");
       setShowInput(false);
       setTimeout(() => {
@@ -73,6 +77,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
       }, 100);
     }
   };
+  
 
   const handleChange = (e) => {
     setSearchKey(e.target.value);
@@ -264,7 +269,6 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                   />
                 )}
               </div>
-              {/* Add Custom Keyterm Button and Refresh Icon */}
               <div className="flex items-center ml-2 space-x-2">
                 {!showInput && (
                   <button
