@@ -12,28 +12,28 @@ const ItemType = {
 
 const InputComponent = ({ initialTags = [], phrases = [] }) => {
   const [searchKey, setSearchKey] = useState("");
-  const [items, setItems] = useState(phrases);
+  const [items, setItems] = useState([]);
   const [clickedItem, setClickedItem] = useState(null);
   const tagsContainerRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
   const [showInput, setShowInput] = useState(false);
 
   const defaultTagsPool = [
-    "performance", 
-    "Traditional", 
-    "Innovative", 
-    "Arduino", 
-    "C++", 
-    "3D modeling", 
-    "Futuristic", 
-    "Generative Art", 
-    "Wearables", 
+    "performance",
+    "Traditional",
+    "Innovative",
+    "Arduino",
+    "C++",
+    "3D modeling",
+    "Futuristic",
+    "Generative Art",
+    "Wearables",
     "Prototyping",
     "Physical Computing",
     "Machine Learning",
     "Cybernetics",
     "Digital Fabrication",
-    "Sound Design"
+    "Sound Design",
   ];
 
   const [defaultTags, setDefaultTags] = useState([]);
@@ -45,10 +45,16 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
     generateRandomDefaultTags();
   }, []);
 
+  const randomizePhrases = () => {
+    const shuffledItems = [...phrases].sort(() => 0.5 - Math.random());
+    setItems(shuffledItems);
+  };
+
   const generateRandomDefaultTags = () => {
     const shuffledTags = [...defaultTagsPool].sort(() => 0.5 - Math.random());
     setDefaultTags(shuffledTags.slice(0, 5));
-    setSelectedTags([]); 
+    setSelectedTags([]);
+    randomizePhrases(); // Shuffle phrases on each refresh
   };
 
   const handleKeyDown = (e) => {
@@ -60,7 +66,8 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
       setShowInput(false);
       setTimeout(() => {
         if (tagsContainerRef.current) {
-          tagsContainerRef.current.scrollLeft = tagsContainerRef.current.scrollWidth;
+          tagsContainerRef.current.scrollLeft =
+            tagsContainerRef.current.scrollWidth;
         }
       }, 100);
     }
@@ -72,15 +79,17 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
 
   const removeTag = (tagToRemove, isPersonalized) => {
     if (isPersonalized) {
-      setPersonalizedTags(personalizedTags.filter((tag) => tag !== tagToRemove));
+      setPersonalizedTags(
+        personalizedTags.filter((tag) => tag !== tagToRemove)
+      );
     } else {
       setDefaultTags(defaultTags.filter((tag) => tag !== tagToRemove));
     }
-    setSelectedTags(selectedTags.filter(tag => tag !== tagToRemove));
+    setSelectedTags(selectedTags.filter((tag) => tag !== tagToRemove));
   };
 
   const escapeRegExp = (string) => {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   };
 
   const highlightText = (text, highlights) => {
@@ -158,7 +167,10 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
     return null;
   }
 
-  const sortedItems = items.sort((a, b) => countHighlights(b, selectedTags) - countHighlights(a, selectedTags));
+  const sortedItems = items.sort(
+    (a, b) =>
+      countHighlights(b, selectedTags) - countHighlights(a, selectedTags)
+  );
 
   return (
     <div className="w-full space-y-2">
@@ -174,7 +186,10 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
         </Link>
 
         <div className="flex flex-row items-center relative w-full ml-4">
-          <div className="flex overflow-x-auto space-x-2 flex-grow" ref={tagsContainerRef}>
+          <div
+            className="flex overflow-x-auto space-x-2 flex-grow"
+            ref={tagsContainerRef}
+          >
             <div className="flex space-x-2">
               {/* Display Default Tags */}
               {defaultTags.length > 0 &&
@@ -214,7 +229,8 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                       selectedTags.includes(tag)
                         ? "bg-lightBlue text-blue"
                         : "bg-none border border-white text-white"
-                    } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}                  >
+                    } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}
+                  >
                     <span>{tag}</span>
                     {selectedTags.includes(tag) && (
                       <button
@@ -263,13 +279,26 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
             </div>
           </div>
         </div>
-        <Switch currentPage="Workspace"/>
+        {/* <Switch currentPage="Workspace"/> */}
       </div>
 
       <div className="flex gap-6 p-2 overflow-x-auto whitespace-nowrap max-w-[1440px]">
         {sortedItems.map((phrase, index) => (
           <Phrase key={index} phrase={phrase} />
         ))}
+      </div>
+      <div className="flex justify-end mr-4">
+        <button className="mr-2" onClick={randomizePhrases}>
+          <p className = "text-sm font-semibold text-white/80">Refresh examples</p>
+        </button>
+        <Image
+          src="/switch.svg"
+          alt="switch icon"
+          width={20}
+          height={20}
+          className="cursor-pointer"
+          onClick={randomizePhrases}
+        />
       </div>
       <DropZone>
         <div ref={drop} className="flex justify-center pt-6 h-full">
