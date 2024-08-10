@@ -17,22 +17,50 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   const tagsContainerRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
   const [showInput, setShowInput] = useState(false);
-  const [tags, setTags] = useState(["performance", "Traditional", "Innovative", "Arduino", "C++", "3D modeling", "Futuristic", ...initialTags]);
+
+  const defaultTagsPool = [
+    "performance", 
+    "Traditional", 
+    "Innovative", 
+    "Arduino", 
+    "C++", 
+    "3D modeling", 
+    "Futuristic", 
+    "Generative Art", 
+    "Wearables", 
+    "Prototyping",
+    "Physical Computing",
+    "Machine Learning",
+    "Cybernetics",
+    "Digital Fabrication",
+    "Sound Design"
+  ];
+
+  const [defaultTags, setDefaultTags] = useState([]);
+  const [personalizedTags, setPersonalizedTags] = useState([...initialTags]);
   const [selectedTags, setSelectedTags] = useState([]);
 
   useEffect(() => {
     setIsClient(true);
+    generateRandomDefaultTags();
   }, []);
+
+  const generateRandomDefaultTags = () => {
+    const shuffledTags = [...defaultTagsPool].sort(() => 0.5 - Math.random());
+    setDefaultTags(shuffledTags.slice(0, 5));
+    setSelectedTags([]); 
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchKey.trim() !== "") {
-      setTags([...tags, searchKey.trim()]);
+      const newTags = [...personalizedTags, searchKey.trim()];
+      setPersonalizedTags(newTags);
+      setSelectedTags(newTags);
       setSearchKey("");
       setShowInput(false);
       setTimeout(() => {
         if (tagsContainerRef.current) {
-          tagsContainerRef.current.scrollLeft =
-            tagsContainerRef.current.scrollWidth;
+          tagsContainerRef.current.scrollLeft = tagsContainerRef.current.scrollWidth;
         }
       }, 100);
     }
@@ -42,8 +70,13 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
     setSearchKey(e.target.value);
   };
 
-  const removeTag = (indexToRemove) => {
-    setTags(tags.filter((_, index) => index !== indexToRemove));
+  const removeTag = (tagToRemove, isPersonalized) => {
+    if (isPersonalized) {
+      setPersonalizedTags(personalizedTags.filter((tag) => tag !== tagToRemove));
+    } else {
+      setDefaultTags(defaultTags.filter((tag) => tag !== tagToRemove));
+    }
+    setSelectedTags(selectedTags.filter(tag => tag !== tagToRemove));
   };
 
   const escapeRegExp = (string) => {
@@ -51,7 +84,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   };
 
   const highlightText = (text, highlights) => {
-    if (!highlights.length || !selectedTags.length) return text;
+    if (!highlights.length) return text;
     const escapedHighlights = highlights.map(escapeRegExp);
     const regex = new RegExp(`(${escapedHighlights.join("|")})`, "gi");
     const parts = text.split(regex);
@@ -89,7 +122,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   };
 
   const clearTags = () => {
-    setTags([]);
+    setPersonalizedTags([]);
     setSelectedTags([]);
   };
 
@@ -141,10 +174,11 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
         </Link>
 
         <div className="flex flex-row items-center relative w-full ml-4">
-          <div className="flex overflow-x-auto space-x-2 flex-grow">
-            <div ref={tagsContainerRef} className="flex space-x-2">
-              {tags.length > 0 &&
-                tags.map((tag, index) => (
+          <div className="flex overflow-x-auto space-x-2 flex-grow" ref={tagsContainerRef}>
+            <div className="flex space-x-2">
+              {/* Display Default Tags */}
+              {defaultTags.length > 0 &&
+                defaultTags.map((tag, index) => (
                   <div
                     key={index}
                     onClick={() => handleTagClick(tag)}
@@ -155,21 +189,48 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                     } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}
                   >
                     <span>{tag}</span>
-                    {selectedTags.includes(tag) && <button
-                      type="button"
-                      className={`ml-2 text-lightBlue bg-blue w-4 h-4 flex items-center justify-center rounded-full ${
-                        ["3D", "innovative"].includes(tag) ? "hidden" : ""
-                      }`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        removeTag(index);
-                      }}
-                    >
-                      &times;
-                    </button>}
-                    
+                    {selectedTags.includes(tag) && (
+                      <button
+                        type="button"
+                        className="ml-2 text-lightBlue bg-blue w-4 h-4 flex items-center justify-center rounded-full"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeTag(tag, false);
+                        }}
+                      >
+                        &times;
+                      </button>
+                    )}
                   </div>
                 ))}
+
+              {/* Display Personalized Tags */}
+              {personalizedTags.length > 0 &&
+                personalizedTags.map((tag, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleTagClick(tag)}
+                    className={`cursor-pointer flex items-center text-xs ${
+                      selectedTags.includes(tag)
+                        ? "bg-lightBlue text-blue"
+                        : "bg-none border border-white text-white"
+                    } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}                  >
+                    <span>{tag}</span>
+                    {selectedTags.includes(tag) && (
+                      <button
+                        type="button"
+                        className="ml-2 text-lightBlue bg-blue w-4 h-4 flex items-center justify-center rounded-full"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeTag(tag, true);
+                        }}
+                      >
+                        &times;
+                      </button>
+                    )}
+                  </div>
+                ))}
+
               {showInput && (
                 <input
                   className="bg-gray outline-none text-white pl-2 text-xs"
@@ -181,7 +242,8 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                 />
               )}
             </div>
-            <div className="flex items-center ml-2">
+            {/* Add Custom Keyterm Button and Refresh Icon */}
+            <div className="flex items-center ml-2 space-x-2">
               {!showInput && (
                 <button
                   className="bg-none border border-white text-white/50 font-semibold py-1 px-3 rounded-md text-xs underline decoration-solid"
@@ -195,8 +257,8 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                 alt="switch icon"
                 width={20}
                 height={20}
-                className="ml-2 cursor-pointer"
-                onClick={clearTags}
+                className="cursor-pointer"
+                onClick={generateRandomDefaultTags}
               />
             </div>
           </div>

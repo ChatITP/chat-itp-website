@@ -55,11 +55,11 @@ const DraggableChatInterface = ({ id, initialX, initialY, isSelected, onDeselect
         top: position.y,
         cursor: isDragging ? 'grabbing' : 'grab',
         zIndex: 1,
-        border: isSelected ? '1px solid lightBlue' : 'none',
-        borderRadius: '0.5rem',
+        border: isSelected ? 'none' : '2px solid white',
+        borderRadius: '1rem',
         overflow: 'hidden',
       }}
-      className={`${isSelected ? 'shadow-lg' : ''}`}
+      // className={`${isSelected ? 'shadow-lg' : ''}`}
       onMouseDown={handleMouseDown}
       onDoubleClick={handleDoubleClick}
     >

@@ -11,7 +11,7 @@ const Explore = () => {
 
   return (
     <div
-      className="h-screen min-h-[640px] block pt-[60px] relative z-10 bg-blue"
+      className="h-screen min-h-[640px] block relative z-10 bg-blue"
       onDoubleClick={handleDoubleClick}
     >
       {showDraggableChat && (
