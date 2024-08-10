@@ -22,7 +22,7 @@ export const Message = ({ text, sender }) => {
   );
 };
 
-const ChatList = ({ messages, showMessage, toggleShowMessage }) => {
+const ChatList = ({ messages, showMessage, toggleShowMessage, isLoading }) => {
   const userMessages = messages.filter((message) => message.sender === "user");
   const otherMessages = messages.filter((message) => message.sender !== "user");
   const userMessagesRef = useRef(null);
@@ -48,14 +48,18 @@ const ChatList = ({ messages, showMessage, toggleShowMessage }) => {
           </div>
         ))}
         <div className="flex justify-end text-xs gap-2">
-          <button onClick={toggleShowMessage}>
-            {showMessage ? "Hide" : "Show"}
-          </button>
-          <Image src="/hide.svg" alt="hide icon" width={9} height={9} />
+          {!isLoading && (
+            <>
+              <button onClick={toggleShowMessage}>
+                {showMessage ? "Hide" : "Show"}
+              </button>
+              <Image src="/hide.svg" alt="hide icon" width={9} height={9} />
+            </>
+          )}
         </div>
       </div>
       {showMessage && (
-        <div className="other-messages  flex-1 overflow-auto p-2 mb-5 rounded-b-2xl text-white/75">
+        <div className="other-messages flex-1 overflow-auto p-2 mb-5 rounded-b-2xl text-white/75">
           {otherMessages.map((message, index) => (
             <div key={index} className={`p-2 my-2 rounded-md text-white`}>
               {message.text}

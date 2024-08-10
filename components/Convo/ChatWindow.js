@@ -9,7 +9,7 @@ const ItemType = {
   CHAT_WINDOW: "chatWindow",
 };
 
-const ChatWindow = ({ initialMessage }) => {
+const ChatWindow = ({ initialMessage, initialPosition }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const chatListRef = useRef(null);
@@ -17,7 +17,7 @@ const ChatWindow = ({ initialMessage }) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [showInput, setShowInput] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState(initialPosition || { x: 0, y: 0 });
   const [showMessage, setShowMessage] = useState(true);
   const initialMousePosition = useRef({ x: 0, y: 0 });
 
@@ -148,9 +148,6 @@ const ChatWindow = ({ initialMessage }) => {
       handleSendMessage(currentMessage);
       setShowInput(false);
     }
-    if (e.key === "Delete") {
-      console.log("delete is pressed")
-    }
   };
 
   const handleSendButtonClick = () => {
@@ -174,7 +171,7 @@ const ChatWindow = ({ initialMessage }) => {
         }}
         onMouseDown={handleMouseDown}
         onMouseUp={(e) => handleMouseUp(e, "select")}
-        className={`flex flex-col w-[669px]  rounded-2xl border-[3px] shadow-md ${
+        className={`flex flex-col w-[669px] rounded-2xl border-[3px] shadow-md ${
           isSelected ? "border-lightBlue" : "border-none"
         } ${isDragging ? "cursor-grabbing" : "cursor-grab"} ${
           showMessage ? "h-[324px]" : "h-[120px] "
@@ -185,6 +182,7 @@ const ChatWindow = ({ initialMessage }) => {
             messages={messages}
             showMessage={showMessage}
             toggleShowMessage={toggleShowMessage}
+            isLoading={loading} // Pass loading state as isLoading prop
           />
         </div>
         {loading && (

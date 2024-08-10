@@ -76,13 +76,13 @@ const DropZone = forwardRef(({ id, children }, ref) => {
       const dropZoneElement = ref.current;
       if (dropZoneElement) {
         const dropZoneRect = dropZoneElement.getBoundingClientRect();
-        const mouseX = event.delta.clientX - dropZoneRect.left;
-        const mouseY = event.delta.clientY - dropZoneRect.top;
+        const x = dropZoneRect.width / 2;
+        const y = dropZoneRect.height / 2;
         const newId = `new-${active.id}-${Date.now()}`;
         const answer = await sendMessageToModel([active.id]);
         setDroppedItems((prev) => [
           ...prev,
-          { id: newId, originalId: active.id, text: active.data.current.text, x: mouseX, y: mouseY, answer },
+          { id: newId, originalId: active.id, text: active.data.current.text, x: x, y: y, answer },
         ]);
       }
     }
@@ -92,7 +92,7 @@ const DropZone = forwardRef(({ id, children }, ref) => {
     <DndContext onDragEnd={handleDragEnd}>
     <div
       ref={setNodeRef}
-      className="rounded-lg max-h-8-vh absolute z-10"
+      className="rounded-lg h-[70vh]  z-10"
       onClick={() => setSelectedChatIndex(null)} 
     >
       {children}

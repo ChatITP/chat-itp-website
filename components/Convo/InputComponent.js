@@ -180,7 +180,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
       </div>
 
       <div className="relative z-10 w-full space-y-2">
-        <div className="flex flex-row gap-4 bg-gray px-2 pt-4 pb-2 items-center">
+        <div className="flex flex-row gap-4 bg-gray px-2 pt-4 pb-2 items-center z-20">
           <Link href="/about">
             <Image
               src="/logo.png"
