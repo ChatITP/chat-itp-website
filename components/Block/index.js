@@ -3,7 +3,7 @@ import AssociationPrompt from "./AssociationPrompt";
 
 const Block = () => {
   return (
-    <div className="w-[400px]">
+    <div>
       <AssociationPrompt />
     </div>
   );

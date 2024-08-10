@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Phrase } from "./Phrase";
 import useClickInOutDetector from "@/hooks/clickInOutDetector";
 
@@ -16,13 +16,7 @@ const colors = [
 
 const AssociationPrompt = () => {
   const promptUIRef = useRef(null);
-  useClickInOutDetector(
-    promptUIRef,
-    () => {},
-    () => setEditing(false)
-  );
 
-  const [editing, setEditing] = useState(false);
   const [promptPhrases, setPromptPhrases] = useState([
     { text: "What", color: colors[0], isSelected: false },
     { text: "is the most common", color: colors[1], isSelected: false },
@@ -31,6 +25,7 @@ const AssociationPrompt = () => {
   ]);
 
   const handlePhraseClick = (id) => {
+    console.log(id);
     const updatedPromptPhrases = promptPhrases.map((phrase, index) => {
       if (index === id) {
         return { ...phrase, isSelected: true };
@@ -38,23 +33,39 @@ const AssociationPrompt = () => {
         return { ...phrase, isSelected: false };
       }
     });
-    setEditing(true);
     setPromptPhrases(updatedPromptPhrases);
   };
-  console.log(editing);
+
+  const handlePhraseClickOut = (id, text) => {
+    console.log(id, text);
+    const updatedPromptPhrases = promptPhrases.map((phrase, index) => {
+      if (index === id) {
+        return { ...phrase, text, isSelected: false };
+      } else {
+        return phrase;
+      }
+    });
+    setPromptPhrases(updatedPromptPhrases);
+  };
+
+  const isEditing = promptPhrases.some((phrase) => phrase.isSelected);
+
   return (
-    <div className="bg-[#252525] w-[500px] leading-10 pl-6 pr-8 py-6" ref={promptUIRef}>
-      {promptPhrases.map((prompt, index) => (
-        <Phrase
-          key={index}
-          color={prompt.color}
-          editing={editing}
-          isSelected={prompt.isSelected}
-          onClick={() => handlePhraseClick(index)}
-        >
-          {prompt.text}
-        </Phrase>
-      ))}
+    <div className="bg-[#252525] w-[500px] leading-10 pl-6 pr-8 py-6 relative" ref={promptUIRef}>
+      <div>
+        {promptPhrases.map((prompt, index) => (
+          <Phrase
+            key={index}
+            color={prompt.color}
+            isEditing={isEditing}
+            isSelected={prompt.isSelected}
+            onClick={() => handlePhraseClick(index)}
+            onClickOut={(text) => handlePhraseClickOut(index, text)}
+          >
+            {prompt.text}
+          </Phrase>
+        ))}
+      </div>
     </div>
   );
 };
