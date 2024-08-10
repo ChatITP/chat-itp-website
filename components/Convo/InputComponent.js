@@ -4,6 +4,7 @@ import ChatWindow from "./ChatWindow";
 import DropZone from "./DropZone";
 import Image from "next/image";
 import Link from "next/link";
+import Background from "./Background";
 import Switch from "./Switch";
 
 const ItemType = {
@@ -173,138 +174,146 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   );
 
   return (
-    <div className="w-full space-y-2">
-      <div className="flex flex-row gap-4 bg-gray px-2 pt-4 pb-2 items-center">
-        <Link href="/about">
-          <Image
-            src="/logo.png"
-            alt="logo icon"
-            width={70}
-            height={61}
-            className="my-auto"
-          />
-        </Link>
+    <div className="relative w-full h-full">
+      <div className="absolute inset-0 z-0">
+        <Background />
+      </div>
 
-        <div className="flex flex-row items-center relative w-full ml-4">
-          <div
-            className="flex overflow-x-auto space-x-2 flex-grow"
-            ref={tagsContainerRef}
-          >
-            <div className="flex space-x-2">
-              {/* Display Default Tags */}
-              {defaultTags.length > 0 &&
-                defaultTags.map((tag, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleTagClick(tag)}
-                    className={`cursor-pointer flex items-center text-xs ${
-                      selectedTags.includes(tag)
-                        ? "bg-lightBlue text-blue"
-                        : "bg-none border border-white text-white"
-                    } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}
+      <div className="relative z-10 w-full space-y-2">
+        <div className="flex flex-row gap-4 bg-gray px-2 pt-4 pb-2 items-center">
+          <Link href="/about">
+            <Image
+              src="/logo.png"
+              alt="logo icon"
+              width={70}
+              height={61}
+              className="my-auto"
+            />
+          </Link>
+
+          <div className="flex flex-row items-center relative w-full ml-4">
+            <div
+              className="flex overflow-x-auto space-x-2 flex-grow"
+              ref={tagsContainerRef}
+            >
+              <div className="flex space-x-2">
+                {/* Display Default Tags */}
+                {defaultTags.length > 0 &&
+                  defaultTags.map((tag, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleTagClick(tag)}
+                      className={`cursor-pointer flex items-center text-xs ${
+                        selectedTags.includes(tag)
+                          ? "bg-lightBlue text-blue"
+                          : "bg-none border border-white text-white"
+                      } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}
+                    >
+                      <span>{tag}</span>
+                      {selectedTags.includes(tag) && (
+                        <button
+                          type="button"
+                          className="ml-2 text-lightBlue bg-blue w-4 h-4 flex items-center justify-center rounded-full"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeTag(tag, false);
+                          }}
+                        >
+                          &times;
+                        </button>
+                      )}
+                    </div>
+                  ))}
+
+                {/* Display Personalized Tags */}
+                {personalizedTags.length > 0 &&
+                  personalizedTags.map((tag, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleTagClick(tag)}
+                      className={`cursor-pointer flex items-center text-xs ${
+                        selectedTags.includes(tag)
+                          ? "bg-lightBlue text-blue"
+                          : "bg-none border border-white text-white"
+                      } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}
+                    >
+                      <span>{tag}</span>
+                      {selectedTags.includes(tag) && (
+                        <button
+                          type="button"
+                          className="ml-2 text-lightBlue bg-blue w-4 h-4 flex items-center justify-center rounded-full"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeTag(tag, true);
+                          }}
+                        >
+                          &times;
+                        </button>
+                      )}
+                    </div>
+                  ))}
+
+                {showInput && (
+                  <input
+                    className="bg-gray outline-none text-white pl-2 text-xs"
+                    value={searchKey}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Add Custom Keyword"
+                    onBlur={() => setShowInput(false)}
+                  />
+                )}
+              </div>
+              {/* Add Custom Keyterm Button and Refresh Icon */}
+              <div className="flex items-center ml-2 space-x-2">
+                {!showInput && (
+                  <button
+                    className="bg-none border border-white text-white/50 font-semibold py-1 px-3 rounded-md text-xs underline decoration-solid"
+                    onClick={() => setShowInput(true)}
                   >
-                    <span>{tag}</span>
-                    {selectedTags.includes(tag) && (
-                      <button
-                        type="button"
-                        className="ml-2 text-lightBlue bg-blue w-4 h-4 flex items-center justify-center rounded-full"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          removeTag(tag, false);
-                        }}
-                      >
-                        &times;
-                      </button>
-                    )}
-                  </div>
-                ))}
-
-              {/* Display Personalized Tags */}
-              {personalizedTags.length > 0 &&
-                personalizedTags.map((tag, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleTagClick(tag)}
-                    className={`cursor-pointer flex items-center text-xs ${
-                      selectedTags.includes(tag)
-                        ? "bg-lightBlue text-blue"
-                        : "bg-none border border-white text-white"
-                    } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}
-                  >
-                    <span>{tag}</span>
-                    {selectedTags.includes(tag) && (
-                      <button
-                        type="button"
-                        className="ml-2 text-lightBlue bg-blue w-4 h-4 flex items-center justify-center rounded-full"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          removeTag(tag, true);
-                        }}
-                      >
-                        &times;
-                      </button>
-                    )}
-                  </div>
-                ))}
-
-              {showInput && (
-                <input
-                  className="bg-gray outline-none text-white pl-2 text-xs"
-                  value={searchKey}
-                  onChange={handleChange}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Add Custom Keyword"
-                  onBlur={() => setShowInput(false)}
+                    Add Custom Keyterm
+                  </button>
+                )}
+                <Image
+                  src="/switch.svg"
+                  alt="switch icon"
+                  width={20}
+                  height={20}
+                  className="cursor-pointer"
+                  onClick={generateRandomDefaultTags}
                 />
-              )}
-            </div>
-            {/* Add Custom Keyterm Button and Refresh Icon */}
-            <div className="flex items-center ml-2 space-x-2">
-              {!showInput && (
-                <button
-                  className="bg-none border border-white text-white/50 font-semibold py-1 px-3 rounded-md text-xs underline decoration-solid"
-                  onClick={() => setShowInput(true)}
-                >
-                  Add Custom Keyterm
-                </button>
-              )}
-              <Image
-                src="/switch.svg"
-                alt="switch icon"
-                width={20}
-                height={20}
-                className="cursor-pointer"
-                onClick={generateRandomDefaultTags}
-              />
+              </div>
             </div>
           </div>
+          {/* <Switch currentPage="Workspace"/> */}
         </div>
-        {/* <Switch currentPage="Workspace"/> */}
-      </div>
 
-      <div className="flex gap-6 p-2 overflow-x-auto whitespace-nowrap max-w-[1440px]">
-        {sortedItems.map((phrase, index) => (
-          <Phrase key={index} phrase={phrase} />
-        ))}
-      </div>
-      <div className="flex justify-end mr-4">
-        <button className="mr-2" onClick={randomizePhrases}>
-          <p className = "text-sm font-semibold text-white/80">Refresh examples</p>
-        </button>
-        <Image
-          src="/switch.svg"
-          alt="switch icon"
-          width={20}
-          height={20}
-          className="cursor-pointer"
-          onClick={randomizePhrases}
-        />
-      </div>
-      <DropZone>
-        <div ref={drop} className="flex justify-center pt-6 h-full">
-          {clickedItem && <ChatWindow initialMessage={clickedItem} />}
+        <div className="flex gap-6 p-2 overflow-x-auto whitespace-nowrap max-w-[1440px]">
+          {sortedItems.map((phrase, index) => (
+            <Phrase key={index} phrase={phrase} />
+          ))}
         </div>
-      </DropZone>
+        <div className="flex justify-end mr-4">
+          <button className="mr-2" onClick={randomizePhrases}>
+            <p className="text-sm font-semibold text-white/80">
+              Refresh examples
+            </p>
+          </button>
+          <Image
+            src="/switch.svg"
+            alt="switch icon"
+            width={20}
+            height={20}
+            className="cursor-pointer"
+            onClick={randomizePhrases}
+          />
+        </div>
+        <DropZone>
+          <div ref={drop} className="flex justify-center pt-6 h-screen">
+            {clickedItem && <ChatWindow initialMessage={clickedItem} />}
+          </div>
+        </DropZone>
+      </div>
     </div>
   );
 };

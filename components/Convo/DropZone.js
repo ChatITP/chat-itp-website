@@ -92,7 +92,7 @@ const DropZone = forwardRef(({ id, children }, ref) => {
     <DndContext onDragEnd={handleDragEnd}>
     <div
       ref={setNodeRef}
-      className="rounded-lg h-screen relative z-10"
+      className="rounded-lg max-h-8-vh absolute z-10"
       onClick={() => setSelectedChatIndex(null)} 
     >
       {children}
