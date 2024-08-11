@@ -1,12 +1,12 @@
 import React from "react";
-import Phrase from "./Phrase";
+import GeneratedPhrase from "./generatedPhrase";
 
-const GeneratedPhraseSelector = () => {
+const GeneratedPhraseSelector = ({ generatedPhrases, color }) => {
   return (
-    <div>
-      {phrases.map((phrase, index) => (
+    <div className="leading-10">
+      {generatedPhrases.map((phrase, index) => (
         <div key={index}>
-          <Phrase color={phrase.color}>{phrase.text}</Phrase>
+          <GeneratedPhrase color={color}>{phrase.text}</GeneratedPhrase>
         </div>
       ))}
     </div>

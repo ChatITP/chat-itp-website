@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Phrase from "./Phrase";
 import useAuthRequest from "@/hooks/useAuthRequest";
+import GeneratedPhraseSelector from "./GeneratedPhraseSelector";
 
 const colorPalette = ["#ff0000", "#00ff00", "#0000ff", "#ffffff"];
 
@@ -29,6 +30,7 @@ const AssociationPrompt = () => {
     { text: "is the most common" },
     { text: "historical theme" },
   ]);
+
   const request = useAuthRequest();
 
   /**
@@ -81,16 +83,17 @@ const AssociationPrompt = () => {
                 isPlaceholder: false,
               });
             }
+          } else if (index === promptPhrases.length - 1 && promptPhrases[index].isPlaceholder) {
+            updatedPromptPhrases.push({ ...phrase, isSelected: false });
           }
         } else {
           updatedPromptPhrases.push(phrase);
         }
       });
       if (!updatedPromptPhrases[updatedPromptPhrases.length - 1].isPlaceholder) {
-        console.log("Adding new phrase");
         // make sure the color is not the same as the previous phrase
         const colors = colorPalette.filter(
-          (color) => color !== updatedPromptPhrases[updatedPromptPhrases.length - 2].color
+          (color) => color !== updatedPromptPhrases[updatedPromptPhrases.length - 1].color
         );
         const newColor = colors[Math.floor(Math.random() * colors.length)];
         updatedPromptPhrases.push({
@@ -141,24 +144,30 @@ const AssociationPrompt = () => {
   };
 
   const isEditing = promptPhrases.some((phrase) => phrase.isSelected);
+  const selectionColor = promptPhrases.find((phrase) => phrase.isSelected)?.color;
 
   return (
-    <div className="bg-[#252525] w-[500px] leading-10 pl-6 pr-8 py-6 relative">
-      {promptPhrases.map((prompt, index) => (
-        <Phrase
-          key={index}
-          color={prompt.color}
-          isEditing={isEditing}
-          isSelected={prompt.isSelected}
-          isPlaceholder={prompt.isPlaceholder}
-          onClick={() => handlePhraseClick(index)}
-          onClickOut={(text) => handlePhraseClickOut(index, text)}
-          isEnd={index === promptPhrases.length - 1}
-        >
-          {prompt.text}
-        </Phrase>
-      ))}
-      <div className="pt-4">{/* <GeneratedPhraseSelector /> */}</div>
+    <div className="bg-[#252525] w-[500px] relative  pl-6 pr-8 py-6 rounded-lg">
+      <div className="relative leading-10 w-full pb-4">
+        {promptPhrases.map((prompt, index) => (
+          <Phrase
+            key={index}
+            color={prompt.color}
+            isEditing={isEditing}
+            isSelected={prompt.isSelected}
+            isPlaceholder={prompt.isPlaceholder}
+            isLoading={prompt.isLoading}
+            onClick={() => handlePhraseClick(index)}
+            onClickOut={(text) => handlePhraseClickOut(index, text)}
+            isEnd={index === promptPhrases.length - 1 || promptPhrases[index + 1]?.isSelected}
+          >
+            {prompt.text}
+          </Phrase>
+        ))}
+      </div>
+      <div className="pt-4 border-gray2 border-t-2">
+        <GeneratedPhraseSelector generatedPhrases={generatedPhrases} color={selectionColor} />
+      </div>
     </div>
   );
 };
