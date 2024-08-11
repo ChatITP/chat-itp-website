@@ -3,9 +3,6 @@ import { useRouter } from "next/navigation";
 
 /**
  * A custom hook to make authenticated requests
- * @param {string} method - HTTP method
- * @param {string} url - API endpoint
- * @param {object} data - Request data
  * @returns {function} - A function to make authenticated requests
  */
 function useAuthRequest() {

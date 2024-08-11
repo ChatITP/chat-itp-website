@@ -1,6 +1,16 @@
 import useClickInOutDetector from "@/hooks/clickInOutDetector";
 import { useRef } from "react";
-export const Phrase = ({ color, children, isEditing, isSelected, onClick, onClickOut }) => {
+
+const Phrase = ({
+  color,
+  children,
+  isEditing,
+  isSelected,
+  isPlaceholder,
+  onClick,
+  onClickOut,
+  isEnd,
+}) => {
   const editableSpanRef = useRef(null);
 
   useClickInOutDetector(
@@ -17,22 +27,22 @@ export const Phrase = ({ color, children, isEditing, isSelected, onClick, onClic
         <span
           ref={editableSpanRef}
           style={{ backgroundColor: color }}
-          className="relative font-medium text-black rounded-md pl-1 pr-1 -mr-2 py-2 shadow-lg shadow-black border-none outline-none z-10"
+          className="relative font-medium text-black rounded-md px-3 py-2 -mx-1 shadow-lg shadow-black border-none outline-none z-10"
           role="textbox"
           contentEditable
           suppressContentEditableWarning
         >
-          &nbsp;{children}{" "}
+          {children}
         </span>
       );
     } else {
       return (
         <span
           onClick={onClick}
-          style={{ backgroundColor: "#cccccc" }}
-          className="relative font-medium text-black rounded-md pl-1 pr-2 -mr-2 py-1"
+          style={{ backgroundColor: "#cccccc", paddingRight: isEnd ? "0.5rem" : "1.5rem" }}
+          className="relative font-medium text-black rounded-md pl-2 -mr-4 py-1"
         >
-          &nbsp;{children}{" "}
+          {isPlaceholder ? "+" : <>{children}</>}
         </span>
       );
     }
@@ -40,11 +50,13 @@ export const Phrase = ({ color, children, isEditing, isSelected, onClick, onClic
     return (
       <span
         onClick={onClick}
-        style={{ backgroundColor: color }}
-        className="relative font-medium text-black rounded-md pl-1 pr-2 -mr-2 py-1"
+        style={{ backgroundColor: color, paddingRight: isEnd ? "0.5rem" : "1.5rem" }}
+        className="relative font-medium text-black rounded-md pl-2 pr-6 -mr-4 py-1"
       >
-        &nbsp;{children}{" "}
+        {isPlaceholder ? "+" : <>{children}</>}
       </span>
     );
   }
 };
+
+export default Phrase;
