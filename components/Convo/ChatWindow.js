@@ -3,7 +3,7 @@ import ChatList from "./ChatList";
 import LoadingDots from "./LoadingDots";
 import request from "/app/lib/request";
 import Image from "next/image";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag } from "react-dnd";
 
 const ItemType = {
   CHAT_WINDOW: "chatWindow",
@@ -20,6 +20,7 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
   const [position, setPosition] = useState(initialPosition || { x: 0, y: 0 });
   const [showMessage, setShowMessage] = useState(true);
   const initialMousePosition = useRef({ x: 0, y: 0 });
+  const isDraggingRef = useRef(false);
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemType.CHAT_WINDOW,
@@ -29,19 +30,28 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
     }),
   }));
 
-  const [, drop] = useDrop(() => ({
-    accept: ItemType.CHAT_WINDOW,
-    drop: (item, monitor) => {
-      const delta = monitor.getDifferenceFromInitialOffset();
-      setPosition((prevPosition) => ({
-        x: prevPosition.x + delta.x,
-        y: prevPosition.y + delta.y,
-      }));
-    },
-  }));
-
   const handleMouseDown = (e) => {
-    initialMousePosition.current = { x: e.clientX, y: e.clientY };
+    e.preventDefault();
+    isDraggingRef.current = true;
+    initialMousePosition.current = { x: e.clientX - position.x, y: e.clientY - position.y };
+
+    const handleMouseMove = (e) => {
+      if (isDraggingRef.current) {
+        setPosition({
+          x: e.clientX - initialMousePosition.current.x,
+          y: e.clientY - initialMousePosition.current.y,
+        });
+      }
+    };
+
+    const handleMouseUp = () => {
+      isDraggingRef.current = false;
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
   };
 
   const handleMouseUp = (e, actionType) => {
@@ -162,97 +172,95 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
   };
 
   return (
-    <div ref={drag}>
-      <div
-        ref={(node) => drag(drop(node))}
-        style={{
-          transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-          opacity: isDragging ? 0.5 : 1,
-        }}
-        onMouseDown={handleMouseDown}
-        onMouseUp={(e) => handleMouseUp(e, "select")}
-        className={`flex flex-col w-[669px] rounded-2xl border-[3px] shadow-md ${
-          isSelected ? "border-lightBlue" : "border-none"
-        } ${isDragging ? "cursor-grabbing" : "cursor-grab"} ${
-          showMessage ? "h-[324px]" : "h-[120px] "
-        }`}
-      >
-        <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
-          <ChatList
-            messages={messages}
-            showMessage={showMessage}
-            toggleShowMessage={toggleShowMessage}
-            isLoading={loading} // Pass loading state as isLoading prop
-          />
+    <div
+      ref={drag}
+      style={{
+        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
+        opacity: isDragging ? 0.5 : 1,
+        cursor: isDragging ? "grabbing" : "grab",
+      }}
+      onMouseDown={handleMouseDown}
+      onMouseUp={(e) => handleMouseUp(e, "select")}
+      className={`flex flex-col w-[669px] rounded-2xl border-[3px] shadow-md ${
+        isSelected ? "border-lightBlue" : "border-none"
+      } ${showMessage ? "h-[324px]" : "h-[120px] "}`}
+    >
+      <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
+        <ChatList
+          messages={messages}
+          showMessage={showMessage}
+          toggleShowMessage={toggleShowMessage}
+          isLoading={loading} // Pass loading state as isLoading prop
+        />
+      </div>
+      {loading && (
+        <div className="flex justify-center items-center my-2">
+          <LoadingDots />
         </div>
-        {loading && (
-          <div className="flex justify-center items-center my-2">
-            <LoadingDots />
+      )}
+      {showMessage && !showInput && (
+        <div className="flex justify-end items-center mb-2 space-x-2 mr-10">
+          <div className="flex flex-row">
+            <button
+              onMouseDown={handleMouseDown}
+              onMouseUp={(e) => handleMouseUp(e, "regenerate")}
+              className="p-2 text-sm font-semibold text-white rounded-md"
+            >
+              Regenerate
+            </button>
+            <Image
+              src="/switch.svg"
+              alt="switch icon"
+              width={12}
+              height={12}
+              className="my-auto"
+            />
+          </div>
+
+          <div className="flex flex-row">
+            <button
+              onMouseDown={handleMouseDown}
+              onMouseUp={(e) => handleMouseUp(e, "askFollowup")}
+              className="p-2 text-sm font-semibold text-white rounded-md"
+            >
+              Ask followup
+            </button>
+            <Image
+              src="/tasks.svg"
+              alt="tasks icon"
+              width={12}
+              height={12}
+              className="my-auto"
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="bg-gray/40">
+        {showInput && (
+          <div className="flex h-[120px] items-center mb-2 mx-4">
+            <input
+              type="text"
+              value={currentMessage}
+              onChange={handleInputChange}
+              onKeyDown={handleInputKeyDown}
+              className="text-white bg-gray/0 flex-1 p-2 rounded-md"
+              placeholder="Type a message..."
+            />
+            <button
+              onMouseDown={handleMouseDown}
+              onMouseUp={(e) => handleMouseUp(e, "send")}
+              onClick={handleSendButtonClick}
+              className="ml-2 p-2 bg-blue text-white rounded-md"
+            >
+              Send
+            </button>
           </div>
         )}
-        {showMessage && !showInput && (
-          <div className="flex justify-end items-center mb-2 space-x-2 mr-10">
-            <div className="flex flex-row">
-              <button
-                onMouseDown={handleMouseDown}
-                onMouseUp={(e) => handleMouseUp(e, "regenerate")}
-                className="p-2 text-sm font-semibold text-white rounded-md"
-              >
-                Regenerate
-              </button>
-              <Image
-                src="/switch.svg"
-                alt="switch icon"
-                width={12}
-                height={12}
-                className="my-auto"
-              />
-            </div>
-
-            <div className="flex flex-row">
-              <button
-                onMouseDown={handleMouseDown}
-                onMouseUp={(e) => handleMouseUp(e, "askFollowup")}
-                className="p-2 text-sm font-semibold text-white rounded-md"
-              >
-                Ask followup
-              </button>
-              <Image
-                src="/tasks.svg"
-                alt="tasks icon"
-                width={12}
-                height={12}
-                className="my-auto"
-              />
-            </div>
-          </div>
-        )}
-
-        <div className="bg-gray/40">
-          {showInput && (
-            <div className="flex h-[120px] items-center mb-2 mx-4">
-              <input
-                type="text"
-                value={currentMessage}
-                onChange={handleInputChange}
-                onKeyDown={handleInputKeyDown}
-                className="text-white bg-gray/0 flex-1 p-2 rounded-md"
-                placeholder="Type a message..."
-              />
-              <button
-                onMouseDown={handleMouseDown}
-                onMouseUp={(e) => handleMouseUp(e, "send")}
-                onClick={handleSendButtonClick}
-                className="ml-2 p-2 bg-blue text-white rounded-md"
-              >
-                Send
-              </button>
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );
 };
 
 export default ChatWindow;
+
