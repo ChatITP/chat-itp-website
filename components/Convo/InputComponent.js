@@ -6,16 +6,22 @@ import Image from "next/image";
 import Link from "next/link";
 import Background from "./Background";
 import Switch from "./Switch";
-import Phrase from "./Phrase"; 
+import Phrase from "./Phrase";
 
 const ItemType = {
   PHRASE: "phrase",
+};
+
+const CHAT_WINDOW_DIMENSIONS = {
+  width: 669,
+  height: 324, 
 };
 
 const InputComponent = ({ initialTags = [], phrases = [] }) => {
   const [searchKey, setSearchKey] = useState("");
   const [items, setItems] = useState([]);
   const [clickedItem, setClickedItem] = useState(null);
+  const [clickedPosition, setClickedPosition] = useState({ x: 0, y: 0 });
   const tagsContainerRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
   const [showInput, setShowInput] = useState(false);
@@ -45,9 +51,8 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   useEffect(() => {
     setIsClient(true);
     generateRandomDefaultTags();
-    randomizePhrases();  
+    randomizePhrases();
   }, []);
-
 
   const randomizePhrases = () => {
     const shuffledItems = [...phrases].sort(() => 0.5 - Math.random());
@@ -143,7 +148,14 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
 
   const [, drop] = useDrop({
     accept: ItemType.PHRASE,
-    drop: (item) => setClickedItem(item.phrase),
+    drop: (item, monitor) => {
+      const delta = monitor.getClientOffset();
+      setClickedItem(item.phrase);
+      setClickedPosition({
+        x: delta.x - CHAT_WINDOW_DIMENSIONS.width,
+        y: delta.y - CHAT_WINDOW_DIMENSIONS.height,
+      });
+    },
   });
 
   if (!isClient) {
@@ -291,8 +303,13 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
           />
         </div>
         <DropZone>
-          <div ref={drop} className="flex justify-center pt-6">
-            {clickedItem && <ChatWindow initialMessage={clickedItem} />}
+          <div ref={drop} className="flex justify-center pt-6 h-screen">
+            {clickedItem && (
+              <ChatWindow
+                initialMessage={clickedItem}
+                initialPosition={clickedPosition}
+              />
+            )}
           </div>
         </DropZone>
       </div>
@@ -303,4 +320,6 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
 InputComponent.displayName = "InputComponent";
 
 export default InputComponent;
+
+
 
