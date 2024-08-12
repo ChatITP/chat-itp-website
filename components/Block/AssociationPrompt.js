@@ -25,11 +25,10 @@ const AssociationPrompt = () => {
     { text: "", color: colorPalette[2], isSelected: false, isPlaceholder: true, isLoading: false },
   ]);
 
-  const [generatedPhrases, setGeneratedPhrases] = useState([
-    { text: "What" },
-    { text: "is the most common" },
-    { text: "historical theme" },
-  ]);
+  const [generatedPhrases, setGeneratedPhrases] = useState({
+    suggestions: ["What", "is the most common", "historical theme"],
+    isLoading: false,
+  });
 
   const request = useAuthRequest();
 
@@ -38,6 +37,7 @@ const AssociationPrompt = () => {
    * @param {*} id
    */
   const handlePhraseClick = (id) => {
+    generateSuggestions(id);
     setPromptPhrases((promptPhrases) => {
       const updatedPromptPhrases = promptPhrases.map((phrase, index) => {
         if (index === id) {
@@ -57,7 +57,7 @@ const AssociationPrompt = () => {
    */
   const handlePhraseClickOut = (id, text) => {
     if (text !== "" && promptPhrases[id].text !== text) {
-      handleSplitText(text, id);
+      splitText(text, id);
     }
 
     setPromptPhrases((promptPhrases) => {
@@ -107,11 +107,43 @@ const AssociationPrompt = () => {
     });
   };
 
+  const handleReplacePhrase = (id, text) => {
+    setPromptPhrases((promptPhrases) => {
+      const updatedPromptPhrases = [];
+      promptPhrases.forEach((phrase, index) => {
+        if (index === id) {
+          updatedPromptPhrases.push({
+            ...phrase,
+            text,
+            isSelected: false,
+            isPlaceholder: false,
+          });
+          if (index === promptPhrases.length - 1) {
+            // make sure the color is not the same as the previous phrase
+            const colors = colorPalette.filter(
+              (color) => color !== updatedPromptPhrases[updatedPromptPhrases.length - 1].color
+            );
+            const newColor = colors[Math.floor(Math.random() * colors.length)];
+            updatedPromptPhrases.push({
+              text: "",
+              color: newColor,
+              isSelected: false,
+              isPlaceholder: true,
+            });
+          }
+        } else {
+          updatedPromptPhrases.push(phrase);
+        }
+      });
+      return updatedPromptPhrases;
+    });
+  };
+
   /**
    * Split the text into phrases
    * @param {*} text
    */
-  const handleSplitText = async (text, insertIndex) => {
+  const splitText = async (text, insertIndex) => {
     const response = await request("post", "/api/llm/split", { text });
     const result = response.data.split;
 
@@ -143,8 +175,17 @@ const AssociationPrompt = () => {
     return result;
   };
 
+  const generateSuggestions = async (replaceIndex) => {
+    setGeneratedPhrases({ suggestions: [], isLoading: true });
+    const response = await request("post", "/api/llm/suggestions", {
+      text: promptPhrases.map((phrase) => phrase.text).join(" "),
+    });
+    setGeneratedPhrases({ suggestions: response.data, isLoading: false });
+  };
+
   const isEditing = promptPhrases.some((phrase) => phrase.isSelected);
   const selectionColor = promptPhrases.find((phrase) => phrase.isSelected)?.color;
+  const selectID = promptPhrases.findIndex((phrase) => phrase.isSelected);
 
   return (
     <div className="bg-[#252525] w-[500px] relative  pl-6 pr-8 py-6 rounded-lg">
@@ -165,9 +206,18 @@ const AssociationPrompt = () => {
           </Phrase>
         ))}
       </div>
-      <div className="pt-4 border-gray2 border-t-2">
-        <GeneratedPhraseSelector generatedPhrases={generatedPhrases} color={selectionColor} />
-      </div>
+      {isEditing && (
+        <div className="pt-4 border-gray2 border-t-2">
+          <GeneratedPhraseSelector
+            suggestions={generatedPhrases.suggestions}
+            isLoading={generatedPhrases.isLoading}
+            color={selectionColor}
+            handleSelect={(text) => {
+              handleReplacePhrase(selectID, text);
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
