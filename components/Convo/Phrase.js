@@ -1,0 +1,32 @@
+import React from 'react';
+import { useDrag } from 'react-dnd';
+
+const ItemType = {
+  PHRASE: "phrase",
+};
+
+const Phrase = ({ phrase, selectedTags, highlightText, onClick }) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemType.PHRASE,
+    item: { phrase },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
+
+  return (
+    <div
+      ref={drag}
+      className={`border border-white/50 rounded-lg p-4 text-white/80 cursor-pointer text-sm hover:bg-white/20 ${
+        isDragging ? "opacity-50" : ""
+      }`}
+      style={{ minWidth: "316px", whiteSpace: "normal" }}
+      onClick={() => onClick(phrase)}
+    >
+      {highlightText(phrase, selectedTags)}
+    </div>
+  );
+};
+
+export default Phrase;
+

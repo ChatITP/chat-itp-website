@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrop } from "react-dnd";
 import ChatWindow from "./ChatWindow";
 import DropZone from "./DropZone";
 import Image from "next/image";
 import Link from "next/link";
 import Background from "./Background";
 import Switch from "./Switch";
+import Phrase from "./Phrase"; 
 
 const ItemType = {
   PHRASE: "phrase",
@@ -44,9 +45,9 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   useEffect(() => {
     setIsClient(true);
     generateRandomDefaultTags();
-    randomizePhrases(); // Shuffle phrases on each refresh
-
+    randomizePhrases();  
   }, []);
+
 
   const randomizePhrases = () => {
     const shuffledItems = [...phrases].sort(() => 0.5 - Math.random());
@@ -77,7 +78,6 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
       }, 100);
     }
   };
-  
 
   const handleChange = (e) => {
     setSearchKey(e.target.value);
@@ -141,29 +141,6 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
     setSelectedTags([]);
   };
 
-  const Phrase = ({ phrase }) => {
-    const [{ isDragging }, drag] = useDrag(() => ({
-      type: ItemType.PHRASE,
-      item: { phrase },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    }));
-
-    return (
-      <div
-        ref={drag}
-        className={`border border-white/50 rounded-lg p-4 text-white/80 cursor-pointer text-sm hover:bg-white/20 ${
-          isDragging ? "opacity-50" : ""
-        }`}
-        style={{ minWidth: "316px", whiteSpace: "normal" }}
-        onClick={() => handleClick(phrase)}
-      >
-        {highlightText(phrase, selectedTags)}
-      </div>
-    );
-  };
-
   const [, drop] = useDrop({
     accept: ItemType.PHRASE,
     drop: (item) => setClickedItem(item.phrase),
@@ -202,7 +179,6 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
               ref={tagsContainerRef}
             >
               <div className="flex space-x-2">
-                {/* Display Default Tags */}
                 {defaultTags.length > 0 &&
                   defaultTags.map((tag, index) => (
                     <div
@@ -229,8 +205,6 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                       )}
                     </div>
                   ))}
-
-                {/* Display Personalized Tags */}
                 {personalizedTags.length > 0 &&
                   personalizedTags.map((tag, index) => (
                     <div
@@ -257,7 +231,6 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                       )}
                     </div>
                   ))}
-
                 {showInput && (
                   <input
                     className="bg-gray outline-none text-white pl-2 text-xs"
@@ -289,12 +262,17 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
               </div>
             </div>
           </div>
-          {/* <Switch currentPage="Workspace"/> */}
         </div>
 
         <div className="flex gap-6 p-2 overflow-x-auto whitespace-nowrap max-w-[1440px]">
           {sortedItems.map((phrase, index) => (
-            <Phrase key={index} phrase={phrase} />
+            <Phrase
+              key={index}
+              phrase={phrase}
+              selectedTags={selectedTags}
+              highlightText={highlightText}
+              onClick={handleClick}
+            />
           ))}
         </div>
         <div className="flex justify-end mr-4">
@@ -313,7 +291,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
           />
         </div>
         <DropZone>
-          <div ref={drop} className="flex justify-center pt-6 h-screen">
+          <div ref={drop} className="flex justify-center pt-6">
             {clickedItem && <ChatWindow initialMessage={clickedItem} />}
           </div>
         </DropZone>
@@ -325,3 +303,4 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
 InputComponent.displayName = "InputComponent";
 
 export default InputComponent;
+
