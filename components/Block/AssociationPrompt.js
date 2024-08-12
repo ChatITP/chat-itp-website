@@ -4,24 +4,10 @@ import Phrase from "./Phrase";
 import useAuthRequest from "@/hooks/useAuthRequest";
 import GeneratedPhraseSelector from "./GeneratedPhraseSelector";
 
-const colorPalette = ["#ff0000", "#00ff00", "#0000ff", "#ffffff"];
+const colorPalette = ["#ff9c9c", "#ffd9a3", "#c8dff7", "#fff495", "#c9f3d7", "#b3ffa0", "#a9ffef"];
 
 const AssociationPrompt = () => {
   const [promptPhrases, setPromptPhrases] = useState([
-    {
-      text: "What",
-      color: colorPalette[0],
-      isSelected: false,
-      isPlaceholder: false,
-      isLoading: false,
-    },
-    {
-      text: "is the most important",
-      color: colorPalette[1],
-      isSelected: false,
-      isPlaceholder: false,
-      isLoading: false,
-    },
     { text: "", color: colorPalette[2], isSelected: false, isPlaceholder: true, isLoading: false },
   ]);
 

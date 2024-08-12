@@ -2,7 +2,6 @@ import React from "react";
 import GeneratedPhrase from "./GeneratedPhrase";
 
 const GeneratedPhraseSelector = ({ suggestions, isLoading, color, handleSelect }) => {
-  console.log(suggestions);
   if (isLoading) {
     return (
       <div className="leading-10">
