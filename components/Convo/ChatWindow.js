@@ -54,24 +54,6 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
     document.addEventListener('mouseup', handleMouseUp);
   };
 
-  const handleMouseUp = (e, actionType) => {
-    const threshold = 5;
-    const movedX = Math.abs(e.clientX - initialMousePosition.current.x);
-    const movedY = Math.abs(e.clientY - initialMousePosition.current.y);
-
-    if (movedX < threshold && movedY < threshold) {
-      if (actionType === "regenerate") {
-        handleRegenerate();
-      } else if (actionType === "askFollowup") {
-        handleAskFollowup();
-      } else if (actionType === "select") {
-        handleClick();
-      } else if (actionType === "send") {
-        handleSendButtonClick();
-      }
-    }
-  };
-
   const handleClick = () => {
     setIsSelected((prev) => !prev);
   };
@@ -180,7 +162,6 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
         cursor: isDragging ? "grabbing" : "grab",
       }}
       onMouseDown={handleMouseDown}
-      onMouseUp={(e) => handleMouseUp(e, "select")}
       className={`flex flex-col w-[669px] rounded-2xl border-[3px] shadow-md ${
         isSelected ? "border-lightBlue" : "border-none"
       } ${showMessage ? "h-[324px]" : "h-[120px] "}`}
@@ -202,8 +183,7 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
         <div className="flex justify-end items-center mb-2 space-x-2 mr-10">
           <div className="flex flex-row">
             <button
-              onMouseDown={handleMouseDown}
-              onMouseUp={(e) => handleMouseUp(e, "regenerate")}
+              onClick={handleRegenerate}
               className="p-2 text-sm font-semibold text-white rounded-md"
             >
               Regenerate
@@ -219,8 +199,7 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
 
           <div className="flex flex-row">
             <button
-              onMouseDown={handleMouseDown}
-              onMouseUp={(e) => handleMouseUp(e, "askFollowup")}
+              onClick={handleAskFollowup}
               className="p-2 text-sm font-semibold text-white rounded-md"
             >
               Ask followup
@@ -248,8 +227,6 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
               placeholder="Type a message..."
             />
             <button
-              onMouseDown={handleMouseDown}
-              onMouseUp={(e) => handleMouseUp(e, "send")}
               onClick={handleSendButtonClick}
               className="ml-2 p-2 bg-blue text-white rounded-md"
             >
@@ -263,4 +240,3 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
 };
 
 export default ChatWindow;
-
