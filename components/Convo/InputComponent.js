@@ -17,31 +17,43 @@ const CHAT_WINDOW_DIMENSIONS = {
   height: 324, 
 };
 
+const tagStyles = {
+  width: "105px",
+  height: "30px",
+  lineHeight: "30px", 
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  cursor: "pointer",
+  fontSize: "12px", 
+  fontFamily: "'Open Sans', sans-serif",
+};
+
 const InputComponent = ({ initialTags = [], phrases = [] }) => {
   const [searchKey, setSearchKey] = useState("");
   const [items, setItems] = useState([]);
-  const [clickedItem, setClickedItem] = useState(null);
   const [clickedPosition, setClickedPosition] = useState({ x: 0, y: 0 });
+  const clickedItemRef = useRef(null); 
   const tagsContainerRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
   const [showInput, setShowInput] = useState(false);
 
   const defaultTagsPool = [
-    "performance",
+    "Performance",
     "Traditional",
     "Innovative",
-    "Arduino",
     "C++",
     "3D modeling",
     "Futuristic",
-    "Generative Art",
+    "Generative",
     "Wearables",
     "Prototyping",
-    "Physical Computing",
-    "Machine Learning",
+    "Arduino",
     "Cybernetics",
-    "Digital Fabrication",
+    "Fabrication",
     "Sound Design",
+    "Unity",
+    "Touch Designer",
   ];
 
   const [defaultTags, setDefaultTags] = useState([]);
@@ -61,7 +73,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
 
   const generateRandomDefaultTags = () => {
     const shuffledTags = [...defaultTagsPool].sort(() => 0.5 - Math.random());
-    setDefaultTags(shuffledTags.slice(0, 5));
+    setDefaultTags(shuffledTags.slice(0, 6));
     setSelectedTags([]);
   };
 
@@ -138,7 +150,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   };
 
   const handleClick = (item) => {
-    setClickedItem(item);
+    clickedItemRef.current = item; // Store the clicked item in a ref
   };
 
   const clearTags = () => {
@@ -150,7 +162,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
     accept: ItemType.PHRASE,
     drop: (item, monitor) => {
       const delta = monitor.getClientOffset();
-      setClickedItem(item.phrase);
+      clickedItemRef.current = item.phrase; // Update ref instead of state
       setClickedPosition({
         x: delta.x - CHAT_WINDOW_DIMENSIONS.width,
         y: delta.y - CHAT_WINDOW_DIMENSIONS.height,
@@ -196,14 +208,15 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                     <div
                       key={index}
                       onClick={() => handleTagClick(tag)}
-                      className={`cursor-pointer flex items-center text-xs ${
+                      style={tagStyles}
+                      className={`cursor-pointer text-xs ${
                         selectedTags.includes(tag)
                           ? "bg-lightBlue text-blue"
                           : "bg-none border border-white text-white"
                       } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}
                     >
                       <span>{tag}</span>
-                      {selectedTags.includes(tag) && (
+                      {/* {selectedTags.includes(tag) && (
                         <button
                           type="button"
                           className="ml-2 text-lightBlue bg-blue w-4 h-4 flex items-center justify-center rounded-full"
@@ -214,7 +227,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                         >
                           &times;
                         </button>
-                      )}
+                      )} */}
                     </div>
                   ))}
                 {personalizedTags.length > 0 &&
@@ -222,7 +235,8 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                     <div
                       key={index}
                       onClick={() => handleTagClick(tag)}
-                      className={`cursor-pointer flex items-center text-xs ${
+                      style={tagStyles}
+                      className={`cursor-pointer text-xs ${
                         selectedTags.includes(tag)
                           ? "bg-lightBlue text-blue"
                           : "bg-none border border-white text-white"
@@ -304,9 +318,9 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
         </div>
         <DropZone>
           <div ref={drop} className="flex justify-center pt-6 h-screen">
-            {clickedItem && (
+            {clickedItemRef.current && (
               <ChatWindow
-                initialMessage={clickedItem}
+                initialMessage={clickedItemRef.current}
                 initialPosition={clickedPosition}
               />
             )}
@@ -320,6 +334,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
 InputComponent.displayName = "InputComponent";
 
 export default InputComponent;
+
 
 
 
