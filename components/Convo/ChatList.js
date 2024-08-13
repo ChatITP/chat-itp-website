@@ -26,7 +26,7 @@ const ChatList = ({
   messages,
   showMessage,
   toggleShowMessage,
-  isLoading,      
+  isLoading,
   onSendMessage,
 }) => {
   const userMessages = messages.filter((message) => message.sender === "user");
@@ -48,7 +48,7 @@ const ChatList = ({
       .find((message) => message.sender === "user");
 
     if (lastUserMessage) {
-      onSendMessage("Regenerate: " + lastUserMessage.text);
+      onSendMessage(lastUserMessage.text);
     }
   };
 
@@ -88,7 +88,7 @@ const ChatList = ({
             {message.text}
           </div>
         ))}
-        <div className="flex justify-end text-xs gap-2">
+        {/* <div className="flex justify-end text-xs gap-2">
           {!isLoading && (
             <>
               <button onClick={toggleShowMessage}>
@@ -97,11 +97,11 @@ const ChatList = ({
               <Image src="/hide.svg" alt="hide icon" width={9} height={9} />
             </>
           )}
-        </div>
+        </div> */}
       </div>
       {showMessage && (
-        <div className="other-messages bg-chatGray flex-1 overflow-auto p-2 rounded-2xl text-white/75 z-50 flex flex-col justify-between">
-          <div>
+        <div className="other-messages bg-chatGray flex-1 overflow-auto p-2 rounded-2xl text-white/75 z-50 flex flex-col justify-between ">
+          <div className="w-[563px] h-[105px] justify-center overflow-y-auto">
             {otherMessages.map((message, index) => (
               <div key={index} className="p-2 my-2 rounded-md text-white">
                 {message.text}
@@ -109,13 +109,13 @@ const ChatList = ({
             ))}
           </div>
           <div className="flex flex-col items-center space-y-2">
-            {isLoading && (    
+            {isLoading && (
               <div className="flex justify-center items-center my-2 flex-1">
                 <LoadingDots />
               </div>
             )}
             {!isLoading && (
-              <div className="flex justify-end space-x-4 mb-4 w-full"> 
+              <div className="flex justify-end space-x-4 mb-4 w-full">
                 <div className="flex flex-row">
                   <button
                     onClick={handleRegenerate}
@@ -144,7 +144,7 @@ const ChatList = ({
                     alt="tasks icon"
                     width={12}
                     height={12}
-                    className="my-auto"
+                    className="my-auto mr-4"
                   />
                 </div>
               </div>
