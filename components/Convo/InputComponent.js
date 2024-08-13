@@ -14,18 +14,18 @@ const ItemType = {
 
 const CHAT_WINDOW_DIMENSIONS = {
   width: 669,
-  height: 324, 
+  height: 324,
 };
 
 const tagStyles = {
   width: "105px",
   height: "30px",
-  lineHeight: "30px", 
+  lineHeight: "30px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   cursor: "pointer",
-  fontSize: "12px", 
+  fontSize: "12px",
   fontFamily: "'Open Sans', sans-serif",
 };
 
@@ -33,27 +33,30 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   const [searchKey, setSearchKey] = useState("");
   const [items, setItems] = useState([]);
   const [clickedPosition, setClickedPosition] = useState({ x: 0, y: 0 });
-  const clickedItemRef = useRef(null); 
+  const clickedItemRef = useRef(null);
   const tagsContainerRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
   const [showInput, setShowInput] = useState(false);
+  const [editingTagIndex, setEditingTagIndex] = useState(null);
+  const [editingText, setEditingText] = useState("");
+  const [modifiedTags, setModifiedTags] = useState(new Set());
 
   const defaultTagsPool = [
     "Performance",
     "Traditional",
     "Innovative",
     "C++",
-    "3D modeling",
+    "3D",
     "Futuristic",
     "Generative",
     "Wearables",
     "Prototyping",
-    "Arduino",
     "Cybernetics",
     "Fabrication",
     "Sound Design",
     "Unity",
     "Touch Designer",
+    "ITP",
   ];
 
   const [defaultTags, setDefaultTags] = useState([]);
@@ -82,7 +85,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
       const newTag = searchKey.trim();
       const newPersonalizedTags = [...personalizedTags, newTag];
       const updatedSelectedTags = [...selectedTags, newTag];
-  
+
       setPersonalizedTags(newPersonalizedTags);
       setSelectedTags(updatedSelectedTags);
       setSearchKey("");
@@ -150,12 +153,42 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
   };
 
   const handleClick = (item) => {
-    clickedItemRef.current = item; // Store the clicked item in a ref
+    clickedItemRef.current = item;
   };
 
   const clearTags = () => {
     setPersonalizedTags([]);
     setSelectedTags([]);
+  };
+
+  const handleTagDoubleClick = (index, currentText) => {
+    setEditingTagIndex(index);
+    setEditingText(currentText);
+  };
+
+  const handleEditChange = (e) => {
+    setEditingText(e.target.value);
+  };
+
+  const handleEditKeyDown = (e, index, isPersonalized) => {
+    if (e.key === "Enter") {
+      saveEditedTag(index, isPersonalized);
+    }
+  };
+
+  const saveEditedTag = (index, isPersonalized) => {
+    if (isPersonalized) {
+      const newPersonalizedTags = [...personalizedTags];
+      newPersonalizedTags[index] = editingText;
+      setPersonalizedTags(newPersonalizedTags);
+      setModifiedTags((prev) => new Set(prev).add(newPersonalizedTags[index]));
+    } else {
+      const newDefaultTags = [...defaultTags];
+      newDefaultTags[index] = editingText;
+      setDefaultTags(newDefaultTags);
+      setModifiedTags((prev) => new Set(prev).add(newDefaultTags[index]));
+    }
+    setEditingTagIndex(null);
   };
 
   const [, drop] = useDrop({
@@ -208,6 +241,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                     <div
                       key={index}
                       onClick={() => handleTagClick(tag)}
+                      onDoubleClick={() => handleTagDoubleClick(index, tag)}
                       style={tagStyles}
                       className={`cursor-pointer text-xs ${
                         selectedTags.includes(tag)
@@ -215,7 +249,18 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                           : "bg-none border border-white text-white"
                       } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}
                     >
-                      <span>{tag}</span>
+                      {editingTagIndex === index ? (
+                        <input
+                          type="text"
+                          value={editingText}
+                          onChange={handleEditChange}
+                          onKeyDown={(e) => handleEditKeyDown(e, index, false)}
+                          onBlur={() => saveEditedTag(index, false)}
+                          className="w-full h-full text-center bg-none border-none outline-none"
+                        />
+                      ) : (
+                        <span>{tag}</span>
+                      )}
                       {/* {selectedTags.includes(tag) && (
                         <button
                           type="button"
@@ -235,6 +280,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                     <div
                       key={index}
                       onClick={() => handleTagClick(tag)}
+                      onDoubleClick={() => handleTagDoubleClick(index, tag)}
                       style={tagStyles}
                       className={`cursor-pointer text-xs ${
                         selectedTags.includes(tag)
@@ -242,8 +288,19 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                           : "bg-none border border-white text-white"
                       } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}
                     >
-                      <span>{tag}</span>
-                      {selectedTags.includes(tag) && (
+                      {editingTagIndex === index ? (
+                        <input
+                          type="text"
+                          value={editingText}
+                          onChange={handleEditChange}
+                          onKeyDown={(e) => handleEditKeyDown(e, index, true)}
+                          onBlur={() => saveEditedTag(index, true)}
+                          className="w-full h-full text-center bg-none border-none outline-none"
+                        />
+                      ) : (
+                        <span>{tag}</span>
+                      )}
+                      {/* {selectedTags.includes(tag) && (
                         <button
                           type="button"
                           className="ml-2 text-lightBlue bg-blue w-4 h-4 flex items-center justify-center rounded-full"
@@ -254,7 +311,7 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
                         >
                           &times;
                         </button>
-                      )}
+                      )} */}
                     </div>
                   ))}
                 {showInput && (
@@ -334,7 +391,3 @@ const InputComponent = ({ initialTags = [], phrases = [] }) => {
 InputComponent.displayName = "InputComponent";
 
 export default InputComponent;
-
-
-
-
