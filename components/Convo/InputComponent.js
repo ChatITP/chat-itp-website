@@ -250,44 +250,75 @@ const InputComponent = ({ phrases = [] }) => {
                   Refresh examples
                 </p>
               </button>
-              <Image
-                src="/switch.svg"
-                alt="switch icon"
-                width={20}
-                height={20}
-                className="cursor-pointer mr-2"
-                onClick={randomizePhrases}
-              />
-              {hidePhrases&&<Image
-                src="/toggle2.svg"
-                alt="hide icon"
-                width={17}
-                height={17}
-                className="my-auto hover:bg-white"
-                onClick = {handleHidePhrase}
-              />}
-              {!hidePhrases&&<Image
-                src="/toggle.svg"
-                alt="hide icon"
-                width={17}
-                height={17}
-                className="my-auto"
-                onClick = {handleHidePhrase}
-              />}
+
+              <div
+                  className="relative group"
+                  style={{ width: "32px", height: "29px" }}
+                >
+                  <div className="absolute inset-0 bg-darkGray rounded-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute inset-0 flex justify-center items-center">
+                    <Image
+                      src="/switch.svg"
+                      alt="refresh icon"
+                      width={20}
+                      height={20}
+                      className="z-10"
+                      onClick={randomizePhrases}
+                    />
+                  </div>
+                </div>
+              {hidePhrases && (
+                <div
+                  className="relative group"
+                  onClick={handleHidePhrase}
+                  style={{ width: "32px", height: "29px" }}
+                >
+                  <div className="absolute inset-0 bg-darkGray rounded-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute inset-0 flex justify-center items-center">
+                    <Image
+                      src="/toggle2.svg"
+                      alt="hide icon"
+                      width={17}
+                      height={17}
+                      className="z-10"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {!hidePhrases && (
+                <div
+                  className="relative group"
+                  onClick={handleHidePhrase}
+                  style={{ width: "32px", height: "29px" }}
+                >
+                  <div className="absolute inset-0 bg-darkGray rounded-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute inset-0 flex justify-center items-center">
+                    <Image
+                      src="/toggle.svg"
+                      alt="hide icon"
+                      width={17}
+                      height={17}
+                      className="z-10"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         <div className="flex gap-6 p-2 overflow-x-auto whitespace-nowrap max-w-[1440px] ml-4">
-          {!hidePhrases&&sortedItems.map((phrase, index) => (
-            <Phrase
-              key={index}
-              phrase={phrase}
-              selectedTags={selectedTags}
-              highlightText={highlightText}
-              onClick={handleClick}
-            />
-          ))}
+          {!hidePhrases &&
+            sortedItems.map((phrase, index) => (
+              <Phrase
+                key={index}
+                phrase={phrase}
+                selectedTags={selectedTags}
+                highlightText={highlightText}
+                onClick={handleClick}
+              />
+            ))}
         </div>
 
         <DropZone>
