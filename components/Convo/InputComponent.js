@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDrop } from "react-dnd";
-import ChatWindow from "./ChatWindow";
+import DraggableChatList from "./ChatWindow";
 import DropZone from "./DropZone";
 import Image from "next/image";
 import Link from "next/link";
@@ -69,6 +69,7 @@ const InputComponent = ({ phrases = [] }) => {
   const [editingTagIndex, setEditingTagIndex] = useState(null);
   const [editingText, setEditingText] = useState("");
   const [modifiedTags, setModifiedTags] = useState(new Set());
+  const [hidePhrases, setHidePhrases] = useState(false);
 
   const defaultTagsPool = [
     "Performance",
@@ -120,6 +121,10 @@ const InputComponent = ({ phrases = [] }) => {
         ? prevSelectedTags.filter((t) => t !== tag)
         : [...prevSelectedTags, tag]
     );
+  };
+
+  const handleHidePhrase = () => {
+    setHidePhrases((prevState) => !prevState);
   };
 
   const handleTagDoubleClick = (index, currentText) => {
@@ -184,7 +189,7 @@ const InputComponent = ({ phrases = [] }) => {
               alt="logo icon"
               width={70}
               height={61}
-              className="my-auto"
+              className="my-auto ml-4"
             />
           </Link>
 
@@ -202,7 +207,8 @@ const InputComponent = ({ phrases = [] }) => {
                       onDoubleClick={() => handleTagDoubleClick(index, tag)}
                       style={{
                         ...tagStyles,
-                        width: tag === "Add Custom Tag" ? "120px" : tagStyles.width, 
+                        width:
+                          tag === "Add Custom Tag" ? "120px" : tagStyles.width,
                       }}
                       className={`cursor-pointer text-xs ${
                         selectedTags.includes(tag)
@@ -238,11 +244,42 @@ const InputComponent = ({ phrases = [] }) => {
                 />
               </div>
             </div>
+            <div className="flex justify-end mr-4">
+              <button className="mr-2" onClick={randomizePhrases}>
+                <p className="text-sm font-semibold text-white/80">
+                  Refresh examples
+                </p>
+              </button>
+              <Image
+                src="/switch.svg"
+                alt="switch icon"
+                width={20}
+                height={20}
+                className="cursor-pointer mr-2"
+                onClick={randomizePhrases}
+              />
+              {hidePhrases&&<Image
+                src="/toggle2.svg"
+                alt="hide icon"
+                width={17}
+                height={17}
+                className="my-auto hover:bg-white"
+                onClick = {handleHidePhrase}
+              />}
+              {!hidePhrases&&<Image
+                src="/toggle.svg"
+                alt="hide icon"
+                width={17}
+                height={17}
+                className="my-auto"
+                onClick = {handleHidePhrase}
+              />}
+            </div>
           </div>
         </div>
 
-        <div className="flex gap-6 p-2 overflow-x-auto whitespace-nowrap max-w-[1440px]">
-          {sortedItems.map((phrase, index) => (
+        <div className="flex gap-6 p-2 overflow-x-auto whitespace-nowrap max-w-[1440px] ml-4">
+          {!hidePhrases&&sortedItems.map((phrase, index) => (
             <Phrase
               key={index}
               phrase={phrase}
@@ -252,25 +289,11 @@ const InputComponent = ({ phrases = [] }) => {
             />
           ))}
         </div>
-        <div className="flex justify-end mr-4">
-          <button className="mr-2" onClick={randomizePhrases}>
-            <p className="text-sm font-semibold text-white/80">
-              Refresh examples
-            </p>
-          </button>
-          <Image
-            src="/switch.svg"
-            alt="switch icon"
-            width={20}
-            height={20}
-            className="cursor-pointer"
-            onClick={randomizePhrases}
-          />
-        </div>
+
         <DropZone>
           <div ref={drop} className="flex justify-center pt-6 h-screen">
             {clickedItemRef.current && (
-              <ChatWindow
+              <DraggableChatList
                 initialMessage={clickedItemRef.current}
                 initialPosition={clickedPosition}
               />

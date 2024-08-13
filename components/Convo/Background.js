@@ -6,13 +6,13 @@ const sketch = (p5) => {
 
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
-    p5.noLoop(); // Only draw once unless window is resized
+    p5.noLoop(); 
   };
 
   p5.draw = () => {
     var cols = p5.windowWidth / stepSize;
     var rows = p5.windowHeight / stepSize;
-    p5.background(67, 64, 64);
+    p5.background(77,77,78);
 
     p5.fill(255);
     p5.noStroke();
