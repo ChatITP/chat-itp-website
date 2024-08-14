@@ -23,7 +23,11 @@ const AssociationPrompt = () => {
    * @param {*} id
    */
   const handlePhraseClick = (id) => {
-    generateSuggestions(id);
+    if (promptPhrases[id].isPlaceholder) {
+      generateSuggestions();
+    } else {
+      generateReplacements(id);
+    }
     setPromptPhrases((promptPhrases) => {
       const updatedPromptPhrases = promptPhrases.map((phrase, index) => {
         if (index === id) {
@@ -161,11 +165,32 @@ const AssociationPrompt = () => {
     return result;
   };
 
-  const generateSuggestions = async (replaceIndex) => {
+  const generateSuggestions = async () => {
     setGeneratedPhrases({ suggestions: [], isLoading: true });
     const response = await request("post", "/api/llm/suggestions", {
       text: promptPhrases.map((phrase) => phrase.text).join(" "),
     });
+    setGeneratedPhrases({ suggestions: response.data, isLoading: false });
+  };
+
+  const generateReplacements = async (replaceIndex) => {
+    setGeneratedPhrases({ suggestions: [], isLoading: true });
+
+    const prompt = promptPhrases
+      .map((phrase, index) => {
+        if (index === replaceIndex) {
+          return `<<<${phrase.text}>>>`;
+        }
+        return phrase.text;
+      })
+      .join(" ");
+
+    const response = await request("post", "/api/llm/replace", {
+      text: prompt,
+    });
+
+    console.log(response.data);
+
     setGeneratedPhrases({ suggestions: response.data, isLoading: false });
   };
 
