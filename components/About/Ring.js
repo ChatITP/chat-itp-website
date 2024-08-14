@@ -42,7 +42,7 @@ const sketch = (p5) => {
     let w = document.getElementById("about").scrollWidth - 1;
     let h = Math.max(p5.windowHeight, 640) * 2;
     let cvn = p5.createCanvas(w, h);
-    cvn.parent("p5-container");
+    cvn.parent("p5-ring-container");
     // Find the center of the circles
     x = 298 + p5.max(0, w - 1440) / 2;
     y = h / 2 + 74;
@@ -79,7 +79,7 @@ const sketch = (p5) => {
 
 export default function Ring() {
   return (
-    <div id="p5-container" className="absolute top-0 left-0">
+    <div id="p5-ring-container" className="absolute top-0 left-0">
       <NextReactP5Wrapper sketch={sketch} />
     </div>
   );
