@@ -203,7 +203,7 @@ const InputComponent = ({ phrases = [] }) => {
       </div>
 
       <div className="relative z-10 w-full space-y-2">
-        <div className="flex flex-row gap-4 bg-gray px-2 pt-4 pb-2 items-center z-20">
+        <div className="flex flex-row gap-4 bg-gray px-2 h-[84px] items-center z-20">
           <Link href="/about">
             <Image
               src="/logo.png"
@@ -267,7 +267,7 @@ const InputComponent = ({ phrases = [] }) => {
             </div>
             <div className="flex justify-end mr-4">
               <button className="mr-2" onClick={randomizePhrases}>
-                <p className="text-sm font-semibold text-white/80">
+                <p className="text-sm font-sans text-white/80">
                   Refresh examples
                 </p>
               </button>
