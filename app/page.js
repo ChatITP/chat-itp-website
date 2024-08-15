@@ -10,7 +10,9 @@ const MyPage = () => {
   return (
     <div>
       <AuthWrapper>
-        <Convo tags={tags} setTags={setTags} />
+        <RecoilRoot>
+          <Convo tags={tags} setTags={setTags} />
+        </RecoilRoot>
       </AuthWrapper>
     </div>
   );

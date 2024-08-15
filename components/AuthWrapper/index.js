@@ -56,8 +56,6 @@ function AuthWrapper({ children }) {
     authenticate();
   }, []);
 
-  console.log(authState);
-
   if (authState.isLoading) {
     return <div>Loading...</div>;
   } else if (authState.isAuthenticated) {
