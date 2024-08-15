@@ -134,6 +134,7 @@ const InputComponent = ({ phrases = [] }) => {
 
   const handleEditChange = (e) => {
     setEditingText(e.target.value);
+
   };
 
   const handleEditKeyDown = (e, index) => {
@@ -143,12 +144,32 @@ const InputComponent = ({ phrases = [] }) => {
   };
 
   const saveEditedTag = (index) => {
-    const newDefaultTags = [...defaultTags];
-    newDefaultTags[index] = editingText;
+  const originalTag = defaultTags[index];
+  const newDefaultTags = [...defaultTags];
+  const newTag = editingText.trim();
+
+  if (newTag) {
+    newDefaultTags[index] = newTag;
     setDefaultTags(newDefaultTags);
-    setModifiedTags((prev) => new Set(prev).add(newDefaultTags[index]));
-    setEditingTagIndex(null);
-  };
+
+    setSelectedTags((prevSelectedTags) => {
+      const updatedSelectedTags = prevSelectedTags.filter(
+        (tag) => tag !== originalTag
+      );
+
+      if (!updatedSelectedTags.includes(newTag)) {
+        updatedSelectedTags.push(newTag);
+      }
+
+      return updatedSelectedTags;
+    });
+
+    setModifiedTags((prev) => new Set(prev).add(newTag));
+  }
+
+  setEditingTagIndex(null);
+};
+
 
   const handleClick = (item) => {
     clickedItemRef.current = item;
