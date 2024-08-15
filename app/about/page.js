@@ -2,6 +2,9 @@ import Home from "@/components/Home";
 import About from "@/components/About";
 import Post from "@/components/Post";
 import Nav from "@/components/Nav";
+import Ring from "@/components/About/Ring.js";
+import Footer from "@/components/Footer";
+
 import PromptSection from "@/components/Prompt";
 
 export default function Page() {
@@ -10,8 +13,9 @@ export default function Page() {
       <Nav />
       <Home />
       <About />
-      <PromptSection />
       {/* <Post /> */}
+      <PromptSection />
+      <Footer />
     </main>
   );
 }

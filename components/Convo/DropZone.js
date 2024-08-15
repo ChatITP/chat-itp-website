@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, forwardRef } from 'react';
-import { useDroppable } from '@dnd-kit/core';
+import { DndContext, useDroppable } from '@dnd-kit/core';
 import DraggableChatInterface from './DraggableChatInterface'; 
 import request from 'app/lib/request'; 
 
@@ -8,14 +8,14 @@ const DropZone = forwardRef(({ id, children }, ref) => {
   const [selectedChatIndex, setSelectedChatIndex] = useState(null);
   const [droppedItems, setDroppedItems] = useState([]);
 
-  const handleDoubleClick = (e) => {
-    const dropZoneRect = e.currentTarget.getBoundingClientRect();
-    const newChat = {
-      id: Date.now(),
-      position: { x: e.clientX - dropZoneRect.left, y: e.clientY - dropZoneRect.top },
-    };
-    setChatInterfaces([...chatInterfaces, newChat]);
-  };
+  // const handleDoubleClick = (e) => {
+  //   const dropZoneRect = e.currentTarget.getBoundingClientRect();
+  //   const newChat = {
+  //     id: Date.now(),
+  //     position: { x: e.clientX - dropZoneRect.left, y: e.clientY - dropZoneRect.top },
+  //   };
+  //   setChatInterfaces([...chatInterfaces, newChat]);
+  // };
 
   const handleDelete = () => {
     if (selectedChatIndex !== null) {
@@ -63,24 +63,6 @@ const DropZone = forwardRef(({ id, children }, ref) => {
     }
   };
 
-  const handleDragEnd = async (event) => {
-    const { active, over } = event;
-    if (over && over.id === 'drop-zone') {
-      const dropZoneElement = ref.current;
-      if (dropZoneElement) {
-        const dropZoneRect = dropZoneElement.getBoundingClientRect();
-        const mouseX = event.delta.clientX - dropZoneRect.left;
-        const mouseY = event.delta.clientY - dropZoneRect.top;
-        const newId = `new-${active.id}-${Date.now()}`;
-        const answer = await sendMessageToModel([active.id]);
-        setDroppedItems((droppedItems) => [
-          ...droppedItems,
-          { id: newId, originalId: active.id, text: active.data.current.text, x: mouseX, y: mouseY, answer },
-        ]);
-      }
-    }
-  };
-
   const { setNodeRef } = useDroppable({
     id: 'drop-zone',
     data: {
@@ -88,32 +70,33 @@ const DropZone = forwardRef(({ id, children }, ref) => {
     },
   });
 
+  const handleDragEnd = async (event) => {
+    const { over, active } = event;
+    if (over && over.id === 'drop-zone') {
+      const dropZoneElement = ref.current;
+      if (dropZoneElement) {
+        const dropZoneRect = dropZoneElement.getBoundingClientRect();
+        const x = dropZoneRect.width / 2;
+        const y = dropZoneRect.height / 2;
+        const newId = `new-${active.id}-${Date.now()}`;
+        const answer = await sendMessageToModel([active.id]);
+        setDroppedItems((prev) => [
+          ...prev,
+          { id: newId, originalId: active.id, text: active.data.current.text, x: x, y: y, answer },
+        ]);
+      }
+    }
+  };
+
   return (
+    <DndContext onDragEnd={handleDragEnd}>
     <div
       ref={setNodeRef}
-      className="rounded-lg h-screen relative z-10"
-      onDoubleClick={handleDoubleClick}
+      className="rounded-lg z-10"
       onClick={() => setSelectedChatIndex(null)} 
     >
       {children}
-      {chatInterfaces.map((chat, index) => (
-        <div
-          key={chat.id}
-          className="chat-interface-container"
-          onClick={(e) => {
-            e.stopPropagation(); 
-            setSelectedChatIndex(index);
-          }}
-        >
-          <DraggableChatInterface
-            id={`chat-${chat.id}`}
-            initialX={chat.position.x}
-            initialY={chat.position.y}
-            isSelected={index === selectedChatIndex}
-            onClick={() => setSelectedChatIndex(index)}
-          />
-        </div>
-      ))}
+      
       {droppedItems.map((item, index) => (
         <div
           key={item.id}
@@ -124,6 +107,7 @@ const DropZone = forwardRef(({ id, children }, ref) => {
         </div>
       ))}
     </div>
+    </DndContext>
   );
 });
 

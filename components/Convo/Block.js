@@ -12,12 +12,13 @@ const colors = [
   'bg-white',
 ];
 
-const Block = ({ text, index, onSelect }) => (
+const Block = ({ text, index, onSelect, color }) => (
   <button
-    className={`py-2 px-4 rounded-full shadow-md text-sm font-semibold ${
+    className={`py-2 px-4 rounded-xl drop-shadow-lg text-sm font-semibold ${
       text === '?' ? 'bg-white/20 text-black' : colors[index % colors.length]
-    } text-black`}
+    } text-black hover:border-2 hover:border-white `}
     onClick={() => onSelect(text)}
+    
   >
     {text}
   </button>

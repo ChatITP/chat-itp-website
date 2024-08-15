@@ -5,6 +5,7 @@ import LoadingDots from '@/components/Convo/LoadingDots';
 import BlockSelector from './BlockSelector';
 import Block from './Block'; 
 
+
 const DottedLine = () => (
   <svg width="32" height="2" className="mx-1">
     <line x1="0" y1="1" x2="32" y2="1" stroke="black" strokeWidth="2" strokeDasharray="2 4"/>
@@ -73,15 +74,15 @@ const ChatInterface = () => {
   }, [messages]);
 
   return (
-    <div className="p-4 w-[600px] bg-white text-black rounded-lg shadow-lg flex flex-col max-h-96">
+    <div className="p-4 w-[534px] bg-white/20 text-white rounded-[20px]  flex flex-col max-h-72">
       <div className="flex-1 overflow-y-auto mb-4" ref={chatListRef}>
         {messages.map((message, index) => (
           <div key={index} className="mb-6">
-            <div className="flex items-center justify-start mb-2 bg-gray-100 p-4 rounded-md shadow-inner min-h-20 overflow-x-auto">
+            <div className="flex items-center justify-start mb-2 bg-gray-100 p-4 rounded-md  min-h-20 overflow-x-auto">
               {message.question.map((block, blockIndex) => (
                 <React.Fragment key={blockIndex}>
                   <Block text={block} index={blockIndex} onSelect={() => {}} />
-                  {blockIndex < message.question.length - 1 && <DottedLine />}
+                  {blockIndex < message.question.length - 1 }
                 </React.Fragment>
               ))}
             </div>
@@ -91,19 +92,19 @@ const ChatInterface = () => {
           </div>
         ))}
       </div>
-      <div className="mt-4">
+      <div>
         {showSuggestions ? (
           <>
-            <div className="flex items-center justify-start mb-4 bg-gray-100 p-4 rounded-md shadow-inner min-h-20 overflow-x-auto">
+            <div className="flex items-center justify-start mb-4 bg-gray-100 p-4 rounded-md min-h-20 overflow-x-auto scroll-white">
               {selectedBlocks.map((block, index) => (
                 <React.Fragment key={index}>
                   <Block text={block} index={index} onSelect={() => {}} />
-                  {index < selectedBlocks.length - 1 && <DottedLine />}
+                  {index < selectedBlocks.length - 1}
                 </React.Fragment>
               ))}
               {selectedBlocks.length > 0 && (
                 <>
-                  <DottedLine />
+                 
                   <Block text="?" index={selectedBlocks.length} onSelect={handleBlockSelect} />
                 </>
               )}
@@ -117,7 +118,7 @@ const ChatInterface = () => {
                 <LoadingDots />
               </div>
             )}
-            <div className="flex justify-end text-black">
+            <div className="flex justify-end text-white">
               <Button onClick={handleAskAgain}>Ask Again</Button>
             </div>
           </div>

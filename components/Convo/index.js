@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InputComponent from "@/components/Convo/InputComponent";
-import Block from "@/components/Block";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 const Home = () => {
   const [tags, setTags] = useState([]);
@@ -10,16 +11,16 @@ const Home = () => {
     "In 2075, ITP students will use AR to redefine social interactions. Describe a project and its implications on privacy and connections.",
     "Imagine that all the ITP student work represents the DNA of a university program. Describe a university program based on this DNA",
     "Write an advertisement poem about ITP Spring Show.",
-    // "Design the “ITP version” of these common objects: Toaster, bubble tea, supercomputer, paper clip, pet chihuahua, underpants.",
+    "How did ITP projects evolve in terms of multimedia storytelling from the 2000s to the 2010s?",
+    "Design the “ITP version” of these common objects: Toaster, bubble tea, supercomputer, paper clip, pet chihuahua, underpants.",
   ];
 
   return (
-    <div className="bg-gray2">
-      <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
-      <div className="absolute top-96 left-20 z-50">
-        <Block />
+    <DndProvider backend={HTML5Backend}>
+      <div className="bg-gray2">
+        <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
       </div>
-    </div>
+    </DndProvider>
   );
 };
 
