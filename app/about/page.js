@@ -3,22 +3,18 @@ import About from "@/components/About";
 import Post from "@/components/Post";
 import Nav from "@/components/Nav";
 import Ring from "@/components/About/Ring.js";
-import Footer from "@/components/Footer"
+import Footer from "@/components/Footer";
 
-
+import PromptSection from "@/components/Prompt";
 
 export default function Page() {
   return (
-    <main className="relative">
+    <main id="about" className="min-w-[360px]">
       <Nav />
-      
       <Home />
-      <div className="absolute inset-0 z-15 left-0 top-[400px]">
-          <Ring />
-        </div>
       <About />
-      
-      <Post />
+      {/* <Post /> */}
+      <PromptSection />
       <Footer />
     </main>
   );

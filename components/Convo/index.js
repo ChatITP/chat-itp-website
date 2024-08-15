@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import InputComponent from '@/components/Convo/InputComponent'; 
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { DndProvider } from 'react-dnd'
+import React, { useState } from "react";
+import InputComponent from "@/components/Convo/InputComponent";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 const Home = () => {
   const [tags, setTags] = useState([]);
@@ -16,10 +16,10 @@ const Home = () => {
   ];
 
   return (
-     <DndProvider backend={HTML5Backend}>
-    <div className="bg-gray2">
-      <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <div className="bg-gray2">
+        <InputComponent tags={tags} setTags={setTags} phrases={phrases} />
+      </div>
     </DndProvider>
   );
 };
