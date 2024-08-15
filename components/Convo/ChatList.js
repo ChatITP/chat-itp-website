@@ -79,31 +79,32 @@ const ChatList = ({
       <div
         className={`user-messages bg-gray text-white/80 pt-3 px-5 ${
           showMessage ? "rounded-t-2xl" : "rounded-2xl"
-        } overflow-auto text-base`}
-        style={{ height: "120px" }}
+        } overflow-auto text-sm`}
+        style={{ height: "98px" }}
         ref={userMessagesRef}
       >
         {userMessages.map((message, index) => (
-          <div key={index} className="p-2 my-2 rounded-md">
+          <div key={index} className="my-2 rounded-md w-[430px] mx-auto font-sans">
             {message.text}
           </div>
         ))}
-        {/* <div className="flex justify-end text-xs gap-2">
+        <div className="flex justify-end text-xs gap-2">
           {!isLoading && (
             <>
-              <button onClick={toggleShowMessage}>
-                {showMessage ? "Hide" : "Show"}
+              <button onClick={toggleShowMessage} className="font-sans text-[10px]">
+                {showMessage ? "Hide" : "Expand"}
               </button>
-              <Image src="/hide.svg" alt="hide icon" width={9} height={9} />
+              {!showMessage&&<Image src="/expand.svg" alt="hide icon" width={9} height={9} />}
+              {showMessage&&<Image src="/hide.svg" alt="hide icon" width={9} height={9} />}
             </>
           )}
-        </div> */}
+        </div>
       </div>
       {showMessage && (
         <div className="other-messages bg-chatGray flex-1 overflow-auto p-2 rounded-2xl text-white/75 z-50 flex flex-col justify-between ">
-          <div className="w-[563px] h-[105px] justify-center overflow-y-auto">
+          <div className="w-[430px] h-[109px] mx-auto overflow-y-auto scrollbar-thumb-white">
             {otherMessages.map((message, index) => (
-              <div key={index} className="p-2 my-2 rounded-md text-white">
+              <div key={index} className="my-2 rounded-md text-white text-sm font-sans">
                 {message.text}
               </div>
             ))}
@@ -115,11 +116,11 @@ const ChatList = ({
               </div>
             )}
             {!isLoading && (
-              <div className="flex justify-end space-x-4 mb-4 w-full">
+              <div className="flex justify-end space-x-4 mb-2 w-full">
                 <div className="flex flex-row">
                   <button
                     onClick={handleRegenerate}
-                    className="p-2 text-sm font-semibold text-white rounded-md"
+                    className="p-2 text-[10px] font-semibold text-white rounded-md"
                   >
                     Regenerate
                   </button>
@@ -135,7 +136,7 @@ const ChatList = ({
                 <div className="flex flex-row">
                   <button
                     onClick={handleAskFollowup}
-                    className="p-2 text-sm font-semibold text-white rounded-md"
+                    className="p-2 text-[10px] font-semibold text-white rounded-md"
                   >
                     Ask followup
                   </button>

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDrop } from "react-dnd";
-import DraggableChatList from "./ChatWindow";
+import ChatWindow from "./ChatWindow";
 import DropZone from "./DropZone";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,8 +12,8 @@ const ItemType = {
 };
 
 const CHAT_WINDOW_DIMENSIONS = {
-  width: 669,
-  height: 324,
+  width: 500,
+  height: 278,
 };
 
 const tagStyles = {
@@ -160,8 +160,8 @@ const InputComponent = ({ phrases = [] }) => {
       const delta = monitor.getClientOffset();
       clickedItemRef.current = item.phrase;
       setClickedPosition({
-        x: delta.x - CHAT_WINDOW_DIMENSIONS.width,
-        y: delta.y - CHAT_WINDOW_DIMENSIONS.height,
+        x: delta.x - CHAT_WINDOW_DIMENSIONS.width/0.8,
+        y: delta.y - CHAT_WINDOW_DIMENSIONS.height/0.8,
       });
     },
   });
@@ -324,7 +324,7 @@ const InputComponent = ({ phrases = [] }) => {
         <DropZone>
           <div ref={drop} className="flex justify-center pt-6 h-screen">
             {clickedItemRef.current && (
-              <DraggableChatList
+              <ChatWindow
                 initialMessage={clickedItemRef.current}
                 initialPosition={clickedPosition}
               />

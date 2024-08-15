@@ -17,6 +17,7 @@ module.exports = {
       gray2: "#4D4D4E",
       darkGray: "#2D2D2D",
       chatGray: "#424242",
+      scrollBar:"#717171",
       red: "#FF9C9C",
       orange: "#FFD9A3",
       yellow: "#FFF495",
@@ -31,6 +32,9 @@ module.exports = {
       },
       boxShadow:{
         'glow': '0 0 8px rgba(207, 231, 255, 0.6), 0 0 12px rgba(207, 231, 255, 0.8), 0 0 16px rgba(207, 231, 255, 1)',
+      },
+      fontFamily:{
+        sans: ['Open Sans', 'Helvetica', 'Arial', 'sans-serif'], 
       }
     },
   },

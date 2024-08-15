@@ -20,7 +20,7 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
   const isDraggingRef = useRef(false);
   const clickStartPosition = useRef({ x: 0, y: 0 });
 
-  const DRAG_THRESHOLD = 5; 
+  const DRAG_THRESHOLD = 5;
 
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: ItemType.CHAT_WINDOW,
@@ -36,7 +36,10 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
     e.preventDefault();
     isDraggingRef.current = false;
     clickStartPosition.current = { x: e.clientX, y: e.clientY };
-    initialMousePosition.current = { x: e.clientX - position.x, y: e.clientY - position.y };
+    initialMousePosition.current = {
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
+    };
 
     const handleMouseMove = (e) => {
       const dx = e.clientX - clickStartPosition.current.x;
@@ -56,12 +59,12 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
       if (!isDraggingRef.current) {
         handleClick();
       }
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
   };
 
   const handleClick = () => {
@@ -145,19 +148,19 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
         cursor: isDragging ? "grabbing" : "grab",
       }}
       onMouseDown={handleMouseDown}
-      className={`flex flex-col w-[669px] rounded-2xl border-[3px] shadow-md bg-gray ${
+      className={`flex flex-col w-[500px]  rounded-2xl border-[3px] shadow-md bg-gray ${
         isSelected ? "border-lightBlue" : "border-none"
-      } ${showMessage ? "h-[324px]" : "h-[120px] "}`}
+      } ${showMessage ? "h-[278px]" : "h-[98px]"}`}
     >
       <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
         <ChatList
           messages={messages}
           showMessage={showMessage}
           toggleShowMessage={toggleShowMessage}
-          isLoading={loading}  
+          isLoading={loading}
           onSendMessage={handleSendMessage}
-          onInputFocus={handleFocus} 
-          onInputBlur={handleBlur}  
+          onInputFocus={handleFocus}
+          onInputBlur={handleBlur}
         />
       </div>
     </div>
