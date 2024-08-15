@@ -10,11 +10,7 @@ export const Message = ({ text, sender }) => {
       : "bg-neutral-100 text-black self-start";
 
   return (
-    <div
-      className={`flex ${
-        sender === "user" ? "justify-end" : "text-center"
-      } mb-2`}
-    >
+    <div className={`flex ${sender === "user" ? "justify-end" : "text-center"} mb-2`}>
       <div className={`p-3 rounded-lg max-w-lg ${messageStyles}`}>
         <span>{text}</span>
       </div>
@@ -29,9 +25,8 @@ const ChatList = ({
   isLoading,
   onSendMessage,
 }) => {
-  const userMessages = messages.filter((message) => message.sender === "user");
-  const otherMessages = messages.filter((message) => message.sender !== "user");
   const userMessagesRef = useRef(null);
+  const inputRef = useRef(null);
   const [showInput, setShowInput] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
 
@@ -39,14 +34,16 @@ const ChatList = ({
     if (userMessagesRef.current) {
       userMessagesRef.current.scrollTop = userMessagesRef.current.scrollHeight;
     }
-  }, [userMessages]);
+  }, [messages]);
+
+  useEffect(() => {
+    if (showInput && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [showInput]);
 
   const handleRegenerate = () => {
-    const lastUserMessage = messages
-      .slice()
-      .reverse()
-      .find((message) => message.sender === "user");
-
+    const lastUserMessage = [...messages].reverse().find((message) => message.sender === "user");
     if (lastUserMessage) {
       onSendMessage(lastUserMessage.text);
     }
@@ -60,26 +57,29 @@ const ChatList = ({
     setCurrentMessage(e.target.value);
   };
 
-  const handleInputKeyDown = (e) => {
-    if (e.key === "Enter" && currentMessage.trim() !== "") {
+  const handleSendButtonClick = () => {
+    if (currentMessage.trim() !== "") {
       onSendMessage(currentMessage);
+      setCurrentMessage("");
       setShowInput(false);
     }
   };
 
-  const handleSendButtonClick = () => {
-    if (currentMessage.trim() !== "") {
+  const handleInputKeyDown = (e) => {
+    if (e.key === "Enter" && currentMessage.trim() !== "") {
       onSendMessage(currentMessage);
+      setCurrentMessage("");
       setShowInput(false);
     }
   };
+
+  const userMessages = messages.filter((message) => message.sender === "user");
+  const otherMessages = messages.filter((message) => message.sender !== "user");
 
   return (
     <div className="chat-list flex flex-col h-full">
       <div
-        className={`user-messages bg-gray text-white/80 pt-3 px-5 ${
-          showMessage ? "rounded-t-2xl" : "rounded-2xl"
-        } overflow-auto text-sm`}
+        className={`user-messages bg-gray text-white/80 pt-3 px-5 ${showMessage ? "rounded-t-2xl" : "rounded-2xl"} overflow-auto text-sm`}
         style={{ height: "98px" }}
         ref={userMessagesRef}
       >
@@ -94,14 +94,14 @@ const ChatList = ({
               <button onClick={toggleShowMessage} className="font-sans text-[10px]">
                 {showMessage ? "Hide" : "Expand"}
               </button>
-              {!showMessage&&<Image src="/expand.svg" alt="hide icon" width={9} height={9} />}
-              {showMessage&&<Image src="/hide.svg" alt="hide icon" width={9} height={9} />}
+              {!showMessage && <Image src="/expand.svg" alt="hide icon" width={9} height={9} />}
+              {showMessage && <Image src="/hide.svg" alt="hide icon" width={9} height={9} />}
             </>
           )}
         </div>
       </div>
       {showMessage && (
-        <div className="other-messages bg-chatGray flex-1 overflow-auto p-2 rounded-2xl text-white/75 z-50 flex flex-col justify-between ">
+        <div className="other-messages bg-chatGray flex-1 overflow-auto p-2 rounded-2xl text-white/75 z-50 flex flex-col justify-between">
           <div className="w-[430px] h-[109px] mx-auto overflow-y-auto scrollbar-thumb-white">
             {otherMessages.map((message, index) => (
               <div key={index} className="my-2 rounded-md text-white text-sm font-sans">
@@ -118,35 +118,16 @@ const ChatList = ({
             {!isLoading && (
               <div className="flex justify-end space-x-4 mb-2 w-full">
                 <div className="flex flex-row">
-                  <button
-                    onClick={handleRegenerate}
-                    className="p-2 text-[10px] font-semibold text-white rounded-md"
-                  >
+                  <button onClick={handleRegenerate} className="p-2 text-[10px] font-semibold text-white rounded-md">
                     Regenerate
                   </button>
-                  <Image
-                    src="/switch.svg"
-                    alt="switch icon"
-                    width={12}
-                    height={12}
-                    className="my-auto"
-                  />
+                  <Image src="/switch.svg" alt="switch icon" width={12} height={12} className="my-auto" />
                 </div>
-
                 <div className="flex flex-row">
-                  <button
-                    onClick={handleAskFollowup}
-                    className="p-2 text-[10px] font-semibold text-white rounded-md"
-                  >
+                  <button onClick={handleAskFollowup} className="p-2 text-[10px] font-semibold text-white rounded-md">
                     Ask followup
                   </button>
-                  <Image
-                    src="/tasks.svg"
-                    alt="tasks icon"
-                    width={12}
-                    height={12}
-                    className="my-auto mr-4"
-                  />
+                  <Image src="/tasks.svg" alt="tasks icon" width={12} height={12} className="my-auto mr-4" />
                 </div>
               </div>
             )}
@@ -154,16 +135,14 @@ const ChatList = ({
               <div className="flex h-[120px] items-center mb-2 mx-4">
                 <input
                   type="text"
+                  ref={inputRef}
                   value={currentMessage}
                   onChange={handleInputChange}
                   onKeyDown={handleInputKeyDown}
                   className="text-white bg-gray-700 flex-1 p-2 rounded-md"
                   placeholder="Type a message..."
                 />
-                <button
-                  onClick={handleSendButtonClick}
-                  className="ml-2 p-2 bg-blue text-white rounded-md"
-                >
+                <button onClick={handleSendButtonClick} className="ml-2 p-2 bg-blue text-white rounded-md">
                   Send
                 </button>
               </div>
@@ -176,3 +155,4 @@ const ChatList = ({
 };
 
 export default ChatList;
+
