@@ -1,21 +1,17 @@
-"use client";
-import React, { useState } from "react";
-import Convo from "@/components/Convo";
-import { RecoilRoot } from "recoil";
-import AuthWrapper from "@/components/AuthWrapper";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import Home from "@/components/homepage/Home";
+import About from "@/components/homepage/About";
+import PromptSection from "@/components/homepage/Prompt";
 
-const MyPage = () => {
-  const [tags, setTags] = useState([]);
-
+export default function Page() {
   return (
-    <div>
-      <AuthWrapper>
-        <RecoilRoot>
-          <Convo tags={tags} setTags={setTags} />
-        </RecoilRoot>
-      </AuthWrapper>
-    </div>
+    <main id="homepage" className="min-w-[360px]">
+      <Nav />
+      <Home />
+      <About />
+      <PromptSection />
+      <Footer />
+    </main>
   );
-};
-
-export default MyPage;
+}

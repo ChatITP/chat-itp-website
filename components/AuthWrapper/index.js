@@ -13,7 +13,7 @@ function AuthWrapper({ children }) {
 
   useEffect(() => {
     if (authState.needRedirect) {
-      router.push("/login");
+      router.replace("/login");
     }
   }, [authState.needRedirect, router]);
 

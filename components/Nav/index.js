@@ -6,7 +6,7 @@ export default function Nav() {
       <div className="text-xl sm:text-2xl font-bold text-offWhite">Chat ITP</div>
       <ul className="flex space-x-6 sm:space-x-10 md:space-x-16 text-offWhite font-light text-sm sm:text-base items-center">
         <li>
-          <Link href="/">
+          <Link href="/workspace">
             <div>Try Chat ITP</div>
           </Link>
         </li>
