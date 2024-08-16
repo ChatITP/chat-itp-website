@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
-import LoadingDots from "./LoadingDots";
+import LoadingDots from "../LoadingDots";
+import Association from "./Association";
 
 export const Message = ({ text, sender }) => {
   const messageStyles =
@@ -73,14 +74,9 @@ const ChatList = ({ messages, showMessage, toggleShowMessage, isLoading, onSendM
         className={`user-messages bg-gray text-white/80 pt-3 px-5 ${
           showMessage ? "rounded-t-2xl" : "rounded-2xl"
         } overflow-auto text-sm`}
-        style={{ height: "98px" }}
         ref={userMessagesRef}
       >
-        {userMessages.map((message, index) => (
-          <div key={index} className="my-2 rounded-md w-[430px] mx-auto font-sans">
-            {message.text}
-          </div>
-        ))}
+        <Association />
         <div className="flex justify-end text-xs gap-2">
           {!isLoading && (
             <>

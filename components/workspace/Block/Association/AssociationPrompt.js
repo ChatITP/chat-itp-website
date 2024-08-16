@@ -12,7 +12,7 @@ const AssociationPrompt = () => {
   ]);
 
   const [generatedPhrases, setGeneratedPhrases] = useState({
-    suggestions: ["What", "is the most common", "historical theme"],
+    suggestions: [],
     isLoading: false,
   });
 
@@ -199,7 +199,7 @@ const AssociationPrompt = () => {
   const selectID = promptPhrases.findIndex((phrase) => phrase.isSelected);
 
   return (
-    <div className="bg-[#252525] w-[500px] relative  pl-6 pr-8 py-6 rounded-lg">
+    <div className="w-full relative  pl-6 pr-8 py-6">
       <div className="relative leading-10 w-full pb-4">
         {promptPhrases.map((prompt, index) => (
           <Phrase

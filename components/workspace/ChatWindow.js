@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import ChatList from "./ChatList";
+import ChatList from "./Block";
 import request from "/app/lib/request";
 import { useDrag } from "react-dnd";
 
@@ -78,18 +78,11 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
     setLoading(true);
 
     try {
-      const response = await request(
-        "POST",
-        process.env.NEXT_PUBLIC_API_URL + "/llm/generate",
-        {
-          userPrompt: message,
-        }
-      );
+      const response = await request("POST", process.env.NEXT_PUBLIC_API_URL + "/llm/generate", {
+        userPrompt: message,
+      });
 
-      newMessages = [
-        ...newMessages,
-        { text: response.data.content, sender: "ai" },
-      ];
+      newMessages = [...newMessages, { text: response.data.content, sender: "ai" }];
       newMessages = removeDuplicates(newMessages);
       setMessages(newMessages);
       setLoading(false);
@@ -111,12 +104,6 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
       setHasSentInitialMessage(true);
     }
   }, [initialMessage, hasSentInitialMessage]);
-
-  useEffect(() => {
-    if (chatListRef.current) {
-      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
-    }
-  }, [messages]);
 
   const removeDuplicates = (messages) => {
     const seen = new Set();
@@ -150,7 +137,7 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
       onMouseDown={handleMouseDown}
       className={`flex flex-col w-[500px]  rounded-2xl border-[3px] shadow-md bg-gray ${
         isSelected ? "border-lightBlue" : "border-none"
-      } ${showMessage ? "h-[278px]" : "h-[98px]"}`}
+      } h-fit`}
     >
       <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
         <ChatList
