@@ -18,7 +18,7 @@ const Login = () => {
 
   useEffect(() => {
     if (loginState.isLoggedIn) {
-      router.replace("/");
+      router.replace("/workspace");
     }
   }, [loginState.isLoggedIn, router]);
 

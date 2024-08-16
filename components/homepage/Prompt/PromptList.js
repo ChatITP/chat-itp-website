@@ -1,7 +1,7 @@
 "use client";
 import { useState, React } from "react";
-import { animate, motion } from "framer-motion";
-import Prompt from "@/components/Prompt/Prompt";
+import { motion } from "framer-motion";
+import Prompt from "./Prompt";
 
 const PromptList = ({ tags }) => {
   const [prompts] = useState([

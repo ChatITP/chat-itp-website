@@ -1,6 +1,6 @@
-import Card from "@/components/About/Card";
+import Card from "./Card";
 
-import Ring from "@/components/About/Ring";
+import Ring from "./Ring";
 import { FaCompass } from "react-icons/fa6";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { FaDatabase } from "react-icons/fa6";
@@ -9,7 +9,7 @@ import { FaCode } from "react-icons/fa6";
 export default function About() {
   return (
     <>
-      <div className="min-h-[640px] max-w-[1440px] m-auto">
+      <div className="min-h-[640px] max-w-[1440px] m-auto" id="about">
         <Ring />
         <div className="relative h-full">
           <h1 className="absolute text-4xl font-semibold lg:left-[96px] top-[80px] left-[calc(50%-202px)]">

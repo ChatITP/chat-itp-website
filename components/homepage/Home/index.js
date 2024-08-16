@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import Button from "@/components/homepage/Button";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa6";
 
@@ -13,7 +13,7 @@ export default function Home() {
             including video, sculpture, writing, animation, game design, and virtual reality.
           </h2>
           <div className="pb-10">
-            <Link href="/">
+            <Link href="/workspace">
               <Button>
                 <div className="flex items-center">
                   Start Now&nbsp;&nbsp;
