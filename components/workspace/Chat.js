@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import request from '/app/lib/request.js';
-import { Button } from '@/components/Convo/Button'; // Adjust this path if necessary
-import LoadingDots from '@/components/Convo/LoadingDots';
-import Modal from 'react-modal';
+import React, { useState, useEffect, useRef } from "react";
+import request from "/app/lib/request.js";
+import { Button } from "@/components/workspace/Button"; // Adjust this path if necessary
+import LoadingDots from "@/components/workspace/LoadingDots";
+import Modal from "react-modal";
 
-Modal.setAppElement('#root'); // or whatever your root element is
+Modal.setAppElement("#root"); // or whatever your root element is
 
 const ChatInterface = () => {
-  const [prompt, setPrompt] = useState('');
-  const [answer, setAnswer] = useState('');
+  const [prompt, setPrompt] = useState("");
+  const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const inputRef = useRef(null);
@@ -16,14 +16,14 @@ const ChatInterface = () => {
   const sendMessageToModel = async () => {
     setLoading(true);
     try {
-      const response = await request('POST', process.env.NEXT_PUBLIC_API_URL+'/llm/generate', {
+      const response = await request("POST", process.env.NEXT_PUBLIC_API_URL + "/llm/generate", {
         userPrompt: prompt,
       });
       setAnswer(response.data.content);
       setModalIsOpen(true);
     } catch (error) {
-      console.error('Error sending message:', error);
-      setAnswer('Failed to get a response from the model.');
+      console.error("Error sending message:", error);
+      setAnswer("Failed to get a response from the model.");
       setModalIsOpen(true);
     } finally {
       setLoading(false);
@@ -37,8 +37,8 @@ const ChatInterface = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
-    setAnswer('');
-    setPrompt('');
+    setAnswer("");
+    setPrompt("");
   };
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const ChatInterface = () => {
           rows="4"
         />
         <Button type="submit" disabled={loading} className="mt-2">
-          {loading ? <LoadingDots /> : 'Send'}
+          {loading ? <LoadingDots /> : "Send"}
         </Button>
       </form>
 

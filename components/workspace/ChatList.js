@@ -1,13 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import LoadingDots from "./LoadingDots";
-import request from "/app/lib/request";
 
 export const Message = ({ text, sender }) => {
   const messageStyles =
-    sender === "user"
-      ? "bg-purple text-black self-end"
-      : "bg-neutral-100 text-black self-start";
+    sender === "user" ? "bg-purple text-black self-end" : "bg-neutral-100 text-black self-start";
 
   return (
     <div className={`flex ${sender === "user" ? "justify-end" : "text-center"} mb-2`}>
@@ -18,13 +15,7 @@ export const Message = ({ text, sender }) => {
   );
 };
 
-const ChatList = ({
-  messages,
-  showMessage,
-  toggleShowMessage,
-  isLoading,
-  onSendMessage,
-}) => {
+const ChatList = ({ messages, showMessage, toggleShowMessage, isLoading, onSendMessage }) => {
   const userMessagesRef = useRef(null);
   const inputRef = useRef(null);
   const [showInput, setShowInput] = useState(false);
@@ -79,7 +70,9 @@ const ChatList = ({
   return (
     <div className="chat-list flex flex-col h-full">
       <div
-        className={`user-messages bg-gray text-white/80 pt-3 px-5 ${showMessage ? "rounded-t-2xl" : "rounded-2xl"} overflow-auto text-sm`}
+        className={`user-messages bg-gray text-white/80 pt-3 px-5 ${
+          showMessage ? "rounded-t-2xl" : "rounded-2xl"
+        } overflow-auto text-sm`}
         style={{ height: "98px" }}
         ref={userMessagesRef}
       >
@@ -118,16 +111,34 @@ const ChatList = ({
             {!isLoading && (
               <div className="flex justify-end space-x-4 mb-2 w-full">
                 <div className="flex flex-row">
-                  <button onClick={handleRegenerate} className="p-2 text-[10px] font-semibold text-white rounded-md">
+                  <button
+                    onClick={handleRegenerate}
+                    className="p-2 text-[10px] font-semibold text-white rounded-md"
+                  >
                     Regenerate
                   </button>
-                  <Image src="/switch.svg" alt="switch icon" width={12} height={12} className="my-auto" />
+                  <Image
+                    src="/switch.svg"
+                    alt="switch icon"
+                    width={12}
+                    height={12}
+                    className="my-auto"
+                  />
                 </div>
                 <div className="flex flex-row">
-                  <button onClick={handleAskFollowup} className="p-2 text-[10px] font-semibold text-white rounded-md">
+                  <button
+                    onClick={handleAskFollowup}
+                    className="p-2 text-[10px] font-semibold text-white rounded-md"
+                  >
                     Ask followup
                   </button>
-                  <Image src="/tasks.svg" alt="tasks icon" width={12} height={12} className="my-auto mr-4" />
+                  <Image
+                    src="/tasks.svg"
+                    alt="tasks icon"
+                    width={12}
+                    height={12}
+                    className="my-auto mr-4"
+                  />
                 </div>
               </div>
             )}
@@ -142,7 +153,10 @@ const ChatList = ({
                   className="text-white bg-gray-700 flex-1 p-2 rounded-md"
                   placeholder="Type a message..."
                 />
-                <button onClick={handleSendButtonClick} className="ml-2 p-2 bg-blue text-white rounded-md">
+                <button
+                  onClick={handleSendButtonClick}
+                  className="ml-2 p-2 bg-blue text-white rounded-md"
+                >
                   Send
                 </button>
               </div>
@@ -155,4 +169,3 @@ const ChatList = ({
 };
 
 export default ChatList;
-

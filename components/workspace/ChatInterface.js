@@ -1,42 +1,43 @@
-import React, { useState, useEffect, useRef } from 'react';
-import request from '/app/lib/request.js'; 
-import { Button } from '@/components/Convo/Button'; 
-import LoadingDots from '@/components/Convo/LoadingDots';
-import BlockSelector from './BlockSelector';
-import Block from './Block'; 
-
+import React, { useState, useEffect, useRef } from "react";
+import request from "/app/lib/request.js";
+import { Button } from "@/components/workspace/Button";
+import LoadingDots from "@/components/workspace/LoadingDots";
+import BlockSelector from "./BlockSelector";
+import Block from "./Block";
 
 const DottedLine = () => (
   <svg width="32" height="2" className="mx-1">
-    <line x1="0" y1="1" x2="32" y2="1" stroke="black" strokeWidth="2" strokeDasharray="2 4"/>
+    <line x1="0" y1="1" x2="32" y2="1" stroke="black" strokeWidth="2" strokeDasharray="2 4" />
   </svg>
 );
 
 const fetchSuggestionsFromBackend = async (selectedBlocks) => {
   try {
-    const response = await request('POST', process.env.NEXT_PUBLIC_API_URL+'/llm/suggestions', { selectedBlocks });
-    console.log('Fetched suggestions:', response.data);
+    const response = await request("POST", process.env.NEXT_PUBLIC_API_URL + "/llm/suggestions", {
+      selectedBlocks,
+    });
+    console.log("Fetched suggestions:", response.data);
     return response.data;
   } catch (error) {
-    console.error('Error fetching suggestions:', error);
+    console.error("Error fetching suggestions:", error);
     return [];
   }
 };
 
 const ChatInterface = () => {
   const [selectedBlocks, setSelectedBlocks] = useState([]);
-  const [suggestions, setSuggestions] = useState(['what', 'who', 'when', 'where', 'why', 'how']);
+  const [suggestions, setSuggestions] = useState(["what", "who", "when", "where", "why", "how"]);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
   const chatListRef = useRef(null);
 
   const handleBlockSelect = async (text) => {
-    if (text === '?') {
+    if (text === "?") {
       const completeQuestion = [...selectedBlocks, text];
       await sendMessageToModel(completeQuestion);
       setSelectedBlocks([]);
-      setSuggestions(['what', 'who', 'when', 'where', 'why', 'how']);
+      setSuggestions(["what", "who", "when", "where", "why", "how"]);
     } else {
       const newSelectedBlocks = [...selectedBlocks, text];
       setSelectedBlocks(newSelectedBlocks);
@@ -49,13 +50,13 @@ const ChatInterface = () => {
     setLoading(true);
     setShowSuggestions(false);
     try {
-      const response = await request('POST', process.env.NEXT_PUBLIC_API_URL+'/llm/generate', {
-        userPrompt: question.join(' '),
+      const response = await request("POST", process.env.NEXT_PUBLIC_API_URL + "/llm/generate", {
+        userPrompt: question.join(" "),
       });
       setMessages([...messages, { question, answer: response.data.content }]);
     } catch (error) {
-      console.error('Error sending message:', error);
-      setMessages([...messages, { question, answer: 'Failed to get a response from the model.' }]);
+      console.error("Error sending message:", error);
+      setMessages([...messages, { question, answer: "Failed to get a response from the model." }]);
     } finally {
       setLoading(false);
     }
@@ -64,7 +65,7 @@ const ChatInterface = () => {
   const handleAskAgain = () => {
     setShowSuggestions(true);
     setSelectedBlocks([]);
-    setSuggestions(['what', 'who', 'when', 'where', 'why', 'how']);
+    setSuggestions(["what", "who", "when", "where", "why", "how"]);
   };
 
   useEffect(() => {
@@ -82,7 +83,7 @@ const ChatInterface = () => {
               {message.question.map((block, blockIndex) => (
                 <React.Fragment key={blockIndex}>
                   <Block text={block} index={blockIndex} onSelect={() => {}} />
-                  {blockIndex < message.question.length - 1 }
+                  {blockIndex < message.question.length - 1}
                 </React.Fragment>
               ))}
             </div>
@@ -104,7 +105,6 @@ const ChatInterface = () => {
               ))}
               {selectedBlocks.length > 0 && (
                 <>
-                 
                   <Block text="?" index={selectedBlocks.length} onSelect={handleBlockSelect} />
                 </>
               )}

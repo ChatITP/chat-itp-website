@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InputComponent from "@/components/Convo/InputComponent";
+import InputComponent from "@/components/workspace/InputComponent";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 

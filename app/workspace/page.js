@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Convo from "@/components/Convo";
+import Workspace from "@/components/workspace";
 import { RecoilRoot } from "recoil";
 import AuthWrapper from "@/components/AuthWrapper";
 
@@ -11,7 +11,7 @@ const MyPage = () => {
     <div>
       <AuthWrapper>
         <RecoilRoot>
-          <Convo tags={tags} setTags={setTags} />
+          <Workspace tags={tags} setTags={setTags} />
         </RecoilRoot>
       </AuthWrapper>
     </div>
