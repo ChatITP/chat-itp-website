@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useDrop } from "react-dnd";
 import ChatWindow from "./ChatWindow";
 import DropZone from "./DropZone";

@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export const Examples = () => {
   const phrases = [
-    "What’s the most innovative theme of ITP Projects?",
+    "What's the most innovative theme of ITP Projects?",
     "Describe the most innovative 3d game modeling projects from the 1980s that utilized early computer graphics.",
     "In 2075, ITP students will use AR to redefine social interactions. Describe a project and its implications on privacy and connections.",
     "Imagine that all the ITP student work represents the DNA of a university program. Describe a university program based on this DNA",

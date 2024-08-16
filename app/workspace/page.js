@@ -5,7 +5,7 @@ import AuthWrapper from "@/components/AuthWrapper";
 
 const MyPage = () => {
   return (
-    <div>
+    <div className="font-sans">
       <AuthWrapper>
         <RecoilRoot>
           <Workspace />
