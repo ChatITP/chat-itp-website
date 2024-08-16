@@ -46,9 +46,7 @@ const highlightText = (text, highlights) => {
   const regex = new RegExp(`(${escapedHighlights.join("|")})`, "gi");
   const parts = text.split(regex);
   return parts.map((part, index) =>
-    escapedHighlights.some(
-      (highlight) => part.toLowerCase() === highlight.toLowerCase()
-    ) ? (
+    escapedHighlights.some((highlight) => part.toLowerCase() === highlight.toLowerCase()) ? (
       <span key={index} className="bg-blue text-white rounded-lg px-1">
         {part}
       </span>
@@ -104,9 +102,7 @@ const InputComponent = ({ phrases = [] }) => {
   };
 
   const generateRandomDefaultTags = () => {
-    const unselectedTags = defaultTagsPool.filter(
-      (tag) => !selectedTags.includes(tag)
-    );
+    const unselectedTags = defaultTagsPool.filter((tag) => !selectedTags.includes(tag));
     const shuffledTags = [...unselectedTags].sort(() => 0.5 - Math.random());
     setDefaultTags([
       ...selectedTags,
@@ -134,7 +130,6 @@ const InputComponent = ({ phrases = [] }) => {
 
   const handleEditChange = (e) => {
     setEditingText(e.target.value);
-
   };
 
   const handleEditKeyDown = (e, index) => {
@@ -144,32 +139,29 @@ const InputComponent = ({ phrases = [] }) => {
   };
 
   const saveEditedTag = (index) => {
-  const originalTag = defaultTags[index];
-  const newDefaultTags = [...defaultTags];
-  const newTag = editingText.trim();
+    const originalTag = defaultTags[index];
+    const newDefaultTags = [...defaultTags];
+    const newTag = editingText.trim();
 
-  if (newTag) {
-    newDefaultTags[index] = newTag;
-    setDefaultTags(newDefaultTags);
+    if (newTag) {
+      newDefaultTags[index] = newTag;
+      setDefaultTags(newDefaultTags);
 
-    setSelectedTags((prevSelectedTags) => {
-      const updatedSelectedTags = prevSelectedTags.filter(
-        (tag) => tag !== originalTag
-      );
+      setSelectedTags((prevSelectedTags) => {
+        const updatedSelectedTags = prevSelectedTags.filter((tag) => tag !== originalTag);
 
-      if (!updatedSelectedTags.includes(newTag)) {
-        updatedSelectedTags.push(newTag);
-      }
+        if (!updatedSelectedTags.includes(newTag)) {
+          updatedSelectedTags.push(newTag);
+        }
 
-      return updatedSelectedTags;
-    });
+        return updatedSelectedTags;
+      });
 
-    setModifiedTags((prev) => new Set(prev).add(newTag));
-  }
+      setModifiedTags((prev) => new Set(prev).add(newTag));
+    }
 
-  setEditingTagIndex(null);
-};
-
+    setEditingTagIndex(null);
+  };
 
   const handleClick = (item) => {
     clickedItemRef.current = item;
@@ -181,8 +173,8 @@ const InputComponent = ({ phrases = [] }) => {
       const delta = monitor.getClientOffset();
       clickedItemRef.current = item.phrase;
       setClickedPosition({
-        x: delta.x - CHAT_WINDOW_DIMENSIONS.width/0.8,
-        y: delta.y - CHAT_WINDOW_DIMENSIONS.height/0.8,
+        x: delta.x - CHAT_WINDOW_DIMENSIONS.width / 0.8,
+        y: delta.y - CHAT_WINDOW_DIMENSIONS.height / 0.8,
       });
     },
   });
@@ -192,8 +184,7 @@ const InputComponent = ({ phrases = [] }) => {
   }
 
   const sortedItems = items.sort(
-    (a, b) =>
-      countHighlights(b, selectedTags) - countHighlights(a, selectedTags)
+    (a, b) => countHighlights(b, selectedTags) - countHighlights(a, selectedTags)
   );
 
   return (
@@ -204,7 +195,7 @@ const InputComponent = ({ phrases = [] }) => {
 
       <div className="relative z-10 w-full space-y-2">
         <div className="flex flex-row gap-4 bg-gray px-2 h-[84px] items-center z-20">
-          <Link href="/about">
+          <Link href="/">
             <Image
               src="/logo.png"
               alt="logo icon"
@@ -215,10 +206,7 @@ const InputComponent = ({ phrases = [] }) => {
           </Link>
 
           <div className="flex flex-row items-center relative w-full ml-4">
-            <div
-              className="flex overflow-x-auto space-x-2 flex-grow"
-              ref={tagsContainerRef}
-            >
+            <div className="flex overflow-x-auto space-x-2 flex-grow" ref={tagsContainerRef}>
               <div className="flex space-x-2">
                 {defaultTags.length > 0 &&
                   defaultTags.map((tag, index) => (
@@ -228,8 +216,7 @@ const InputComponent = ({ phrases = [] }) => {
                       onDoubleClick={() => handleTagDoubleClick(index, tag)}
                       style={{
                         ...tagStyles,
-                        width:
-                          tag === "Add Custom Tag" ? "120px" : tagStyles.width,
+                        width: tag === "Add Custom Tag" ? "120px" : tagStyles.width,
                       }}
                       className={`cursor-pointer text-xs ${
                         selectedTags.includes(tag)
@@ -267,27 +254,22 @@ const InputComponent = ({ phrases = [] }) => {
             </div>
             <div className="flex justify-end mr-4">
               <button className="mr-2" onClick={randomizePhrases}>
-                <p className="text-sm font-sans text-white/80">
-                  Refresh examples
-                </p>
+                <p className="text-sm font-sans text-white/80">Refresh examples</p>
               </button>
 
-              <div
-                  className="relative group"
-                  style={{ width: "32px", height: "29px" }}
-                >
-                  <div className="absolute inset-0 bg-darkGray rounded-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute inset-0 flex justify-center items-center">
-                    <Image
-                      src="/switch.svg"
-                      alt="refresh icon"
-                      width={20}
-                      height={20}
-                      className="z-10"
-                      onClick={randomizePhrases}
-                    />
-                  </div>
+              <div className="relative group" style={{ width: "32px", height: "29px" }}>
+                <div className="absolute inset-0 bg-darkGray rounded-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="absolute inset-0 flex justify-center items-center">
+                  <Image
+                    src="/switch.svg"
+                    alt="refresh icon"
+                    width={20}
+                    height={20}
+                    className="z-10"
+                    onClick={randomizePhrases}
+                  />
                 </div>
+              </div>
               {hidePhrases && (
                 <div
                   className="relative group"
