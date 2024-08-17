@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Tag from "./Tag";
 import shuffle from "@/utils/shuffle";
-import { tagState } from "../contexts";
+import { tagState } from "./contexts";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
@@ -58,6 +58,63 @@ const TagList = () => {
     });
   };
 
+  /**
+   * Toggle the selected state of a tag.
+   * @param {number} index - The index of the tag to be toggled.
+   */
+  const handleTagClick = (clickIndex) => {
+    setTags((prevTags) => {
+      return prevTags.map((tag, index) => {
+        if (clickIndex === index) {
+          return {
+            ...tag,
+            isSelected: !tag.isSelected,
+          };
+        }
+        return tag;
+      });
+    });
+  };
+
+  /**
+   * Enter the edit mode of a tag.
+   * @param {number} clickIndex - The index of the tag to be edited.
+   */
+  const handleEditClick = (clickIndex) => {
+    setTags((prevTags) => {
+      return prevTags.map((tag, index) => {
+        if (clickIndex === index) {
+          return {
+            ...tag,
+            isEditing: !tag.isEditing,
+          };
+        }
+        return tag;
+      });
+    });
+  };
+
+  /**
+   * Exit the edit mode of a tag.
+   * Save the new name and update the context
+   * @param {number} clickIndex - The index of the tag to be edited.
+   * @param {string} newName - The new name of the tag.
+   */
+  const handleEdited = (clickIndex, newName) => {
+    setTags((prevTags) => {
+      return prevTags.map((tag, index) => {
+        if (clickIndex === index) {
+          return {
+            ...tag,
+            name: newName,
+            isEditing: false,
+          };
+        }
+        return tag;
+      });
+    });
+  };
+
   useEffect(() => {
     /**
      * Initialize the tag state with random unselected tags.
@@ -74,12 +131,21 @@ const TagList = () => {
 
     initializeTags();
   }, [setTags]);
-
+  console.log(tags);
   return (
     <div className="flex space-x-2">
       <div className="flex space-x-2">
         {tags.map((tag, index) => (
-          <Tag key={index}>{tag.name}</Tag>
+          <Tag
+            key={index}
+            isSelected={tag.isSelected}
+            isEditing={tag.isEditing}
+            onClick={() => handleTagClick(index)}
+            onEditClick={() => handleEditClick(index)}
+            onEdited={(newName) => handleEdited(index, newName)}
+          >
+            {tag.name}
+          </Tag>
         ))}
       </div>
       <button className="flex-none" onClick={randomizeUnselectedTags}>

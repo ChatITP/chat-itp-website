@@ -1,29 +1,17 @@
 import React from "react";
-import { useDrag } from "react-dnd";
 
 const ItemType = {
   PHRASE: "phrase",
 };
 
-const ExampleCard = ({ phrase, selectedTags, highlightText, onClick }) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemType.PHRASE,
-    item: { phrase },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }));
+const ExampleCard = ({ onClick, text }) => {
+  const highlightText = (text) => {
+    return text;
+  };
 
   return (
-    <div
-      ref={drag}
-      className={`border border-white/50 rounded-lg p-4 text-white cursor-pointer text-sm font-sans hover:bg-white/20 ${
-        isDragging ? "opacity-50" : ""
-      }`}
-      style={{ minWidth: "300px", minHeight: "80px", whiteSpace: "normal" }}
-      onClick={() => onClick(phrase)}
-    >
-      {highlightText(phrase, selectedTags)}
+    <div className="mx-3 flex-none border border-white/50 rounded-lg p-4 w-[300px] h-[120px] text-white cursor-pointer text-sm font-sans hover:bg-[#696969] bg-gray2/60">
+      {highlightText(text)}
     </div>
   );
 };

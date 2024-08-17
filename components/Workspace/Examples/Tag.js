@@ -1,23 +1,47 @@
-import React from "react";
+import { useEffect, useRef } from "react";
+import { FaEdit } from "react-icons/fa";
+import useClickInOutDetector from "@/hooks/clickInOutDetector";
 
-const Tag = ({ children, isSelected, isEditing }) => {
+const Tag = ({ children, isSelected, isEditing, onClick, onEditClick, onEdited }) => {
+  const editButtonClicked = (e) => {
+    e.stopPropagation();
+    onEditClick();
+  };
+
+  const inputRef = useRef(null);
+  // focus after the input is rendered
+  useEffect(() => {
+    inputRef.current?.focus();
+  });
   return (
-    <div
-      className={`cursor-pointer text-sm ${
-        isSelected ? "bg-lightBlue text-blue" : "bg-none border border-white text-white/80"
-      } font-semibold rounded-lg px-3 py-1 whitespace-nowrap`}
-    >
+    <div>
       {isEditing ? (
-        <input
-          type="text"
-          value={children}
-          // onChange={handleEditChange}
-          // onKeyDown={(e) => handleEditKeyDown(e, index)}
-          // onBlur={() => saveEditedTag(index)}
-          className="w-full h-full text-center bg-yellow/80 border-none outline-none"
-        />
+        <div
+          ref={inputRef}
+          className="flex items-center text-sm bg-none border border-white text-white/80 font-semibold rounded-lg px-3 py-1 whitespace-nowrap"
+          style={{
+            backgroundColor: isSelected ? "#C8DFF7" : "transparent",
+          }}
+          role="textbox"
+          contentEditable
+          suppressContentEditableWarning
+          onBlur={(e) => onEdited(e.target.innerText)}
+        >
+          <div>{children}</div>
+        </div>
       ) : (
-        <span>{children}</span>
+        <button
+          className="flex items-center text-sm bg-none border border-white text-white/80 font-semibold rounded-lg px-3 py-1 whitespace-nowrap"
+          style={{
+            backgroundColor: isSelected ? "#C8DFF7" : "transparent",
+          }}
+          onClick={onClick}
+        >
+          <div>{children}</div>
+          <div className="ml-2" onClick={editButtonClicked} role="button">
+            <FaEdit />
+          </div>
+        </button>
       )}
     </div>
   );

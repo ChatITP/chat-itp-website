@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import { useDrop } from "react-dnd";
 import ChatWindow from "./ChatWindow";
 import DropZone from "./DropZone";
-import Background from "./Background";
 
 const ItemType = {
   PHRASE: "phrase",
@@ -117,13 +116,11 @@ const InputComponent = ({ phrases = [] }) => {
 
   return (
     <div className="relative w-full h-full">
-      <div className="absolute inset-0 z-0">
-        <Background />
-      </div>
+      <div className="absolute inset-0 z-0"></div>
 
       <div className="relative z-10 w-full space-y-2">
         <DropZone>
-          <div ref={drop} className="flex justify-center pt-6 h-screen">
+          <div ref={drop} className="flex justify-center pt-6 h-full">
             {clickedItemRef.current && (
               <ChatWindow
                 initialMessage={clickedItemRef.current}
