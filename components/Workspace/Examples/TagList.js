@@ -131,7 +131,6 @@ const TagList = () => {
 
     initializeTags();
   }, [setTags]);
-  console.log(tags);
   return (
     <div className="flex space-x-2">
       <div className="flex space-x-2">

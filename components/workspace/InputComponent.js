@@ -12,34 +12,6 @@ const CHAT_WINDOW_DIMENSIONS = {
   height: 278,
 };
 
-const escapeRegExp = (string) => {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-};
-
-const countHighlights = (text, highlights) => {
-  if (!highlights.length) return 0;
-  const escapedHighlights = highlights.map(escapeRegExp);
-  const regex = new RegExp(`(${escapedHighlights.join("|")})`, "gi");
-  const matches = text.match(regex);
-  return matches ? matches.length : 0;
-};
-
-const highlightText = (text, highlights) => {
-  if (!highlights.length) return text;
-  const escapedHighlights = highlights.map(escapeRegExp);
-  const regex = new RegExp(`(${escapedHighlights.join("|")})`, "gi");
-  const parts = text.split(regex);
-  return parts.map((part, index) =>
-    escapedHighlights.some((highlight) => part.toLowerCase() === highlight.toLowerCase()) ? (
-      <span key={index} className="bg-blue text-white rounded-lg px-1">
-        {part}
-      </span>
-    ) : (
-      part
-    )
-  );
-};
-
 const InputComponent = ({ phrases = [] }) => {
   const [searchKey, setSearchKey] = useState("");
   const [clickedPosition, setClickedPosition] = useState({ x: 0, y: 0 });

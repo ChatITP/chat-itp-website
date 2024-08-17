@@ -1,7 +1,8 @@
 import React from "react";
 import ExampleCard from "./ExampleCard";
-import { showExamplesState } from "./contexts";
+import { tagState, showExamplesState } from "./contexts";
 import { useRecoilValue } from "recoil";
+import escapeRegExp from "@/utils/escapeRegExp";
 
 const examples = [
   "What's the most innovative theme of ITP Projects?",
@@ -15,14 +16,30 @@ const examples = [
 
 const ExampleCards = () => {
   const showExamples = useRecoilValue(showExamplesState);
+  const tags = useRecoilValue(tagState);
+
+  const tagNames = tags.filter((tag) => tag.isSelected).map((tag) => tag.name);
+  /**
+   * Count the number of tag matches that exist in a string of text.
+   */
+  const countTagMatches = (text) => {
+    if (tagNames.length === 0) {
+      return 0;
+    }
+    const escapedTagNames = tagNames.map(escapeRegExp);
+    const regex = new RegExp(`(${escapedTagNames.join("|")})`, "gi");
+    const matches = text.match(regex);
+    return matches ? matches.length : 0;
+  };
+
+  const sortedExamples = [...examples].sort((a, b) => countTagMatches(b) - countTagMatches(a));
 
   if (!showExamples) {
     return null;
   }
-
   return (
-    <div className="flex overflow-x-scroll mt-6 pb-2">
-      {examples.map((example, index) => (
+    <div className="flex overflow-x-scroll mt-6 pb-2 scrollbar-thumb-[#313131] scrollbar-thin scrollbar-track-transparent">
+      {sortedExamples.map((example, index) => (
         <ExampleCard key={index} text={example} />
       ))}
     </div>

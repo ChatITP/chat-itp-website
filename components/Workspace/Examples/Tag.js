@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { FaEdit } from "react-icons/fa";
-import useClickInOutDetector from "@/hooks/clickInOutDetector";
 
 const Tag = ({ children, isSelected, isEditing, onClick, onEditClick, onEdited }) => {
   const editButtonClicked = (e) => {
@@ -18,22 +17,26 @@ const Tag = ({ children, isSelected, isEditing, onClick, onEditClick, onEdited }
       {isEditing ? (
         <div
           ref={inputRef}
-          className="flex items-center text-sm bg-none border border-white text-white/80 font-semibold rounded-lg px-3 py-1 whitespace-nowrap"
+          className="flex items-center text-sm font-semibold rounded-lg px-3 py-1 whitespace-nowrap"
           style={{
             backgroundColor: isSelected ? "#C8DFF7" : "transparent",
+            color: isSelected ? "#3175BB" : "white",
+            border: isSelected ? "1px solid #3175BB" : "1px solid white",
           }}
           role="textbox"
           contentEditable
           suppressContentEditableWarning
-          onBlur={(e) => onEdited(e.target.innerText)}
+          onBlur={(e) => onEdited(e.target.innerText.trim())}
         >
           <div>{children}</div>
         </div>
       ) : (
         <button
-          className="flex items-center text-sm bg-none border border-white text-white/80 font-semibold rounded-lg px-3 py-1 whitespace-nowrap"
+          className="flex items-center text-sm font-semibold rounded-lg px-3 py-1 whitespace-nowrap"
           style={{
             backgroundColor: isSelected ? "#C8DFF7" : "transparent",
+            color: isSelected ? "#3175BB" : "white",
+            border: isSelected ? "1px solid #3175BB" : "1px solid white",
           }}
           onClick={onClick}
         >
