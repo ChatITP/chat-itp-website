@@ -168,9 +168,9 @@ const Login = () => {
             ) : (
               <button
                 type="submit"
-                className="bg-black font-sans w-[380px] h-[56px] rounded-lg text-white"
+                className="bg-black font-sans w-[380px] h-[56px] rounded-lg text-white uppercase text-xs"
               >
-                Login
+                continue
               </button>
             )}
           </div>
