@@ -5,6 +5,7 @@ import Link from "next/link";
 const CreditPage = () => {
   return (
     <>
+    
       <div className="bg-gradient-to-b from-[#1b0e25] via-[#1b0e25] to-[#3a2238]">
         <nav className="px-2 pt-4 h-[84px] z-10">
           <Link href="/">
