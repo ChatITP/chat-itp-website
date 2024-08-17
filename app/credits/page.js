@@ -23,14 +23,41 @@ const CreditPage = () => {
           </h1>
         </div>
         <div id="des">
-          <p className="text-center text-base font-sans mb-7">
+          <p className="text-center text-xl font-sans mb-7">
             We extend our gratitude to the resources and individuals who have
             contributed to the development of Chat ITP.
           </p>
         </div>
         <div className="flex flex-row gap-6">
-          <div className="w-[750px] h-[402px] border-[6px] border-white rounded-3xl"></div>
-          <div className="w-[404px] h-[402px] border-[6px] border-white rounded-3xl"></div>
+          <div className="w-[750px] h-[402px] border-[6px] border-white rounded-3xl">
+            <p className="text-xl font-sans font-bold text-center pt-8 mb-6">
+              Database Resources
+            </p>
+            <p className="text-base font-sans text-center mb-4">
+              The following databases have been instrumental in powering the
+              features of Chat ITP:
+            </p>
+            <Image
+              src="/database.png"
+              alt="database"
+              width={636}
+              height={271}
+              className="mx-auto h-[271px] rounded-t-[20px]"
+            />
+          </div>
+          <div className="w-[404px] h-[402px] border-[6px] border-white rounded-3xl">
+            <p className="text-xl font-sans font-bold text-center pt-8 mb-6">
+              Additional Resources
+            </p>
+            <p className="text-base font-sans text-left mx-6 mb-4">
+              We also acknowledge the use of the following tools and libraries
+              in the development of Chat ITP:
+            </p>
+            <div className = "flex gap-4 mx-6">
+              <Image src="/llama.png " alt="llama" width={122} height={97} className = "rounded-[20px]"/>
+              <Image src="/mongodb.png " alt="mongodb" width={122} height={97} className = "rounded-[20px]" />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -140,10 +167,7 @@ const CreditPage = () => {
         <p className="text-center text-xl font-sans pt-[94px] mb-[200px]">
           Thank you to everyone who contributed to making Chat ITP possible!
         </p>
-        <div
-          
-          className="left-0 top-0 flex w-full items-center justify-between"
-        >
+        <div className="left-0 top-0 flex w-full items-center justify-between">
           <div className="relative m-auto">
             <ul className="flex gap-14">
               <a href="mailto:chat.itp@itp.nyu.edu" target="_blank">
