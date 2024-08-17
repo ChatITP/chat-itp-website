@@ -119,6 +119,7 @@ const Login = () => {
                 Email
               </label>
               <input
+                id="user_email"
                 name="user_email"
                 type="email"
                 className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -128,12 +129,13 @@ const Login = () => {
 
             <div id="password-field" className="relative mb-4">
               <label
-                htmlFor="user_password"
+                htmlFor="user_password" 
                 className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
               >
                 Password
               </label>
               <input
+                id="user_password" 
                 name="user_password"
                 type="password"
                 className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -150,7 +152,7 @@ const Login = () => {
                   className="w-4 h-4 text-blue-600 bg-gray-50 border-black rounded focus:ring-blue-500"
                 />
                 <label
-                  htmlFor="checkbox-1"
+                  htmlFor="checkbox-1" 
                   className="ml-2 text-xs font-sans text-black"
                 >
                   Remember me
@@ -166,7 +168,7 @@ const Login = () => {
             ) : (
               <button
                 type="submit"
-                className="bg-black font-sans w-[380px] h-[56px] rounded-lg "
+                className="bg-black font-sans w-[380px] h-[56px] rounded-lg text-white"
               >
                 Login
               </button>
@@ -190,7 +192,7 @@ const Login = () => {
         </div>
 
         {loginState.error && (
-          <div className="mt-4 text-xs font-medium text-red mx-[40px]">
+          <div className="mt-4 text-xs font-medium text-red-500 mx-[40px]">
             {loginState.message}
           </div>
         )}
