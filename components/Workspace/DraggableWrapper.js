@@ -1,9 +1,16 @@
 import React from "react";
 import Draggable from "react-draggable";
+import { useRef } from "react";
+
 const DraggableWrapper = ({ children }) => {
+  // Reference to the draggable component to supress the findDOMNode warning
+  const draggableRef = useRef(null);
+
   return (
-    <Draggable bounds>
-      <div className="w-fit h-fit">{children}</div>
+    <Draggable nodeRef={draggableRef}>
+      <div ref={draggableRef} className="w-fit h-fit">
+        {children}
+      </div>
     </Draggable>
   );
 };
