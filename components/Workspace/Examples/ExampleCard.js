@@ -4,7 +4,6 @@ import escapeRegExp from "@/utils/escapeRegExp";
 
 const ExampleCard = ({ onClick, text }) => {
   const tags = useRecoilValue(tagState);
-
   /**
    * Highlight the tags that are selected in the text.
    * The highlighted text is wrapped in a span with a background color.

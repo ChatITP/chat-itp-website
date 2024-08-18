@@ -137,7 +137,7 @@ const ChatWindow = ({ initialMessage, initialPosition }) => {
       onMouseDown={handleMouseDown}
       className={`flex flex-col w-[500px]  rounded-2xl border-[3px] shadow-md bg-gray ${
         isSelected ? "border-lightBlue" : "border-none"
-      } h-fit`}
+      } `}
     >
       <div className="flex-1 w-full overflow-y-auto" ref={chatListRef}>
         <ChatList

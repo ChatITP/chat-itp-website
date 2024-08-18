@@ -38,7 +38,7 @@ const ExampleCards = () => {
     return null;
   }
   return (
-    <div className="flex overflow-x-scroll mt-6 pb-2 scrollbar-thumb-[#313131] scrollbar-thin scrollbar-track-transparent">
+    <div className="flex overflow-x-scroll mt-6 pb-2 scrollbar-thumb-[#313131] scrollbar-thin scrollbar-track-transparent w-full">
       {sortedExamples.map((example, index) => (
         <ExampleCard key={index} text={example} />
       ))}

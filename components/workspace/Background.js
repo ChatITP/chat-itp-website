@@ -5,7 +5,7 @@ const sketch = (p5) => {
   var stepSize = 20;
 
   p5.setup = () => {
-    let w = document.getElementById("workspace").scrollWidth;
+    let w = p5.windowWidth;
     let h = p5.windowHeight;
     let cnv = p5.createCanvas(w, h);
     cnv.parent("p5-workspace-background");
@@ -28,8 +28,9 @@ const sketch = (p5) => {
   };
 
   p5.windowResized = () => {
-    let w = document.getElementById("workspace").scrollWidth;
+    let w = p5.windowWidth;
     let h = p5.windowHeight;
+    console.log(w, h);
     p5.resizeCanvas(w, h);
     p5.redraw();
   };

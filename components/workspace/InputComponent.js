@@ -12,67 +12,9 @@ const CHAT_WINDOW_DIMENSIONS = {
   height: 278,
 };
 
-const InputComponent = ({ phrases = [] }) => {
-  const [searchKey, setSearchKey] = useState("");
+const InputComponent = () => {
   const [clickedPosition, setClickedPosition] = useState({ x: 0, y: 0 });
   const clickedItemRef = useRef(null);
-  const tagsContainerRef = useRef(null);
-  const [showInput, setShowInput] = useState(false);
-  const [editingTagIndex, setEditingTagIndex] = useState(null);
-  const [editingText, setEditingText] = useState("");
-  const [modifiedTags, setModifiedTags] = useState(new Set());
-
-  const handleTagClick = (tag) => {
-    setSelectedTags((prevSelectedTags) =>
-      prevSelectedTags.includes(tag)
-        ? prevSelectedTags.filter((t) => t !== tag)
-        : [...prevSelectedTags, tag]
-    );
-  };
-
-  const handleTagDoubleClick = (index, currentText) => {
-    setEditingTagIndex(index);
-    setEditingText(currentText);
-  };
-
-  const handleEditChange = (e) => {
-    setEditingText(e.target.value);
-  };
-
-  const handleEditKeyDown = (e, index) => {
-    if (e.key === "Enter") {
-      saveEditedTag(index);
-    }
-  };
-
-  const saveEditedTag = (index) => {
-    const originalTag = defaultTags[index];
-    const newDefaultTags = [...defaultTags];
-    const newTag = editingText.trim();
-
-    if (newTag) {
-      newDefaultTags[index] = newTag;
-      setDefaultTags(newDefaultTags);
-
-      setSelectedTags((prevSelectedTags) => {
-        const updatedSelectedTags = prevSelectedTags.filter((tag) => tag !== originalTag);
-
-        if (!updatedSelectedTags.includes(newTag)) {
-          updatedSelectedTags.push(newTag);
-        }
-
-        return updatedSelectedTags;
-      });
-
-      setModifiedTags((prev) => new Set(prev).add(newTag));
-    }
-
-    setEditingTagIndex(null);
-  };
-
-  const handleClick = (item) => {
-    clickedItemRef.current = item;
-  };
 
   const [, drop] = useDrop({
     accept: ItemType.PHRASE,
@@ -92,7 +34,7 @@ const InputComponent = ({ phrases = [] }) => {
 
       <div className="relative z-10 w-full space-y-2">
         <DropZone>
-          <div ref={drop} className="flex justify-center pt-6 h-full">
+          <div ref={drop} className="flex justify-center pt-6">
             {clickedItemRef.current && (
               <ChatWindow
                 initialMessage={clickedItemRef.current}

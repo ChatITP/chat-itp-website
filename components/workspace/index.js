@@ -1,21 +1,22 @@
-import React, { useState } from "react";
-import InputComponent from "./InputComponent";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
+import React from "react";
+import { DndContext } from "@dnd-kit/core";
 import Examples from "./Examples";
 import { RecoilRoot } from "recoil";
 import Background from "./Background";
+import WorkArea from "./WorkArea";
 
 const Workspace = () => {
   return (
     <RecoilRoot>
-      <DndProvider backend={HTML5Backend}>
-        <div className="" id="workspace">
+      <DndContext>
+        <div id="workspace">
           <Background />
-          <Examples />
-          <InputComponent />
+          <WorkArea />
+          <div className="absolute z-10 top-0 left-0 w-full">
+            <Examples />
+          </div>
         </div>
-      </DndProvider>
+      </DndContext>
     </RecoilRoot>
   );
 };
