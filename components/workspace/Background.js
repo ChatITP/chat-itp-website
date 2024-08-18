@@ -30,7 +30,6 @@ const sketch = (p5) => {
   p5.windowResized = () => {
     let w = p5.windowWidth;
     let h = p5.windowHeight;
-    console.log(w, h);
     p5.resizeCanvas(w, h);
     p5.redraw();
   };

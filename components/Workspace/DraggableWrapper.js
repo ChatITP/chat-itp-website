@@ -1,7 +1,11 @@
 import React from "react";
-
-const draggableWrapper = () => {
-  return <div>draggableWrapper</div>;
+import Draggable from "react-draggable";
+const DraggableWrapper = ({ children }) => {
+  return (
+    <Draggable bounds>
+      <div className="w-fit h-fit">{children}</div>
+    </Draggable>
+  );
 };
 
-export default draggableWrapper;
+export default DraggableWrapper;

@@ -65,11 +65,11 @@ const ChatList = ({ messages, showMessage, toggleShowMessage, isLoading, onSendM
     }
   };
 
-  const userMessages = messages.filter((message) => message.sender === "user");
-  const otherMessages = messages.filter((message) => message.sender !== "user");
+  //const userMessages = messages.filter((message) => message.sender === "user");
+  //const otherMessages = messages.filter((message) => message.sender !== "user");
 
   return (
-    <div className="chat-list flex flex-col h-full">
+    <div className="chat-list flex flex-col h-full w-[600px]">
       <div
         className={`user-messages bg-gray text-white/80 pt-3 px-5 ${
           showMessage ? "rounded-t-2xl" : "rounded-2xl"
