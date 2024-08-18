@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+
 const Login = () => {
   const [loginState, setLoginState] = useState({
     isLoggedIn: false,
@@ -102,7 +103,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="mt-[140px] w-[460px] h-[600px] bg-white rounded-3xl">
+      <div className="relative w-[460px] h-[600px] bg-white rounded-3xl z-20">
         <form onSubmit={handleFormSubmit}>
           <div className="mx-[40px] pt-[64px]">
             <p className="text-black uppercase text-xs font-sans mb-2">
@@ -129,13 +130,13 @@ const Login = () => {
 
             <div id="password-field" className="relative mb-4">
               <label
-                htmlFor="user_password" 
+                htmlFor="user_password"
                 className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
               >
                 Password
               </label>
               <input
-                id="user_password" 
+                id="user_password"
                 name="user_password"
                 type="password"
                 className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -152,7 +153,7 @@ const Login = () => {
                   className="w-4 h-4 text-blue-600 bg-gray-50 border-black rounded focus:ring-blue-500"
                 />
                 <label
-                  htmlFor="checkbox-1" 
+                  htmlFor="checkbox-1"
                   className="ml-2 text-xs font-sans text-black"
                 >
                   Remember me

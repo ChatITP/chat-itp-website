@@ -118,7 +118,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="mt-[20px] w-[460px] h-[650px] bg-white rounded-3xl">
+      <div className="mt-[20px] w-[460px] h-[650px] bg-white rounded-3xl z-20">
         <div>
           <form onSubmit={handleFormSubmit} className="mt-8  text-black">
             <div className="mx-[40px]">
@@ -224,7 +224,7 @@ const Register = () => {
             </div>
           
           {registerState.error && (
-            <div className="text-red">{registerState.message}</div>
+            <div className="text-red text-xs font-sans text-center">{registerState.message}</div>
           )}
         </div>
       </div>
