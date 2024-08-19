@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 const CreditPage = () => {
   return (
@@ -211,57 +212,7 @@ const CreditPage = () => {
             </div>
           </div>
         </div>
-
-        {/* <div id="footer" className="h-[469px] z-10">
-          
-          <div className="left-0 top-0 flex w-full items-center justify-between">
-            <div className="relative m-auto">
-              <div className="flex gap-14">
-                <div className="bg-custom-radial w-[45px] h-[45px] rounded-full">
-                  <Link href="mailto:chat.itp@itp.nyu.edu" target="_blank">
-                    <Image
-                      src="/envelope.png"
-                      alt="Envelope icon"
-                      width={25}
-                      height={25}
-                      className="m-auto my-[10px]"
-                    />
-                  </Link>
-                </div>
-                <div className="bg-custom-radial w-[45px] h-[45px] rounded-full">
-                  <Link
-                    href="https://www.linkedin.com/company/chat-itp/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Image
-                      src="/linkedin.png"
-                      alt="Description of the image"
-                      width={25}
-                      height={25}
-                      className="m-auto my-[10px]"
-                    />
-                  </Link>
-                </div>
-                <div className="bg-custom-radial w-[45px] h-[45px] rounded-full">
-                  <Link
-                    href="https://www.instagram.com/chat.itp/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Image
-                      src="/instagram.png"
-                      alt="Description of the image"
-                      width={25}
-                      height={25}
-                      className="m-auto my-[10px]"
-                    />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
+        <Footer />
       </div>
     </>
   );
