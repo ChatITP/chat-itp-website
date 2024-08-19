@@ -12,8 +12,8 @@ const CreditPage = () => {
             <Image
               src="/logo.png"
               alt="logo icon"
-              width={70}
-              height={61}
+              width={116}
+              height={65}
               className="my-auto ml-4"
             />
           </Link>
