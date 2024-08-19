@@ -5,7 +5,6 @@ import { useRef } from "react";
 const DraggableWrapper = ({ children, defaultX, defaultY, defaultZ }) => {
   // Reference to the draggable component to supress the findDOMNode warning
   const draggableRef = useRef(null);
-  console.log(defaultX, defaultY);
   return (
     <Draggable nodeRef={draggableRef}>
       <div

@@ -5,8 +5,15 @@ import Message from "./Message";
 const Block = ({ initialPromptPhrases }) => {
   const promptRef = useRef("");
 
+  const handleDoubleClick = (event) => {
+    event.stopPropagation();
+  };
+
   return (
-    <div className="bg-gray w-[550px] rounded-xl drop-shadow-lg flex flex-col">
+    <div
+      onDoubleClick={handleDoubleClick}
+      className="bg-gray w-[550px] rounded-xl drop-shadow-lg flex flex-col"
+    >
       <Association promptRef={promptRef} initialPromptPhrases={initialPromptPhrases} />
       <Message promptRef={promptRef} />
     </div>
