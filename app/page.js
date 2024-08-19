@@ -11,7 +11,7 @@ export default function Page() {
       <Home />
       <About />
       {/* <PromptSection /> */}
-      <div className="h-96 bg-cover bg-center" style={{backgroundImage: "url('/radialBg.jpg')"}}>
+      <div className="h-96 bg-cover bg-center" style={{backgroundImage: "url('/landingBg.jpg')"}}>
         <Footer />
       </div>
     </main>
