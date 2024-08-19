@@ -1,7 +1,7 @@
 import React from "react";
 import { BeatLoader } from "react-spinners";
 
-const LoadingDots = ({ color = "#6CA2D9" }) => {
+const LoadingDots = ({ color = "#aaaaaa" }) => {
   return <BeatLoader color={color} />;
 };
 

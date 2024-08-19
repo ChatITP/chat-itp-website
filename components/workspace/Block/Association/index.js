@@ -1,15 +1,33 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
+import { useState, useMemo } from "react";
 import Phrase from "./Phrase";
 import useAuthRequest from "@/hooks/useAuthRequest";
 import GeneratedPhraseSelector from "./GeneratedPhraseSelector";
 
 const colorPalette = ["#ff9c9c", "#ffd9a3", "#c8dff7", "#fff495", "#c9f3d7", "#b3ffa0", "#a9ffef"];
 
-const AssociationPrompt = ({ promptRef }) => {
-  const [promptPhrases, setPromptPhrases] = useState([
-    { text: "", color: colorPalette[2], isSelected: false, isPlaceholder: true, isLoading: false },
-  ]);
+const AssociationPrompt = ({ promptRef, initialPromptPhrases }) => {
+  const [promptPhrases, setPromptPhrases] = useState([]);
+
+  useEffect(() => {
+    const phrases = initialPromptPhrases.map((phrase, index) => {
+      return {
+        text: phrase,
+        color: colorPalette[index % colorPalette.length],
+        isSelected: false,
+        isPlaceholder: false,
+        isLoading: false,
+      };
+    });
+    phrases.push({
+      text: "",
+      color: colorPalette[phrases.length % colorPalette.length],
+      isSelected: false,
+      isPlaceholder: true,
+      isLoading: false,
+    });
+    setPromptPhrases(phrases);
+  }, [initialPromptPhrases]);
 
   const [generatedPhrases, setGeneratedPhrases] = useState({
     suggestions: [],
@@ -214,8 +232,8 @@ const AssociationPrompt = ({ promptRef }) => {
   const selectID = promptPhrases.findIndex((phrase) => phrase.isSelected);
 
   return (
-    <div className="w-full relative  pl-6 pr-8 py-6">
-      <div className="relative leading-10 w-full pb-4">
+    <div className="w-full relative p-6">
+      <div className="relative w-full pb-6">
         {promptPhrases.map((prompt, index) => (
           <Phrase
             key={index}
@@ -233,7 +251,7 @@ const AssociationPrompt = ({ promptRef }) => {
         ))}
       </div>
       {isEditing && (
-        <div className="pt-4 border-gray2 border-t-2">
+        <div className="pt-6 border-gray2 border-t-2">
           <GeneratedPhraseSelector
             suggestions={generatedPhrases.suggestions}
             isLoading={generatedPhrases.isLoading}
