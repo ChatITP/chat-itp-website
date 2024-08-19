@@ -9,6 +9,7 @@ export const Examples = () => {
   const sortedItems = items.sort(
     (a, b) => countHighlights(b, selectedTags) - countHighlights(a, selectedTags)
   );
+
   return (
     <div>
       <TopBar />

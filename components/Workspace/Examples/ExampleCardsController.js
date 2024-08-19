@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useState } from "react";
-import { showExamplesState } from "./contexts";
+import { showExamplesState } from "../../../contexts/examples";
 import { useRecoilState } from "recoil";
 
 const ExampleCardsController = () => {

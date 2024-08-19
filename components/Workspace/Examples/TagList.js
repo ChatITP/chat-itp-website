@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Tag from "./Tag";
 import shuffle from "@/utils/shuffle";
-import { tagState } from "./contexts";
+import { tagState } from "../../../contexts/examples";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
