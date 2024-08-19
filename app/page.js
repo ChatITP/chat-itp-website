@@ -10,8 +10,10 @@ export default function Page() {
       <Nav />
       <Home />
       <About />
-      <PromptSection />
-      <Footer />
+      {/* <PromptSection /> */}
+      <div className="h-96 bg-cover bg-center" style={{backgroundImage: "url('/radialBg.jpg')"}}>
+        <Footer />
+      </div>
     </main>
   );
 }
