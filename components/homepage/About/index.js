@@ -16,7 +16,7 @@ export default function About() {
             <div className = "flex justify-center pt-[20px] mb-16">
               <ChatWindow />
             </div>
-            <div className="pb-10 flex justify-center">
+            <div className="flex pt-10 justify-center">
             <Link href="/workspace">
               <Button>
                 <div className="flex items-center text-lg">
