@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+
 const Login = () => {
   const [loginState, setLoginState] = useState({
     isLoggedIn: false,
@@ -101,32 +102,103 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleFormSubmit} className="mt-12 max-w-96">
-        <div className="pb-4">
-          <label htmlFor="user_email" className="block text-sm font-medium">
-            Email
-          </label>
-          <input name="user_email" type="email" className="text-black" />
-        </div>
-        <div className="pb-6">
-          <label htmlFor="user_password" className="block text-sm font-medium">
-            Password
-          </label>
-          <input name="user_password" type="password" className="text-black" />
+    <>
+      <div className="relative w-[460px] h-[600px] bg-white rounded-3xl z-20">
+        <form onSubmit={handleFormSubmit}>
+          <div className="mx-[40px] pt-[64px]">
+            <p className="text-black uppercase text-xs font-sans mb-2">
+              welcome back
+            </p>
+            <p className="text-black text-2xl font-sans mb-7 font-semibold">
+              Log In to your Account
+            </p>
+            <div id="email-field" className="relative mb-4 w-[380px]">
+              <label
+                htmlFor="user_email"
+                className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
+              >
+                Email
+              </label>
+              <input
+                id="user_email"
+                name="user_email"
+                type="email"
+                className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="chatitp@nyu.edu"
+              />
+            </div>
+
+            <div id="password-field" className="relative mb-4">
+              <label
+                htmlFor="user_password"
+                className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
+              >
+                Password
+              </label>
+              <input
+                id="user_password"
+                name="user_password"
+                type="password"
+                className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="***************"
+              />
+            </div>
+
+            {/* checkbox and forgot password */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <input
+                  id="checkbox-1"
+                  type="checkbox"
+                  className="w-4 h-4 text-blue-600 bg-gray-50 border-black rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox-1"
+                  className="ml-2 text-xs font-sans text-black"
+                >
+                  Remember me
+                </label>
+              </div>
+              <div>
+                <p className="text-xs font-sans text-black">Forgot Password?</p>
+              </div>
+            </div>
+
+            {loginState.isLoading ? (
+              <div>...</div>
+            ) : (
+              <button
+                type="submit"
+                className="bg-black font-sans w-[380px] h-[56px] rounded-lg text-white uppercase text-xs"
+              >
+                continue
+              </button>
+            )}
+          </div>
+        </form>
+
+        <div className="flex items-center mt-7 mb-8 mx-[40px]">
+          <hr className="flex-grow border-t border-chatGray" />
+          <span className="mx-4 text-black font-semibold text-xs font-sans">
+            Or
+          </span>
+          <hr className="flex-grow border-t border-chatGray" />
         </div>
 
-        {loginState.isLoading ? <div>...</div> : <button type="submit">Login</button>}
-      </form>
-      <Link href="/register">
-        <div className="mt-4 text-sm font-medium w-fit underline">
-          Don&apos;t have an account? Register
+        <div className="mt-4 text-xs font-sans w-fit text-black mx-auto">
+          New User?{" "}
+          <Link href="/register">
+            <span className="font-bold underline uppercase">Sign up here</span>
+          </Link>
         </div>
-      </Link>
-      {loginState.error && (
-        <div className="mt-4 text-sm font-medium text-red">{loginState.message}</div>
-      )}
-    </div>
+
+        {loginState.error && (
+          <div className="mt-4 text-xs font-medium text-red-500 mx-[40px]">
+            {loginState.message}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
