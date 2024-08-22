@@ -83,9 +83,13 @@ const Register = () => {
 
   async function registerUser(loginInfo) {
     try {
-      await axios.post(process.env.NEXT_PUBLIC_API_URL + "/user/register", loginInfo, {
-        withCredentials: true,
-      });
+      await axios.post(
+        process.env.NEXT_PUBLIC_API_URL + "/user/register",
+        loginInfo,
+        {
+          withCredentials: true,
+        }
+      );
       router.replace("/login");
     } catch (error) {
       if (error.response && error.response.status) {
@@ -113,50 +117,118 @@ const Register = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleFormSubmit} className="mt-12 max-w-96 text-black">
-        <div className="pb-6">
-          <label htmlFor="user_name" className="block text-sm font-medium text-white">
-            Name
-          </label>
-          <input name="user_name" type="text" />
-        </div>
-        <div className="pb-6">
-          <label htmlFor="user_email" className="block text-sm font-medium text-white">
-            Email
-          </label>
-          <input name="user_email" type="email" />
-        </div>
-        <div className="pb-6">
-          <label htmlFor="user_password" className="block text-sm font-medium text-white">
-            Password
-          </label>
-          <input name="user_password" type="password" />
-        </div>
-        <div className="pb-6">
-          <label htmlFor="user_password_confirm" className="block text-sm font-medium text-white">
-            Confirm Password
-          </label>
-          <input name="user_password_confirm" type="password" />
-        </div>
-        <div className="pb-6">
-          <label htmlFor="user_code" className="block text-sm font-medium text-white">
-            Early Access Code
-          </label>
-          <input name="user_code" type="text" autoComplete="off" />
-        </div>
+    <>
+      <div className="mt-[20px] w-[460px] h-[650px] bg-white rounded-3xl z-20">
+        <div>
+          <form onSubmit={handleFormSubmit} className="mt-8  text-black">
+            <div className="mx-[40px]">
+              <p className="text-black uppercase text-xs font-sans mb-2">
+                let&apos; get you started
+              </p>
+              <p className="text-black text-2xl font-sans mb-7 font-semibold">
+                Create an Account
+              </p>
+              <div id="name-field" className="relative mb-4 w-[380px]">
+                <label
+                  htmlFor="user_name"
+                  className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
+                >
+                  Your Name
+                </label>
+                <input
+                  name="user_name"
+                  type="text"
+                  className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="chatit"
+                />
+              </div>
+              <div id="email-field" className="relative mb-4 w-[380px]">
+                <label
+                  htmlFor="user_email"
+                  className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
+                >
+                  Email
+                </label>
+                <input
+                  name="user_email"
+                  type="email"
+                  className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="chatitp@nyu.edu"
+                />
+              </div>
+              <div id="password-field" className="relative mb-4 w-[380px]">
+                <label
+                  htmlFor="user_password"
+                  className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
+                >
+                  Password
+                </label>
+                <input
+                  name="user_password"
+                  type="password"
+                  className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="***************"
+                />
+              </div>
+              <div
+                id="password-confirm-field"
+                className="relative mb-4 w-[380px]"
+              >
+                <label
+                  htmlFor="user_password_confirm"
+                  className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
+                >
+                  Confirm Password
+                </label>
+                <input
+                  name="user_password_confirm"
+                  type="password"
+                  className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="***************"
+                />
+              </div>
+              <div id="user-code-field" className="relative mb-4 w-[380px]">
+                <label
+                  htmlFor="user_code"
+                  className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
+                >
+                  Early Access Code
+                </label>
+                <input
+                  name="user_code"
+                  type="text"
+                  autoComplete="off"
+                  className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="***************"
+                />
+              </div>
+            </div>
 
-        <button type="submit" className="text-white">
-          Register
-        </button>
-      </form>
-      <Link href="/login">
-        <div className="mt-4 text-sm font-medium w-fit underline">
-          Already have an account? Login
+            <button
+              type="submit"
+              className="bg-black font-sans w-[380px] h-[56px] rounded-lg text-white uppercase mx-[40px] text-xs"
+            >
+              Get Started
+            </button>
+          </form>
+          <div className="flex items-center mt-7 mb-6 mx-[40px]">
+            <hr className="flex-grow border-t border-chatGray" />
+            <span className="mx-4 text-black font-semibold text-xs font-sans">
+              Or
+            </span>
+            <hr className="flex-grow border-t border-chatGray" />
+          </div>
+         
+            <div className="text-xs font-sans w-fit text-black mx-auto">
+              Already have an account?  <Link href="/login"><span className = "underline font-bold uppercase">Login here</span></Link>
+            </div>
+          
+          {registerState.error && (
+            <div className="text-red text-xs font-sans text-center">{registerState.message}</div>
+          )}
         </div>
-      </Link>
-      {registerState.error && <div className="text-red">{registerState.message}</div>}
-    </div>
+      </div>
+    </>
   );
 };
 
