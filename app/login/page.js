@@ -6,19 +6,13 @@ import Link from "next/link";
 
 export const LoginPage = () => {
   return (
-    <div className="bg-gradient-45 z-0">
+    <div className="bg-gradient-45 z-0" id="login-page">
       <div className="z-10">
         {" "}
         <Ring />
       </div>
-      <Link href = "/">
-        <Image
-          src="/logo.png"
-          alt="logo"
-          width={84}
-          height={59}
-          className="absolute ml-7 pt-4"
-        />
+      <Link href="/">
+        <Image src="/logo.png" alt="logo" width={84} height={59} className="absolute ml-7 pt-4" />
       </Link>
 
       <div className="w-full h-screen flex flex-col items-center justify-center z-20">

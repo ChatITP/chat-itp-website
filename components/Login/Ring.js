@@ -30,10 +30,8 @@ const sketch = (p5) => {
       let angle = p5.atan2(mouseY - y, mouseX - x);
 
       let maxDistance = p5.dist(0, 0, p5.width, p5.height);
-      let targetX =
-        p5.cos(angle) * p5.min(distance / maxDistance, 1) * (this.d / 4);
-      let targetY =
-        p5.sin(angle) * p5.min(distance / maxDistance, 1) * (this.d / 4);
+      let targetX = p5.cos(angle) * p5.min(distance / maxDistance, 1) * (this.d / 4);
+      let targetY = p5.sin(angle) * p5.min(distance / maxDistance, 1) * (this.d / 4);
 
       this.xDrift += (targetX - this.xDrift) * 0.05;
       this.yDrift += (targetY - this.yDrift) * 0.05;
@@ -44,7 +42,7 @@ const sketch = (p5) => {
     let w = p5.windowWidth;
     let h = p5.windowHeight;
     let cvn = p5.createCanvas(w, h);
-    cvn.parent("p5-container-2");
+    cvn.parent("p5-container-login");
     // Find the center of the circles
     x = 298 + p5.max(0, w - 1440) / 2;
     y = h / 2 + 74;
@@ -70,8 +68,8 @@ const sketch = (p5) => {
   };
 
   p5.windowResized = () => {
-    let w = document.getElementById("about").scrollWidth - 1;
-    let h = Math.max(p5.windowHeight, 640) * 2;
+    let w = p5.windowWidth;
+    let h = p5.windowHeight;
     p5.resizeCanvas(w, h);
     x = 298 + p5.max(0, w - 1440) / 2;
     y = h / 2 + 74;
@@ -81,7 +79,7 @@ const sketch = (p5) => {
 
 export default function Ring() {
   return (
-    <div id="p5-container-2" className="absolute top-0 left-0">
+    <div id="p5-container-login" className="absolute top-0 left-0">
       <NextReactP5Wrapper sketch={sketch} />
     </div>
   );
