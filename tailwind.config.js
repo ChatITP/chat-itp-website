@@ -1,3 +1,5 @@
+const { Chango } = require('next/font/google');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -40,6 +42,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Open Sans", "Helvetica", "Arial", "sans-serif"],
+        chango:['Chango', 'cursive'],
       },
     },
   },
