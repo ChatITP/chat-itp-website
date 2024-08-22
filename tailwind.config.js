@@ -31,7 +31,8 @@ module.exports = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+        'custom-radial': 'radial-gradient(circle at 30% 30%, #FF8AB3, #A8C4FF, #FFC75F)',
+         },
       boxShadow: {
         glow: "0 0 8px rgba(207, 231, 255, 0.6), 0 0 12px rgba(207, 231, 255, 0.8), 0 0 16px rgba(207, 231, 255, 1)",
       },
