@@ -103,16 +103,16 @@ const Login = () => {
 
   return (
     <>
-      <div className="relative w-[460px] h-[600px] bg-white rounded-3xl z-20">
+      <div className="relative w-[320px] h-[500px] md:w-[460px] md:h-[600px] bg-white rounded-3xl z-20">
         <form onSubmit={handleFormSubmit}>
-          <div className="mx-[40px] pt-[64px]">
-            <p className="text-black uppercase text-xs font-sans mb-2">
+          <div className="mx-[40px] pt-[56px] md:pt-[64px]">
+            <p className="text-black uppercase text-xs font-sans md:mb-2">
               welcome back
             </p>
-            <p className="text-black text-2xl font-sans mb-7 font-semibold">
+            <p className="text-black text-xl md:text-2xl font-sans mb-6 md:mb-7 font-semibold">
               Log In to your Account
             </p>
-            <div id="email-field" className="relative mb-4 w-[380px]">
+            <div id="email-field" className="relative mb-4">
               <label
                 htmlFor="user_email"
                 className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
@@ -169,7 +169,7 @@ const Login = () => {
             ) : (
               <button
                 type="submit"
-                className="bg-black font-sans w-[380px] h-[56px] rounded-lg text-white uppercase text-xs"
+                className="bg-black font-sans w-[240px] md:w-[380px] h-[56px] rounded-lg text-white uppercase text-xs"
               >
                 continue
               </button>

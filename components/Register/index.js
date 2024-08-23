@@ -118,17 +118,17 @@ const Register = () => {
 
   return (
     <>
-      <div className="mt-[20px] w-[460px] h-[650px] bg-white rounded-3xl z-20">
+      <div className="mt-[20px] w-[320px] h-[620px] md:w-[460px] md:h-[650px] bg-white rounded-3xl z-20">
         <div>
           <form onSubmit={handleFormSubmit} className="mt-8  text-black">
             <div className="mx-[40px]">
-              <p className="text-black uppercase text-xs font-sans mb-2">
+              <p className="text-black uppercase text-xs font-sans md:mb-2">
                 let&apos; get you started
               </p>
-              <p className="text-black text-2xl font-sans mb-7 font-semibold">
+              <p className="text-black text-xl md:text-2xl font-sans mb-6 md:mb-7 font-semibold">
                 Create an Account
               </p>
-              <div id="name-field" className="relative mb-4 w-[380px]">
+              <div id="name-field" className="relative mb-4">
                 <label
                   htmlFor="user_name"
                   className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
@@ -142,7 +142,7 @@ const Register = () => {
                   placeholder="chatit"
                 />
               </div>
-              <div id="email-field" className="relative mb-4 w-[380px]">
+              <div id="email-field" className="relative mb-4">
                 <label
                   htmlFor="user_email"
                   className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
@@ -156,7 +156,7 @@ const Register = () => {
                   placeholder="chatitp@nyu.edu"
                 />
               </div>
-              <div id="password-field" className="relative mb-4 w-[380px]">
+              <div id="password-field" className="relative mb-4">
                 <label
                   htmlFor="user_password"
                   className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
@@ -172,7 +172,7 @@ const Register = () => {
               </div>
               <div
                 id="password-confirm-field"
-                className="relative mb-4 w-[380px]"
+                className="relative mb-4"
               >
                 <label
                   htmlFor="user_password_confirm"
@@ -187,7 +187,7 @@ const Register = () => {
                   placeholder="***************"
                 />
               </div>
-              <div id="user-code-field" className="relative mb-4 w-[380px]">
+              <div id="user-code-field" className="relative mb-4">
                 <label
                   htmlFor="user_code"
                   className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
@@ -206,7 +206,7 @@ const Register = () => {
 
             <button
               type="submit"
-              className="bg-black font-sans w-[380px] h-[56px] rounded-lg text-white uppercase mx-[40px] text-xs"
+              className="bg-black font-sans w-[240px] md:w-[380px] h-[56px] rounded-lg text-white uppercase mx-[40px] text-xs"
             >
               Get Started
             </button>

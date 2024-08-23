@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export const LoginPage = () => {
   return (
-    <div className="bg-gradient-45 z-0" id="login-page">
+    <div className="h-screen bg-gradient-45 z-0" id="login-page">
       <div className="z-10">
         {" "}
         <Ring />

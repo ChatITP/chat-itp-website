@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export const RegisterPage = () => {
   return (
-    <div className="bg-gradient-45">
+    <div className="h-screen bg-gradient-45">
       {" "}
       <div className="z-10">
         {" "}
