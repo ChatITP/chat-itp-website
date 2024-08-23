@@ -2,7 +2,7 @@
 import { NextReactP5Wrapper } from "@p5-wrapper/next";
 
 const sketch = (p5) => {
-  var stepSize = 20;
+  let stepSize = 20;
 
   p5.setup = () => {
     let w = p5.windowWidth;
@@ -35,7 +35,7 @@ const sketch = (p5) => {
   };
 };
 
-export default function Ring() {
+export default function Background() {
   return (
     <div id="p5-workspace-background" className="absolute -z-10 top-0 left-0 w-full">
       <NextReactP5Wrapper sketch={sketch} />

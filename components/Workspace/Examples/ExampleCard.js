@@ -34,15 +34,24 @@ const ExampleCard = ({ text, phrases }) => {
 
   const handleDragStart = (event) => {
     setIsDragging(true);
-    setBlockList((blockList) => [
-      ...blockList,
-      {
-        phrases: phrases,
-        x: event.clientX - 20,
-        y: event.clientY - 20,
-        z: blockList.reduce((max, block) => (block.z > max ? block.z : max), 0) + 1,
-      },
-    ]);
+    setBlockList((blockList) => {
+      const newBlockList = [
+        ...blockList,
+        {
+          phrases: phrases,
+          x: event.clientX - 20,
+          y: event.clientY - 20,
+          z: blockList.reduce((max, block) => (block.z > max ? block.z : max), 0) + 1,
+        },
+      ];
+
+      return newBlockList.map((block, index) => {
+        return {
+          ...block,
+          isSelected: index === newBlockList.length - 1,
+        };
+      });
+    });
   };
 
   const onDrag = (event) => {
