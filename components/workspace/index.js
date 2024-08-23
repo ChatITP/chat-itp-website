@@ -11,8 +11,8 @@ const Workspace = () => {
   };
 
   return (
-    <ScreenSizeLock>
-      <RecoilRoot>
+    <RecoilRoot>
+      <ScreenSizeLock>
         <div id="workspace" onDragOver={preventDefault} onDragEnter={preventDefault}>
           <Background />
           <WorkArea />
@@ -20,8 +20,8 @@ const Workspace = () => {
             <Examples />
           </div>
         </div>
-      </RecoilRoot>
-    </ScreenSizeLock>
+      </ScreenSizeLock>
+    </RecoilRoot>
   );
 };
 

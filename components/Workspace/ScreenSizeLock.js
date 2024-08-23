@@ -22,7 +22,7 @@ const ScreenSizeLock = ({ children }) => {
 
   if (lock) {
     return (
-      <div className="bg-gray font-sans text-md w-screen h-screen flex items-center justify-center flex-col">
+      <div className="bg-gray font-sans text-md w-screen h-screen flex items-center justify-center flex-col relative z-50">
         <div className="max-w-[400px] text-center p-4">
           <div className="mb-4"> ( &gt;_&lt; '')</div>
           <div className="mb-2">

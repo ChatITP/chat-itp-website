@@ -71,7 +71,9 @@ const Message = ({ promptRef }) => {
       )}
       {showMessage && (
         <div>
-          <div className="text-sm">{output}</div>
+          <div className="text-sm max-h-[300px] overflow-y-auto scrollbar-thumb-[#313131] scrollbar-thin scrollbar-track-transparent">
+            {output}
+          </div>
           <div className={`flex justify-center ${hasGeneratedRef.current && "pt-6"}`}>
             <button
               onClick={handleAskButtonClick}
