@@ -17,7 +17,7 @@ module.exports = {
       blue: "#6CA2D9",
       lightBlue: "#C8DFF7",
       transparent: "transparent",
-      gray: "#3A3A3A",
+      gray: "#353535",
       gray2: "#4D4D4E",
       darkGray: "#2D2D2D",
       chatGray: "#424242",
@@ -46,5 +46,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
 };

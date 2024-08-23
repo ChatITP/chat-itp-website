@@ -1,17 +1,14 @@
 "use client";
-import React, { useState } from "react";
-import Workspace from "@/components/workspace";
+import Workspace from "@/components/Workspace";
 import { RecoilRoot } from "recoil";
 import AuthWrapper from "@/components/AuthWrapper";
 
 const MyPage = () => {
-  const [tags, setTags] = useState([]);
-
   return (
-    <div>
+    <div className="font-sans">
       <AuthWrapper>
         <RecoilRoot>
-          <Workspace tags={tags} setTags={setTags} />
+          <Workspace />
         </RecoilRoot>
       </AuthWrapper>
     </div>

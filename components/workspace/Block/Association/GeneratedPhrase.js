@@ -5,7 +5,7 @@ const GeneratedPhrase = ({ color, children, onClick }) => {
       style={{
         backgroundColor: color,
       }}
-      className="relative font-medium text-black rounded-md px-2 py-1 break-words cursor-pointer"
+      className="relative font-[600] text-sm text-black rounded-md px-2 break-words cursor-pointer"
     >
       {children}
     </span>

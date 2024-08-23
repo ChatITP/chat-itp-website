@@ -4,13 +4,7 @@ import GeneratedPhrase from "./GeneratedPhrase";
 const GeneratedPhraseSelector = ({ suggestions, isLoading, color, handleSelect }) => {
   if (isLoading) {
     return (
-      <div className="leading-10">
-        <div>
-          <GeneratedPhrase color={color}>...</GeneratedPhrase>
-        </div>
-        <div>
-          <GeneratedPhrase color={color}>...</GeneratedPhrase>
-        </div>
+      <div>
         <div>
           <GeneratedPhrase color={color}>...</GeneratedPhrase>
         </div>
@@ -24,7 +18,7 @@ const GeneratedPhraseSelector = ({ suggestions, isLoading, color, handleSelect }
     );
   } else {
     return (
-      <div className="leading-10">
+      <div>
         {suggestions.map((phrase, index) => (
           <div key={index}>
             <GeneratedPhrase

@@ -28,7 +28,7 @@ const Phrase = ({
         <span
           ref={editableSpanRef}
           style={{ backgroundColor: color }}
-          className="font-medium text-black rounded-md px-3 py-2 mx-1 shadow-lg shadow-black border-none outline-none break-words cursor-text"
+          className="font-[600] text-sm text-black rounded-md px-3 mx-1 shadow-lg shadow-black border-none outline-none break-words cursor-text"
           role="textbox"
           contentEditable
           suppressContentEditableWarning
@@ -39,13 +39,12 @@ const Phrase = ({
     } else {
       return (
         <span
-          onClick={onClick}
           style={{
             backgroundColor: "#cccccc",
             paddingRight: isEnd ? "0.5rem" : "1.5rem",
             marginRight: isEnd ? "0" : "-1rem",
           }}
-          className="relative font-medium text-[#6b6b6b] rounded-md pl-2 py-1 break-words cursor-pointer"
+          className="relative font-[600] text-sm text-[#6b6b6b] rounded-md pl-2 break-words cursor-pointer"
         >
           {isPlaceholder ? "+" : <>{children}</>}
         </span>
@@ -59,7 +58,7 @@ const Phrase = ({
           paddingRight: isEnd ? "0.5rem" : "1.5rem",
           marginRight: isEnd ? "0" : "-1rem",
         }}
-        className="relative font-medium text-[#6b6b6b] rounded-md pl-2 pr-6 py-1 break-words cursor-pointer"
+        className="relative font-[600] text-sm text-[#6b6b6b] rounded-md pl-2 pr-6 break-words cursor-pointer"
       >
         {isPlaceholder ? "+" : <>{children}</>}
       </span>
@@ -73,7 +72,7 @@ const Phrase = ({
           paddingRight: isEnd ? "0.5rem" : "1.5rem",
           marginRight: isEnd ? "0" : "-1rem",
         }}
-        className="relative font-medium text-black rounded-md pl-2 pr-6 py-1 break-words cursor-pointer"
+        className="relative font-[600] text-sm text-black rounded-md pl-2 pr-6 break-words cursor-pointer"
       >
         {isPlaceholder ? "+" : <>{children}</>}
       </span>
