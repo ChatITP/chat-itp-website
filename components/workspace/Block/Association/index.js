@@ -222,8 +222,6 @@ const AssociationPrompt = ({ promptRef, initialPromptPhrases }) => {
       text: prompt,
     });
 
-    console.log(response.data);
-
     setGeneratedPhrases({ suggestions: response.data, isLoading: false });
   };
 

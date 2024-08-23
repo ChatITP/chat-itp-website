@@ -1,37 +1,53 @@
 import React from "react";
-import Image from "next/image";
-import { useState } from "react";
-import { showExamplesState } from "../../../contexts/examples";
-import { useRecoilState } from "recoil";
+import { showExamplesState, exampleState } from "../../../contexts/examples";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import shuffle from "@/utils/shuffle";
+import { FaAngleDoubleUp } from "react-icons/fa";
+import { FaAngleDoubleDown } from "react-icons/fa";
+import { FaArrowsRotate } from "react-icons/fa6";
 
 const ExampleCardsController = () => {
   const [showExamples, setShowExamples] = useRecoilState(showExamplesState);
+  const setExamples = useSetRecoilState(exampleState);
 
   const handleShowHideExamples = () => {
     setShowExamples((prev) => !prev);
   };
 
+  const handleRefreshExamples = () => {
+    setExamples((prev) => {
+      const newExamples = [...prev];
+      shuffle(newExamples);
+      return newExamples;
+    });
+  };
+
   return (
-    <div className="flex">
-      <button className="p-2 text-sm text-white/80 flex text-nowrap flex-none hover:bg-gray2 rounded-md ">
-        <div className="mr-2">Refresh examples</div>
-        <Image className="flex-none" src="/switch.svg" alt="refresh icon" width={20} height={20} />
-      </button>
+    <div className="flex pr-2 mt-1">
       {showExamples ? (
-        <button
-          className="p-2 text-sm text-white/80 flex text-nowrap flex-none hover:bg-gray2 rounded-md"
-          onClick={handleShowHideExamples}
-        >
-          <div className="text-sm text-white/80 mr-2">Hide Examples</div>
-          <Image src="/toggle.svg" alt="show icon" width={17} height={17} />
-        </button>
+        <>
+          <button
+            className="px-2 py-1 text-sm text-white flex items-center flex-none hover:bg-gray rounded-md"
+            onClick={handleRefreshExamples}
+          >
+            <div className="mr-1">Refresh examples</div>
+            <FaArrowsRotate />
+          </button>
+          <button
+            className="px-2 py-1 text-sm text-white flex items-center flex-none hover:bg-gray rounded-md"
+            onClick={handleShowHideExamples}
+          >
+            <div className="mr-1">Hide Examples</div>
+            <FaAngleDoubleUp />
+          </button>
+        </>
       ) : (
         <button
-          className="p-2 text-sm text-white/80 flex text-nowrap flex-none hover:bg-gray2 rounded-md"
+          className="px-2 py-1 text-sm text-white flex items-center flex-none hover:bg-gray rounded-md"
           onClick={handleShowHideExamples}
         >
-          <div className="text-sm text-white/80 mr-2">Show Examples</div>
-          <Image src="/toggle2.svg" alt="hide icon" width={17} height={17} />
+          <div className="mr-1">Show Examples</div>
+          <FaAngleDoubleDown />
         </button>
       )}
     </div>

@@ -5,6 +5,7 @@ import shuffle from "@/utils/shuffle";
 import { tagState } from "../../../contexts/examples";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import { FaArrowsRotate } from "react-icons/fa6";
 
 const defaultTagsPool = [
   "Performance",
@@ -148,13 +149,7 @@ const TagList = () => {
         ))}
       </div>
       <button className="flex-none" onClick={randomizeUnselectedTags}>
-        <Image
-          src="/switch.svg"
-          alt="switch icon"
-          width={20}
-          height={20}
-          className="cursor-pointer"
-        />
+        <FaArrowsRotate />
       </button>
     </div>
   );
