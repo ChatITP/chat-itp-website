@@ -6,16 +6,16 @@ export default function Footer() {
   return (
     <div id="footer" className="flex w-full h-96">
       <div className="flex flex-col md:flex-row md:gap-14 lg:gap-20 xl:gap-32 pt-10 md:pt-8  mx-auto">
-        <div className="flex flex-row w-[200px] md:block items-center md:items-start ">
+        <div className="flex flex-row md:block items-center md:items-start ">
           <Image
             src="/logo.png"
             alt="logo"
             width={113}
             height={64}
-            className="mb-4 md:mb-8 w-[56px] md:w-[80px] lg:w-[113px] h-auto mx-auto md:mx-0"
+            className="hidden md:block mb-4 md:mb-8 w-[56px] md:w-[80px] lg:w-[113px] h-auto mx-auto md:mx-0"
           />
           <div className="ml-4 md:ml-0 w-[300px] md:w-[200px] lg:w-[265px] h-auto md:mb-24 items-center md:text-left">
-            <p className="font-sans text-[10px] w-[150px] md:w-[250px] md:text-xs text-offWhite">
+            <p className="hidden md:block font-sans text-[10px] w-[150px] md:w-[250px] md:text-xs text-offWhite">
               Chat ITP is an ethical, open-source Large language Model trained
               with 20+ years of ITP/NYU student work.
             </p>
@@ -25,10 +25,16 @@ export default function Footer() {
           </p>
         </div>
         <div className="pt-2 md:pt-9 flex flex-row gap-6 md:block ">
-          <p className="font-sans text-xs md:text-sm font-bold text-offWhite">
+          <p className="hidden md:block font-sans text-xs md:text-sm font-bold text-offWhite">
             Service
           </p>
-          <div className="flex flex-row pt-[1px] md:flex-col gap-4 md:pt-8">
+          <Link href="/login">
+            <p className="md:hidden font-sans text-xs  font-bold text-offWhite">
+              Login
+            </p>
+          </Link>
+
+          <div className="hidden md:flex flex-row pt-[1px] md:flex-col gap-4 md:pt-8">
             <Link href="/login">
               <p className="font-sans text-[10px] md:text-xs text-offWhite">
                 Login
@@ -45,10 +51,12 @@ export default function Footer() {
           </div>
         </div>
         <div className="pt-2 md:pt-9 flex flex-row gap-6 md:block">
-          <p className="font-sans text-xs md:text-sm font-bold text-offWhite">
-            Credits
-          </p>
-          <div className="flex flex-row pt-[1.5px] md:flex-col gap-4 md:pt-8">
+          <Link href="/credits">
+            <p className="font-sans text-xs md:text-sm font-bold text-offWhite">
+              Credits
+            </p>
+          </Link>
+          <div className="hidden md:flex flex-row pt-[1.5px] md:flex-col gap-4 md:pt-8">
             <Link href="/credits#acknowledge">
               <p className="font-sans text-[10px] md:text-xs text-offWhite">
                 Database
