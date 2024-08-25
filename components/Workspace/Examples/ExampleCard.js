@@ -42,6 +42,7 @@ const ExampleCard = ({ text, phrases }) => {
           x: event.clientX - 20,
           y: event.clientY - 20,
           z: blockList.reduce((max, block) => (block.z > max ? block.z : max), 0) + 1,
+          type: "block",
         },
       ];
 
@@ -83,10 +84,6 @@ const ExampleCard = ({ text, phrases }) => {
       newBlockList.push(newLastBlock);
       return newBlockList;
     });
-  };
-
-  const preventDefault = (event) => {
-    event.preventDefault();
   };
 
   return (

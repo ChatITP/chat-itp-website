@@ -183,6 +183,7 @@ const AssociationPrompt = ({ promptRef, initialPromptPhrases }) => {
         isLoading: false,
       };
     });
+
     setPromptPhrases((prev) => {
       const updatedPromptPhrases = [...prev];
       updatedPromptPhrases.splice(insertIndex, 1, ...newPhrases);
