@@ -54,7 +54,7 @@ const NewBlock = ({ id }) => {
   if (isLoading) {
     return (
       <div
-        className="w-[550px] h-[100px] border-2 border-[#c0c0c0] bg-white/15 rounded-lg border-dashed outline-none flex items-center justify-center"
+        className="w-[550px] h-[100px] border-2 border-[#c0c0c0] bg-white/15 rounded-lg border-dashed outline-none flex items-center justify-center shadow-lg"
         contentEditable={false}
       >
         <BeatLoader color="#c0c0c0" />
@@ -64,7 +64,7 @@ const NewBlock = ({ id }) => {
 
   return (
     <div
-      className="w-[550px] min-h-[100px] border-2 border-[#c0c0c0] bg-white/15 rounded-lg border-dashed outline-none focus:border-[#ffffff] p-4"
+      className="w-[550px] min-h-[100px] border-2 border-[#c0c0c0] bg-white/15 rounded-lg border-dashed outline-none focus:border-[#ffffff] p-4 shadow-lg"
       contentEditable
       suppressContentEditableWarning
       tabIndex={0}
