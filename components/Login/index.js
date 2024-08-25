@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-
 const Login = () => {
   const [loginState, setLoginState] = useState({
     isLoggedIn: false,
@@ -103,43 +102,46 @@ const Login = () => {
 
   return (
     <>
-      <div className="relative w-[320px] h-[500px] md:w-[460px] md:h-[600px] bg-white rounded-3xl z-20">
+      <div className="relative w-[320px] h-[550px] md:w-[460px] md:h-[600px] bg-white/20 rounded-[16px] shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[4.5px] border border-white/30 z-20">
         <form onSubmit={handleFormSubmit}>
-          <div className="mx-[40px] pt-[56px] md:pt-[64px]">
-            <p className="text-black uppercase text-xs font-sans md:mb-2">
+          <div className="mx-[25px] md:mx-[40px] pt-[56px] md:pt-[64px]">
+            <p className="text-white uppercase text-xs font-sans md:mb-2">
               welcome back
             </p>
-            <p className="text-black text-xl md:text-2xl font-sans mb-6 md:mb-7 font-semibold">
+            <p className="text-white text-xl md:text-2xl font-sans mb-6 md:mb-7 font-semibold">
               Log In to your Account
             </p>
             <div id="email-field" className="relative mb-4">
-              <label
+              <p className="text-xs font-sans mb-2">Email</p>
+              {/* <label
                 htmlFor="user_email"
-                className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
+                className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-offWhite font-sans"
               >
                 Email
-              </label>
+              </label> */}
               <input
                 id="user_email"
                 name="user_email"
                 type="email"
-                className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-white border bg-transparent border-white rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-purple"
                 placeholder="chatitp@nyu.edu"
               />
             </div>
 
             <div id="password-field" className="relative mb-4">
-              <label
+              <p className="text-xs font-sans mb-2">Password</p>
+
+              {/* <label
                 htmlFor="user_password"
-                className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
+                className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-black font-sans"
               >
                 Password
-              </label>
+              </label> */}
               <input
                 id="user_password"
                 name="user_password"
                 type="password"
-                className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-white border bg-transparent border-white rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-purple"
                 placeholder="***************"
               />
             </div>
@@ -150,17 +152,17 @@ const Login = () => {
                 <input
                   id="checkbox-1"
                   type="checkbox"
-                  className="w-4 h-4 text-blue-600 bg-gray-50 border-black rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 bg-transparent border-white rounded focus:ring-blue-500"
                 />
                 <label
                   htmlFor="checkbox-1"
-                  className="ml-2 text-xs font-sans text-black"
+                  className="ml-2 text-xs font-sans text-white"
                 >
                   Remember me
                 </label>
               </div>
               <div>
-                <p className="text-xs font-sans text-black">Forgot Password?</p>
+                <p className="text-xs font-sans text-white">Forgot Password?</p>
               </div>
             </div>
 
@@ -169,7 +171,7 @@ const Login = () => {
             ) : (
               <button
                 type="submit"
-                className="bg-black font-sans w-[240px] md:w-[380px] h-[56px] rounded-lg text-white uppercase text-xs"
+                className="bg-white/50 font-sans w-[268px] md:w-[380px] h-[56px] rounded-lg text-white font-bold uppercase text-xs"
               >
                 continue
               </button>
@@ -177,15 +179,15 @@ const Login = () => {
           </div>
         </form>
 
-        <div className="flex items-center mt-7 mb-8 mx-[40px]">
-          <hr className="flex-grow border-t border-chatGray" />
-          <span className="mx-4 text-black font-semibold text-xs font-sans">
+        <div className="flex items-center mt-7 mb-8 mx-[25px] md:mx-[40px]">
+          <hr className="flex-grow border-t border-white" />
+          <span className="mx-4 text-white font-semibold text-xs font-sans">
             Or
           </span>
-          <hr className="flex-grow border-t border-chatGray" />
+          <hr className="flex-grow border-t border-white" />
         </div>
 
-        <div className="mt-4 text-xs font-sans w-fit text-black mx-auto">
+        <div className="mt-4 text-xs font-sans w-fit text-white mx-auto">
           New User?{" "}
           <Link href="/register">
             <span className="font-bold underline uppercase">Sign up here</span>

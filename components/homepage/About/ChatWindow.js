@@ -55,7 +55,7 @@ const ChatWindow = () => {
 
   return (
     <>
-      <div className="relative w-[290px] h-[184px] md:w-[670px] md:h-[350px] rounded-2xl shadow-md bg-gray/80 z-20">
+      <div className="relative w-[290px] h-[184px] md:w-[670px] md:h-[350px] rounded-2xl shadow-md bg-gray z-20">
         <div className="text-left pt-6  md:p-10">
           <p className="font-sans text-xs md:text-lg w-[260px] md:w-[570px] mx-auto">
             {currentPrompt}

@@ -5,7 +5,7 @@ import SignUp from "./SignUp";
 export default function Footer() {
   return (
     <div id="footer" className="flex w-full h-96">
-      <div className="flex flex-col md:flex-row md:gap-14 lg:gap-20 xl:gap-32 pt-10 md:pt-8  mx-auto">
+      <div className="flex flex-col justify-end mb-8 md:mb-0 md:justify-normal md:flex-row md:gap-14 lg:gap-20 xl:gap-32 pt-10 md:pt-8 mx-auto">
         <div className="flex flex-row md:block items-center md:items-start ">
           <Image
             src="/logo.png"

@@ -118,87 +118,64 @@ const Register = () => {
 
   return (
     <>
-      <div className="mt-[20px] w-[320px] h-[620px] md:w-[460px] md:h-[650px] bg-white rounded-3xl z-20">
+      <div className="relative w-[320px] h-[690px] md:w-[460px] md:h-[700px] bg-white/20 rounded-[16px] shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[4.5px] border border-white/30 z-20">
         <div>
-          <form onSubmit={handleFormSubmit} className="mt-8  text-black">
-            <div className="mx-[40px]">
-              <p className="text-black uppercase text-xs font-sans md:mb-2">
+          <form onSubmit={handleFormSubmit} className="mt-8  text-white">
+            <div className="mx-[25px] md:mx-[40px]">
+              <p className="text-white uppercase text-xs font-sans md:mb-1">
                 let&apos; get you started
               </p>
-              <p className="text-black text-xl md:text-2xl font-sans mb-6 md:mb-7 font-semibold">
+              <p className="text-white text-xl md:text-2xl font-sans mb-6 md:mb-6 font-semibold">
                 Create an Account
               </p>
-              <div id="name-field" className="relative mb-4">
-                <label
-                  htmlFor="user_name"
-                  className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
-                >
-                  Your Name
-                </label>
+              <div id="name-field" className="relative mb-2">
+                <p className="text-xs font-sans mb-2 text-white">Your Name</p>
+
                 <input
                   name="user_name"
                   type="text"
-                  className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full bg-transparent text-white border border-white rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="chatit"
                 />
               </div>
-              <div id="email-field" className="relative mb-4">
-                <label
-                  htmlFor="user_email"
-                  className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
-                >
-                  Email
-                </label>
+              <div id="email-field" className="relative mb-2">
+                <p className="text-xs font-sans mb-2 text-white">Email</p>
+
                 <input
                   name="user_email"
                   type="email"
-                  className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full bg-transparent text-white border border-white rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="chatitp@nyu.edu"
                 />
               </div>
-              <div id="password-field" className="relative mb-4">
-                <label
-                  htmlFor="user_password"
-                  className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
-                >
-                  Password
-                </label>
+              <div id="password-field" className="relative mb-2">
+                <p className="text-xs font-sans mb-2 text-white">Password</p>
+
                 <input
                   name="user_password"
                   type="password"
-                  className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full bg-transparent text-white border border-white rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="***************"
                 />
               </div>
-              <div
-                id="password-confirm-field"
-                className="relative mb-4"
-              >
-                <label
-                  htmlFor="user_password_confirm"
-                  className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
-                >
-                  Confirm Password
-                </label>
+              <div id="password-confirm-field" className="relative mb-2">
+                <p className="text-xs font-sans mb-2 text-white">Confirm Password</p>
+
                 <input
                   name="user_password_confirm"
                   type="password"
-                  className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full bg-transparent text-white border border-white rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="***************"
                 />
               </div>
-              <div id="user-code-field" className="relative mb-4">
-                <label
-                  htmlFor="user_code"
-                  className="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray font-sans"
-                >
-                  Early Access Code
-                </label>
+              <div id="user-code-field" className="relative mb-2">
+                <p className="text-xs font-sans mb-2 text-white">Early Access Code</p>
+
                 <input
                   name="user_code"
                   type="text"
                   autoComplete="off"
-                  className="w-full text-black border border-black rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full bg-transparent text-white border border-white rounded-lg py-4 px-4 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="***************"
                 />
               </div>
@@ -206,25 +183,30 @@ const Register = () => {
 
             <button
               type="submit"
-              className="bg-black font-sans w-[240px] md:w-[380px] h-[56px] rounded-lg text-white uppercase mx-[40px] text-xs"
+              className="bg-white/50 font-sans w-[268px] md:w-[380px] h-[56px] rounded-lg text-white uppercase mx-[25px] md:mx-[40px] text-xs"
             >
               Get Started
             </button>
           </form>
-          <div className="flex items-center mt-7 mb-6 mx-[40px]">
-            <hr className="flex-grow border-t border-chatGray" />
-            <span className="mx-4 text-black font-semibold text-xs font-sans">
+          <div className="flex items-center mt-7 mb-4 mx-[25px] md:mx-[40px]">
+            <hr className="flex-grow border-t border-offWhite" />
+            <span className="mx-4 text-white font-semibold text-xs font-sans">
               Or
             </span>
-            <hr className="flex-grow border-t border-chatGray" />
+            <hr className="flex-grow border-t border-offWhite" />
           </div>
-         
-            <div className="text-xs font-sans w-fit text-black mx-auto">
-              Already have an account?  <Link href="/login"><span className = "underline font-bold uppercase">Login here</span></Link>
-            </div>
-          
+
+          <div className="text-xs font-sans w-fit text-white mx-auto">
+            Already have an account?{" "}
+            <Link href="/login">
+              <span className="underline font-bold uppercase">Login here</span>
+            </Link>
+          </div>
+
           {registerState.error && (
-            <div className="text-red text-xs font-sans text-center">{registerState.message}</div>
+            <div className="text-red text-xs font-sans text-center">
+              {registerState.message}
+            </div>
           )}
         </div>
       </div>
