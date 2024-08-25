@@ -27,7 +27,6 @@ const WorkArea = () => {
   const preventDefault = (event) => {
     event.preventDefault();
   };
-  console.log(blockList);
   return (
     <div
       className="absolute w-screen h-screen top-0 left-0 overflow-hidden"
