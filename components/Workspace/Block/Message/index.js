@@ -5,6 +5,7 @@ import useAuthRequest from "@/hooks/useAuthRequest";
 import { IoSend } from "react-icons/io5";
 import { FaAngleDoubleUp } from "react-icons/fa";
 import { FaAngleDoubleDown } from "react-icons/fa";
+import ReactMarkdown from "react-markdown";
 
 const Message = ({ promptRef }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +73,7 @@ const Message = ({ promptRef }) => {
       {showMessage && (
         <div>
           <div className="text-sm max-h-[300px] overflow-y-auto scrollbar-thumb-[#313131] scrollbar-thin scrollbar-track-transparent">
-            {output}
+            <ReactMarkdown>{output}</ReactMarkdown>
           </div>
           <div className={`flex justify-center ${hasGeneratedRef.current && "pt-6"}`}>
             <button
