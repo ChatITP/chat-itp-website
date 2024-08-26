@@ -17,7 +17,7 @@ const Tag = ({ children, isSelected, isEditing, onClick, onEditClick, onEdited }
       {isEditing ? (
         <div
           ref={inputRef}
-          className="flex items-center text-sm font-semibold rounded-lg px-3 py-1 whitespace-nowrap"
+          className="flex items-center text-sm font-semibold rounded-lg px-3 py-1 whitespace-nowrap max-w-[150px] overflow-hidden focus:outline focus:outline-2 focus:outline-white"
           style={{
             backgroundColor: isSelected ? "#C8DFF7" : "transparent",
             color: isSelected ? "#3175BB" : "white",
@@ -28,7 +28,7 @@ const Tag = ({ children, isSelected, isEditing, onClick, onEditClick, onEdited }
           suppressContentEditableWarning
           onBlur={(e) => onEdited(e.target.innerText.trim())}
         >
-          <div>{children}</div>
+          {children}
         </div>
       ) : (
         <button
@@ -40,7 +40,7 @@ const Tag = ({ children, isSelected, isEditing, onClick, onEditClick, onEdited }
           }}
           onClick={onClick}
         >
-          <div>{children}</div>
+          <div className="max-w-[103px] overflow-hidden text-ellipsis">{children}</div>
           <div className="ml-2" onClick={editButtonClicked} role="button">
             <FaEdit />
           </div>

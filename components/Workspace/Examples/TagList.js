@@ -105,11 +105,20 @@ const TagList = () => {
     setTags((prevTags) => {
       return prevTags.map((tag, index) => {
         if (clickIndex === index) {
-          return {
-            ...tag,
-            name: newName,
-            isEditing: false,
-          };
+          if (newName === "") {
+            return {
+              ...tag,
+              isEditing: false,
+              name: defaultTagsPool[Math.floor(Math.random() * defaultTagsPool.length)],
+              isSelected: false,
+            };
+          } else {
+            return {
+              ...tag,
+              name: newName,
+              isEditing: false,
+            };
+          }
         }
         return tag;
       });
