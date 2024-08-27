@@ -36,13 +36,13 @@ export default function SignUp() {
               name="email"
               type="email"
               placeholder="Enter Your Email"
-              className="text-xs bg-transparent w-[250px] h-[45px] border-[1px] border-blue pl-2 mb-4 text-left rounded-sm text-offWhite"
+              className="text-[10px] md:text-xs bg-transparent w-[100px] h-[35px] md:w-[150px] xl:w-[250px] md:h-[45px] border-[1px] border-blue pl-2 mb-4 text-left rounded-sm text-offWhite"
               required
             />
             <div className="w-fit">
               <button
                 type="submit"
-                className="text-xs cursor-pointer w-[96px] h-[45px] px-4 bg-blue rounded-lg"
+                className="text-[10px] md:text-xs cursor-pointer w-[80px] h-[35px] md:w-[96px] md:h-[45px] px-1 md:px-4 bg-blue rounded-lg"
                 disabled={isLoading}
               >
                 {isLoading ? 'Subscribing...' : 'Subscribe'}

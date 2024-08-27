@@ -18,7 +18,7 @@ const ChatWindow = () => {
   ];
   const answers = [
     "I'm Chat ITP, your go-to AI assistant for all things ITP projects and fun conversations! Think of me as your insider guide to the Interactive Telecommunications Program at NYU, with a dash of humor and wit.",
-    "The Interactive Media program at NYU, specifically the Interactive Telecommunications Program (ITP), aims to foster innovative and creative uses of technology in various fields. A key aspect of this is exploring the intersection of technology and education, as seen in projects like \" New Projects, Young People\" by Tali Padan. This project, which documented high school students working with ITP students to create a movie, highlights the benefits of hands-on, constructivist learning approaches. By engaging students in interactive and immersive experiences, the program encourages active learning, collaboration, and creativity. The overall goal is to equip students with the skills and knowledge to harness technology in meaningful ways, whether in education, art, design, or other areas.",
+    'The Interactive Media program at NYU, specifically the Interactive Telecommunications Program (ITP), aims to foster innovative and creative uses of technology in various fields. A key aspect of this is exploring the intersection of technology and education, as seen in projects like " New Projects, Young People" by Tali Padan. This project, which documented high school students working with ITP students to create a movie, highlights the benefits of hands-on, constructivist learning approaches. By engaging students in interactive and immersive experiences, the program encourages active learning, collaboration, and creativity. The overall goal is to equip students with the skills and knowledge to harness technology in meaningful ways, whether in education, art, design, or other areas.',
     "The ITP program is all about embracing emerging technologies and pushing boundaries. A great example of this is how students experiment with traditional mediums in innovative ways. Take Zannah Marsh's \"ITP Book 1.0\" project, for instance. In 2009, she created a physical book featuring work by current ITP students, showcasing the intersection of digital and physical media. This project highlights the program's willingness to explore and incorporate various technologies, even if it means reimagining traditional formats like the printed book. By encouraging experimentation and creativity, ITP provides a fertile ground for students to explore emerging technologies, from interactive installations to virtual reality experiences. The program's emphasis on hands-on learning and collaboration allows students to stay ahead of the curve and develop innovative solutions that often blend art, design, and technology. In essence, ITP's approach to emerging technologies is all about fostering a spirit of curiosity, experimentation, and innovation, giving students the freedom to explore and shape the future of interactive media.",
     "You want to know about some notable projects from NYU's ITP program? Well, I've got a great example right here! Let me tell you about \"Sustainable ITP,\" an initiative led by Robert Faludi and Rebecca Bray back in 2007. This project aimed to promote and reveal sustainable practices within the ITP community. They created a map of sustainable projects showcased at the Spring Show, highlighting initiatives that used renewable energy, green materials, or promoted environmental awareness. What I love about this project is that it not only encouraged sustainable practices but also provided a platform for students and faculty to share their eco-friendly ideas and projects. By doing so, Sustainable ITP helped foster a sense of community and social responsibility within the program. This project is a fantastic representation of ITP's focus on innovation, creativity, and using technology to drive positive change. And, as you can see, sustainability has been a key area of interest for ITP students and faculty for many years! Would you like to know more about other ITP projects or is there something specific you'd like to explore?",
     "You want to know the magic behind our Chat ITP sessions? Well, let me spill the beans! A Chat ITP session is basically a fun conversation between you and me, your friendly AI assistant. You can ask me anything about ITP projects, and I'll do my best to provide you with accurate and interesting information. If I have specific project details available, I'll share them with you. But if not, I'll give you general information or advice on the topic. Here's how it works: You ask me a question or start a conversation on a topic you're interested in. I check if I have any relevant project information available. If I do, I'll share it with you. If I don't have specific project details, I'll provide general information, advice, or insights on the topic. We keep chatting back and forth, exploring the topic and having a great time! That's it! Our goal is to have an engaging and informative conversation that's also fun and enjoyable. So, what's on your mind? Want to discuss a specific project or topic? I'm all ears!",
@@ -31,7 +31,6 @@ const ChatWindow = () => {
   const [currentPrompt, setCurrentPrompt] = useState(prompts[0]);
   const [currentAnswer, setCurrentAnswer] = useState(answers[0]);
 
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentPrompt((prevPrompt) => {
@@ -43,7 +42,7 @@ const ChatWindow = () => {
     return () => clearInterval(interval); // Cleanup the interval on component unmount
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     const ansInterval = setInterval(() => {
       setCurrentAnswer((prevAnswer) => {
         const currentIndex = answers.indexOf(prevAnswer);
@@ -52,17 +51,19 @@ const ChatWindow = () => {
       });
     }, 10000); // Change answers every 10 seconds
     return () => clearInterval(ansInterval); // Cleanup the interval on component unmount
-  },[]);
+  }, []);
 
   return (
     <>
-      <div className="relative w-[670px] h-[350px] rounded-2xl shadow-md bg-gray/80 z-20">
-        <div className="text-left p-10">
-          <p className="font-sans text-lg w-[570px] mx-auto">{currentPrompt}</p>
+      <div className="relative w-[290px] h-[184px] md:w-[670px] md:h-[350px] rounded-2xl shadow-md bg-gray z-20">
+        <div className="text-left pt-6  md:p-10">
+          <p className="font-sans text-xs md:text-lg w-[260px] md:w-[570px] mx-auto">
+            {currentPrompt}
+          </p>
         </div>
-        <div className="absolute h-[242px] w-full bg-white/10 rounded-2xl">
-          <div className="flex flex-row justify-end pr-10 pt-4 gap-2">
-            <p className="text-xs font-sans">Hide</p>
+        <div className="absolute bottom-0 w-full h-[110px] md:h-[242px] bg-white/10 rounded-2xl">
+          <div className="flex flex-row justify-end pr-10 pt-2 md:pt-4 gap-2">
+            <p className="text-[8px] md:text-xs font-sans">Hide</p>
             <Image
               src="/hide.svg"
               alt="hide"
@@ -71,31 +72,31 @@ const ChatWindow = () => {
               className="my-auto pt-[1px]"
             />
           </div>
-          <div className="w-[570px] h-[120px] mx-auto pt-8 mb-14 overflow-y-auto">
-            <p className="font-sans text-lg">
+          <div className="w-[260px] h-[50px] md:w-[570px] md:h-[120px] mx-auto pt-2 md:pt-8 mb-4 md:mb-14 overflow-y-auto">
+            <p className="font-sans text-xs md:text-lg">
              {currentAnswer}
             </p>
           </div>
-          <div className="flex flex-row justify-end pr-10 gap-6">
-            <div className="flex flex-row items-center gap-2">
-              <p className="text-xs font-sans">Regenerate</p>
+          <div className="flex flex-row justify-end pr-2 gap-2 md:pr-10 md:gap-6">
+            <div className="flex flex-row items-center gap-[1px] md:gap-2">
+              <p className="text-[8px] md:text-xs font-sans">Regenerate</p>
               <Image
                 src="/switch.svg"
                 alt="switch"
                 width={13}
                 height={13}
-                className="my-auto pt-[1px]"
+                className="my-auto pt-[1px] w-[8px] md:w-[13px] h-auto"
               />
             </div>
 
-            <div className="flex flex-row items-center gap-2">
-              <p className="text-xs font-sans">Ask Followup</p>
+            <div className="flex flex-row items-center gap-[1px] md:gap-2">
+              <p className="text-[8px] md:text-xs font-sans">Ask Followup</p>
               <Image
                 src="/tasks.svg"
                 alt="task"
                 width={13}
                 height={13}
-                className="my-auto pt-[1px]"
+                className="my-auto pt-[1px] w-[8px] md:w-[13px] h-auto"
               />
             </div>
           </div>
