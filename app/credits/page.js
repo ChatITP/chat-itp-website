@@ -127,12 +127,12 @@ const CreditPage = () => {
 
           <div
             id="member-container"
-            className="h-[450px] md:h-[645px] bg-cover bg-center mb-[40px]"
+            className="h-[1400px] md:h-[645px] bg-cover bg-center md:mb-[40px]"
             style={{ backgroundImage: "url('/radialBg.jpg')" }}
           >
             <div
               id="col1"
-              className="flex gap-x-[15px] md:gap-x-[80px] lg:gap-x-[120px] xl:gap-x-[150px] justify-center mb-7 pt-14 mx-auto"
+              className="flex flex-col md:flex-row gap-y-11 mb-0 gap-x-[15px] md:gap-x-[80px] lg:gap-x-[120px] xl:gap-x-[150px] justify-center md:mb-7 pt-14 mx-auto"
             >
               {teamMembers1.map((member) => (
                 <TeamMember key={member.name} {...member} />
@@ -141,7 +141,7 @@ const CreditPage = () => {
 
             <div
               id="col2"
-              className="flex gap-x-[15px] md:gap-x-[80px] lg:gap-x-[120px] xl:gap-x-[150px] justify-center mb-7 pt-14 md:pt-32 lg:pt-20 xl:pt-14 mx-auto"
+              className="flex flex-col md:flex-row gap-y-11 gap-x-[15px] md:gap-x-[80px] lg:gap-x-[120px] xl:gap-x-[150px] justify-center md:mb-9 pt-8 md:pt-32 lg:pt-20 xl:pt-14 mx-auto"
             >
               {teamMembers2.map((member) => (
                 <TeamMember key={member.name} {...member} />
@@ -158,7 +158,7 @@ const CreditPage = () => {
 
 const TeamMember = ({ name, role }) => (
   <div className="flex flex-col items-center">
-    <div className="w-[50px] h-[50px] md:w-[80px] md:h-[80px] lg:w-[110px] lg:h-[110px] xl:w-[150px] xl:h-[150px] bg-lightBlue border-[1px] md:border-[3px] border-white rounded-full"></div>
+    <div className="w-[100px] h-[100px] md:w-[80px] md:h-[80px] lg:w-[110px] lg:h-[110px] xl:w-[150px] xl:h-[150px] bg-lightBlue border-[1px] md:border-[3px] border-white rounded-full"></div>
     <p className="text-[10px] md:text-sm font-sans font-semibold text-center pt-3 md:pt-7 leading-tight">
       {name}
     </p>
@@ -174,36 +174,37 @@ const TeamMember = ({ name, role }) => (
 
 const teamMembers1 = [
   {
-    name: "Tyler Peppel",
-    role: ["Founder", "Project Manager"],
-  },
-  {
-    name: "Ziyuan (Peter) Lin",
-    role: ["Lead Software Engineer"],
-  },
-  {
-    name: "Ningyu (Duorfan) Fan",
-    role: ["Outreach Manager", "User Experience Designer"],
-  },
-  {
-    name: "Yuxiang Cheng",
-    role: ["Full Stack Developer"],
-  },
-];
-
-const teamMembers2 = [
-  {
-    name: "Nina Li",
-    role: ["Software Engineer"],
+    name: "Anzhelika",
+    role: ["Full Software Engineer"],
   },
   {
     name: "Cara Cai",
     role: ["User Experience Designer"],
   },
   {
-    name: "Anzhelika",
-    role: ["Full Software Engineer"],
+    name: "Nina Li",
+    role: ["Software Engineer"],
   },
+  {
+    name: "Ningyu (Duorfan) Fan",
+    role: ["Outreach Manager", "User Experience Designer"],
+  },
+];
+
+const teamMembers2 = [
+  {
+    name: "Tyler Peppel",
+    role: ["Founder", "Project Manager"],
+  },
+  {
+    name: "Yuxiang Cheng",
+    role: ["Full Stack Developer"],
+  },
+  {
+    name: "Ziyuan (Peter) Lin",
+    role: ["Lead Software Engineer"],
+  },
+
 ];
 
 export default CreditPage;
