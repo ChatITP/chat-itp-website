@@ -183,6 +183,7 @@ const AssociationPrompt = ({ promptRef, initialPromptPhrases }) => {
         isLoading: false,
       };
     });
+
     setPromptPhrases((prev) => {
       const updatedPromptPhrases = [...prev];
       updatedPromptPhrases.splice(insertIndex, 1, ...newPhrases);
@@ -221,8 +222,6 @@ const AssociationPrompt = ({ promptRef, initialPromptPhrases }) => {
     const response = await request("post", "/api/llm/replace", {
       text: prompt,
     });
-
-    console.log(response.data);
 
     setGeneratedPhrases({ suggestions: response.data, isLoading: false });
   };

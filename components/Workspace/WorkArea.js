@@ -2,6 +2,7 @@ import DraggableWrapper from "./DraggableWrapper";
 import Block from "./Block";
 import { useRecoilState } from "recoil";
 import { blockListState } from "../../contexts/workspace";
+import NewBlock from "./NewBlock";
 
 const WorkArea = () => {
   const [blockList, setBlockList] = useRecoilState(blockListState);
@@ -18,6 +19,7 @@ const WorkArea = () => {
         x: event.clientX,
         y: event.clientY,
         z: getHighestZ() + 1,
+        type: "new-block",
       },
     ]);
   };
@@ -25,7 +27,6 @@ const WorkArea = () => {
   const preventDefault = (event) => {
     event.preventDefault();
   };
-
   return (
     <div
       className="absolute w-screen h-screen top-0 left-0 overflow-hidden"
@@ -34,8 +35,9 @@ const WorkArea = () => {
       onDragEnter={preventDefault}
     >
       {blockList.map((block, index) => (
-        <DraggableWrapper key={index} defaultX={block.x} defaultY={block.y} defaultZ={block.z}>
-          <Block initialPromptPhrases={block.phrases} />
+        <DraggableWrapper key={index} x={block.x} y={block.y} z={block.z} id={index}>
+          {block.type === "block" && <Block initialPromptPhrases={block.phrases} id={index} />}
+          {block.type === "new-block" && <NewBlock id={index} />}
         </DraggableWrapper>
       ))}
     </div>

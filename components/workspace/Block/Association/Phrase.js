@@ -1,5 +1,6 @@
-import useClickInOutDetector from "@/hooks/clickInOutDetector";
+import { IoIosAdd } from "react-icons/io";
 import { useRef } from "react";
+import useClickInOutDetector from "@/hooks/clickInOutDetector";
 
 const Phrase = ({
   color,
@@ -22,16 +23,36 @@ const Phrase = ({
     }
   );
 
+  const handleKeyDown = (e) => {
+    e.stopPropagation();
+
+    if (e.key === "Enter") {
+      editableSpanRef.current.blur();
+      onClickOut(editableSpanRef.current.innerText.trim());
+    }
+    if (e.key === "Backspace" && editableSpanRef.current.innerText.trim() === "") {
+      editableSpanRef.current.blur();
+      onClickOut(editableSpanRef.current.innerText.trim());
+    }
+    if (e.key === "Delete") {
+      e.preventDefault();
+      editableSpanRef.current.blur();
+      onClickOut("");
+    }
+  };
+
   if (isEditing) {
     if (isSelected) {
       return (
         <span
           ref={editableSpanRef}
           style={{ backgroundColor: color }}
-          className="font-[600] text-sm text-black rounded-md px-3 mx-1 shadow-lg shadow-black border-none outline-none break-words cursor-text"
+          className="font-[600] text-sm text-black rounded-md px-3 mx-1 shadow-lg shadow-black border-none break-words cursor-text focus:outline focus:outline-2 focus:outline-white"
           role="textbox"
           contentEditable
           suppressContentEditableWarning
+          onKeyDown={handleKeyDown}
+          tabIndex={0}
         >
           {children}
         </span>
@@ -46,7 +67,7 @@ const Phrase = ({
           }}
           className="relative font-[600] text-sm text-[#6b6b6b] rounded-md pl-2 break-words cursor-pointer"
         >
-          {isPlaceholder ? "+" : <>{children}</>}
+          {isPlaceholder ? <IoIosAdd className="inline text-lg" /> : <>{children}</>}
         </span>
       );
     }
@@ -60,7 +81,7 @@ const Phrase = ({
         }}
         className="relative font-[600] text-sm text-[#6b6b6b] rounded-md pl-2 pr-6 break-words cursor-pointer"
       >
-        {isPlaceholder ? "+" : <>{children}</>}
+        {isPlaceholder ? <IoIosAdd className="inline text-lg" /> : <>{children}</>}
       </span>
     );
   } else {
@@ -74,7 +95,7 @@ const Phrase = ({
         }}
         className="relative font-[600] text-sm text-black rounded-md pl-2 pr-6 break-words cursor-pointer"
       >
-        {isPlaceholder ? "+" : <>{children}</>}
+        {isPlaceholder ? <IoIosAdd className="inline text-lg" /> : <>{children}</>}
       </span>
     );
   }

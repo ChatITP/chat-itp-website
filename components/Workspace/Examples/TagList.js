@@ -5,6 +5,7 @@ import shuffle from "@/utils/shuffle";
 import { tagState } from "../../../contexts/examples";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import { FaArrowsRotate } from "react-icons/fa6";
 
 const defaultTagsPool = [
   "Performance",
@@ -104,11 +105,20 @@ const TagList = () => {
     setTags((prevTags) => {
       return prevTags.map((tag, index) => {
         if (clickIndex === index) {
-          return {
-            ...tag,
-            name: newName,
-            isEditing: false,
-          };
+          if (newName === "") {
+            return {
+              ...tag,
+              isEditing: false,
+              name: defaultTagsPool[Math.floor(Math.random() * defaultTagsPool.length)],
+              isSelected: false,
+            };
+          } else {
+            return {
+              ...tag,
+              name: newName,
+              isEditing: false,
+            };
+          }
         }
         return tag;
       });
@@ -148,13 +158,7 @@ const TagList = () => {
         ))}
       </div>
       <button className="flex-none" onClick={randomizeUnselectedTags}>
-        <Image
-          src="/switch.svg"
-          alt="switch icon"
-          width={20}
-          height={20}
-          className="cursor-pointer"
-        />
+        <FaArrowsRotate />
       </button>
     </div>
   );
