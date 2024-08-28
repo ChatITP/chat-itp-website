@@ -43,7 +43,7 @@ const Message = ({ promptRef }) => {
       setOutput(response.data.content);
     } else {
       // TODO: handle images
-      setOutput(response.data.text);
+      setOutput(response.data.content.text);
     }
     setIsLoading(false);
     hasGeneratedRef.current = true;
