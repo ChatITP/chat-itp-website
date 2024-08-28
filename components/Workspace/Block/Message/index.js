@@ -39,8 +39,12 @@ const Message = ({ promptRef }) => {
     const response = await request("post", process.env.NEXT_PUBLIC_API_URL + "/llm/generate", {
       userPrompt: promptRef.current,
     });
-
-    setOutput(response.data.content);
+    if (response.data.type === "content") {
+      setOutput(response.data.content);
+    } else {
+      // TODO: handle images
+      setOutput(response.data.text);
+    }
     setIsLoading(false);
     hasGeneratedRef.current = true;
   };
