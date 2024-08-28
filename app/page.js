@@ -10,7 +10,10 @@ export default function Page() {
       <Home />
       <About />
       {/* <PromptSection /> */}
-      <div className="w-screen h-96 bg-cover bg-center" style={{backgroundImage: "url('/landingBg.jpg')"}}>
+      <div
+        className="w-full h-96 bg-cover bg-center"
+        style={{ backgroundImage: "url('/landingBg.jpg')" }}
+      >
         <Footer />
       </div>
     </main>
