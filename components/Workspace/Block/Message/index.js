@@ -3,17 +3,16 @@ import LoadingDots from "./LoadingDots";
 import { useState, useRef } from "react";
 import useAuthRequest from "@/hooks/useAuthRequest";
 import { IoSend } from "react-icons/io5";
-import { FaAngleDoubleUp } from "react-icons/fa";
-import { FaAngleDoubleDown } from "react-icons/fa";
+import { FaAngleDoubleUp, FaAngleDoubleDown } from "react-icons/fa";
 import ReactMarkdown from "react-markdown";
 
 const Message = ({ promptRef }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showMessage, setShowMessage] = useState(true);
   const [output, setOutput] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [isError, setIsError] = useState(false);
   const hasGeneratedRef = useRef(false);
-
   const request = useAuthRequest();
 
   const toggleShowMessage = () => {
@@ -39,12 +38,18 @@ const Message = ({ promptRef }) => {
     const response = await request("post", process.env.NEXT_PUBLIC_API_URL + "/llm/generate", {
       userPrompt: promptRef.current,
     });
+
     if (response.data.type === "text") {
       setOutput(response.data.content);
-    } else {
-      // TODO: handle images
+      setImageUrl("");
+    } else if (response.data.type === "image") {
       setOutput(response.data.content.text);
+      setImageUrl(response.data.content.imageUrl);
+    } else {
+      setIsError(true);
+      setOutput("Unsupported response type");
     }
+
     setIsLoading(false);
     hasGeneratedRef.current = true;
   };
@@ -78,6 +83,11 @@ const Message = ({ promptRef }) => {
         <div>
           <div className="text-sm max-h-[300px] overflow-y-auto scrollbar-thumb-[#313131] scrollbar-thin scrollbar-track-transparent">
             <ReactMarkdown>{output}</ReactMarkdown>
+            {imageUrl && (
+              <div className="mt-4">
+                <img src={imageUrl} alt="" className="max-w-full h-auto" />
+              </div>
+            )}
           </div>
           <div className={`flex justify-center ${hasGeneratedRef.current && "pt-6"}`}>
             <button
