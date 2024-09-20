@@ -31,8 +31,6 @@ const WorkArea = () => {
     <div
       className="absolute w-screen h-screen top-0 left-0 overflow-hidden"
       onDoubleClick={handleDoubleClick}
-      onDragOver={preventDefault}
-      onDragEnter={preventDefault}
     >
       {blockList.map((block, index) => (
         <DraggableWrapper key={index} x={block.x} y={block.y} z={block.z} id={index}>
