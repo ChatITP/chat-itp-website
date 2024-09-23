@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { blockListState } from "@/contexts/workspace";
+import { blockListState, getHighestZ } from "@/contexts/workspace";
 import { useSetRecoilState } from "recoil";
 
 /**
@@ -10,14 +10,14 @@ import { useSetRecoilState } from "recoil";
  * @param {React.ReactNode} props.children - The child elements to be rendered inside the draggable wrapper.
  * @param {number} props.x - The initial x-coordinate position of the draggable element.
  * @param {number} props.y - The initial y-coordinate position of the draggable element.
- * @param {string} props.itemId - The unique identifier of the draggable element.
+ * @param {string} props.id - The unique identifier of the draggable element.
  *
  * @example
  * <DraggableWrapper x={100} y={200}>
  *   <YourComponent />
  * </DraggableWrapper>
  */
-const DraggableWrapper = ({ children, x, y, itemId }) => {
+const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
   const setBlockList = useSetRecoilState(blockListState);
   const offsetRef = useRef({ x: 0, y: 0 });
 
@@ -30,6 +30,7 @@ const DraggableWrapper = ({ children, x, y, itemId }) => {
    * @param {MouseEvent} event - The mouse event triggered on mouse down.
    */
   const onMouseDown = (event) => {
+    console.log("onMouseDown");
     // Store the click position relative to the draggable element.
     // With the offset, we can calculate the new position during dragging.
     const xOff = event.clientX - location.x;
@@ -38,6 +39,16 @@ const DraggableWrapper = ({ children, x, y, itemId }) => {
     // Add listeners to window to ensure they catch events even if mouse leaves the component
     window.addEventListener("mousemove", onMouseDrag);
     window.addEventListener("mouseup", onMouseUp);
+
+    // Update the z-index of the block to be the highest in the workspace
+    setBlockList((blockList) =>
+      blockList.map((block) => {
+        if (block.id === id) {
+          return { ...block, z: getHighestZ(blockList) + 1 };
+        }
+        return block;
+      })
+    );
   };
 
   /**
@@ -49,7 +60,7 @@ const DraggableWrapper = ({ children, x, y, itemId }) => {
     // Calculate the new location of the draggable element based on the mouse movement.
     const newX = event.clientX - offsetRef.current.x;
     const newY = event.clientY - offsetRef.current.y;
-    setLocation({ x: newX, y: newY });
+    setLocation(() => ({ x: newX, y: newY }));
   };
 
   /**
@@ -64,7 +75,7 @@ const DraggableWrapper = ({ children, x, y, itemId }) => {
     // Update the blockList with the new location of the draggable element
     setBlockList((blockList) =>
       blockList.map((block) => {
-        if (block.itemId === itemId) {
+        if (block.id === id) {
           return { ...block, x: location.x, y: location.y };
         }
         return block;
@@ -72,12 +83,32 @@ const DraggableWrapper = ({ children, x, y, itemId }) => {
     );
   };
 
+  // If the dragFlag is true, manually set the offset to 20, 20 and simulate a mouse down event
+  // This is for creating a new block from dragging an example card
+  if (dragFlag) {
+    offsetRef.current = { x: 20, y: 20 };
+    // Add listeners to window to ensure they catch events even if mouse leaves the component
+    window.addEventListener("mousemove", onMouseDrag);
+    window.addEventListener("mouseup", onMouseUp);
+
+    // Set the dragFlag to false after the block is created
+    setBlockList((blockList) =>
+      blockList.map((block) => {
+        if (block.id === id) {
+          return { ...block, dragFlag: false };
+        }
+        return block;
+      })
+    );
+  }
+
   return (
     <div
       onMouseDown={onMouseDown}
       className="absolute"
       style={{
         transform: `translate(${location.x}px, ${location.y}px)`,
+        zIndex: z,
       }}
     >
       {children}

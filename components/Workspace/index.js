@@ -13,7 +13,7 @@ const Workspace = () => {
   return (
     <RecoilRoot>
       <ScreenSizeLock>
-        <div id="workspace" onDragOver={preventDefault} onDragEnter={preventDefault}>
+        <div id="workspace" className="select-none">
           <Background />
           <WorkArea />
           <div className="absolute z-10 top-0 left-0 w-full">
