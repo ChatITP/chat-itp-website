@@ -21,8 +21,6 @@ const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
   const setBlockList = useSetRecoilState(blockListState);
   const offsetRef = useRef({ x: 0, y: 0 });
 
-  const [location, setLocation] = useState({ x, y });
-
   /**
    * Handles the mouse down event on the draggable element.
    * Stores the click position relative to the draggable element.
@@ -30,11 +28,11 @@ const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
    * @param {MouseEvent} event - The mouse event triggered on mouse down.
    */
   const onMouseDown = (event) => {
-    console.log("onMouseDown");
+    event.stopPropagation();
     // Store the click position relative to the draggable element.
     // With the offset, we can calculate the new position during dragging.
-    const xOff = event.clientX - location.x;
-    const yOff = event.clientY - location.y;
+    const xOff = event.clientX - x;
+    const yOff = event.clientY - y;
     offsetRef.current = { x: xOff, y: yOff };
     // Add listeners to window to ensure they catch events even if mouse leaves the component
     window.addEventListener("mousemove", onMouseDrag);
@@ -60,14 +58,24 @@ const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
     // Calculate the new location of the draggable element based on the mouse movement.
     const newX = event.clientX - offsetRef.current.x;
     const newY = event.clientY - offsetRef.current.y;
-    setLocation(() => ({ x: newX, y: newY }));
+
+    setBlockList((blockList) =>
+      blockList.map((block) => {
+        if (block.id === id) {
+          return { ...block, x: newX, y: newY };
+        }
+        return block;
+      })
+    );
   };
 
   /**
    * Handles the mouse up event to clean up event listeners when dragging ends.
    * Removes event listeners that handled dragging and mouse release.
    */
-  const onMouseUp = () => {
+  const onMouseUp = (event) => {
+    const newX = event.clientX - offsetRef.current.x;
+    const newY = event.clientY - offsetRef.current.y;
     // Clean up listeners when drag ends
     window.removeEventListener("mousemove", onMouseDrag);
     window.removeEventListener("mouseup", onMouseUp);
@@ -76,7 +84,7 @@ const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
     setBlockList((blockList) =>
       blockList.map((block) => {
         if (block.id === id) {
-          return { ...block, x: location.x, y: location.y };
+          return { ...block, x: newX, y: newY };
         }
         return block;
       })
@@ -107,7 +115,7 @@ const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
       onMouseDown={onMouseDown}
       className="absolute"
       style={{
-        transform: `translate(${location.x}px, ${location.y}px)`,
+        transform: `translate(${x}px, ${y}px)`,
         zIndex: z,
       }}
     >
