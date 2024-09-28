@@ -1,12 +1,17 @@
 import { tagState } from "../../../contexts/examples";
-import { useRecoilValue } from "recoil";
 import escapeRegExp from "@/utils/escapeRegExp";
-import { blockListState, createBlock, getHighestZ } from "@/contexts/workspace";
-import { useSetRecoilState } from "recoil";
+import {
+  blockListState,
+  createBlock,
+  getHighestZ,
+  viewportPositionState,
+} from "@/contexts/workspace";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 
 const ExampleCard = ({ text, phrases }) => {
   const tags = useRecoilValue(tagState);
   const setBlockList = useSetRecoilState(blockListState);
+  const viewportPosition = useRecoilValue(viewportPositionState);
   /**
    * Highlight the tags that are selected in the text.
    * The highlighted text is wrapped in a span with a background color.
@@ -35,7 +40,6 @@ const ExampleCard = ({ text, phrases }) => {
     window.addEventListener("mousemove", onMouseDrag);
     window.addEventListener("mouseup", onMouseUp);
   };
-
   const onMouseDrag = (event) => {
     event.preventDefault();
     setBlockList((blockList) => {
@@ -43,8 +47,8 @@ const ExampleCard = ({ text, phrases }) => {
         ...blockList,
         createBlock(
           "block",
-          event.clientX - 20,
-          event.clientY - 20,
+          event.clientX - 20 + viewportPosition.x,
+          event.clientY - 20 + viewportPosition.y,
           getHighestZ(blockList) + 1,
           phrases,
           true
