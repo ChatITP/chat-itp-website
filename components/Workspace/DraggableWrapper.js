@@ -17,10 +17,14 @@ import { useSetRecoilState } from "recoil";
  *   <YourComponent />
  * </DraggableWrapper>
  */
-const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
+const DraggableWrapper = ({ children, block, viewport }) => {
   const setBlockList = useSetRecoilState(blockListState);
   const offsetRef = useRef({ x: 0, y: 0 });
 
+  const { x, y, z, id, dragFlag } = block;
+  const vx = viewport.x;
+  const vy = viewport.y;
+  const scale = viewport.scale;
   /**
    * Handles the mouse down event on the draggable element.
    * Stores the click position relative to the draggable element.
@@ -31,8 +35,8 @@ const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
     event.stopPropagation();
     // Store the click position relative to the draggable element.
     // With the offset, we can calculate the new position during dragging.
-    const xOff = event.clientX - x;
-    const yOff = event.clientY - y;
+    const xOff = event.clientX - x + vx;
+    const yOff = event.clientY - y + vy;
     offsetRef.current = { x: xOff, y: yOff };
     // Add listeners to window to ensure they catch events even if mouse leaves the component
     window.addEventListener("mousemove", onMouseDrag);
@@ -56,8 +60,8 @@ const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
    */
   const onMouseDrag = (event) => {
     // Calculate the new location of the draggable element based on the mouse movement.
-    const newX = event.clientX - offsetRef.current.x;
-    const newY = event.clientY - offsetRef.current.y;
+    const newX = event.clientX - offsetRef.current.x + vx;
+    const newY = event.clientY - offsetRef.current.y + vy;
 
     setBlockList((blockList) =>
       blockList.map((block) => {
@@ -73,22 +77,10 @@ const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
    * Handles the mouse up event to clean up event listeners when dragging ends.
    * Removes event listeners that handled dragging and mouse release.
    */
-  const onMouseUp = (event) => {
-    const newX = event.clientX - offsetRef.current.x;
-    const newY = event.clientY - offsetRef.current.y;
+  const onMouseUp = () => {
     // Clean up listeners when drag ends
     window.removeEventListener("mousemove", onMouseDrag);
     window.removeEventListener("mouseup", onMouseUp);
-
-    // Update the blockList with the new location of the draggable element
-    setBlockList((blockList) =>
-      blockList.map((block) => {
-        if (block.id === id) {
-          return { ...block, x: newX, y: newY };
-        }
-        return block;
-      })
-    );
   };
 
   // If the dragFlag is true, manually set the offset to 20, 20 and simulate a mouse down event
@@ -115,7 +107,7 @@ const DraggableWrapper = ({ children, x, y, z, id, dragFlag }) => {
       onMouseDown={onMouseDown}
       className="absolute"
       style={{
-        transform: `translate(${x}px, ${y}px)`,
+        transform: `translate(${x - vx}px, ${y - vy}px) scale(${scale})`,
         zIndex: z,
       }}
     >

@@ -19,8 +19,7 @@ const Block = ({ initialPromptPhrases, id }) => {
   };
   return (
     <div
-      className={`bg-gray w-[550px] rounded-xl drop-shadow-lg flex flex-col focus:outline`}
-      tabIndex={0}
+      className="bg-gray w-[550px] rounded-xl drop-shadow-lg flex flex-col"
       onKeyDown={handleKeyDown}
     >
       <Association promptRef={promptRef} initialPromptPhrases={initialPromptPhrases} />
