@@ -5,7 +5,12 @@ import shuffle from "@/utils/shuffle";
 import { FaAngleDoubleUp } from "react-icons/fa";
 import { FaAngleDoubleDown } from "react-icons/fa";
 import { FaArrowsRotate } from "react-icons/fa6";
+import promptData from "public/prompt_data.json";
 
+//function to pick 10 random items from json file
+const pickRandomPrompts = (prompts, count) => {
+  return [...prompts].sort(() => 0.5 - Math.random()).slice(0, count);
+};
 const ExampleCardsController = () => {
   const [showExamples, setShowExamples] = useRecoilState(showExamplesState);
   const setExamples = useSetRecoilState(exampleState);
@@ -15,11 +20,7 @@ const ExampleCardsController = () => {
   };
 
   const handleRefreshExamples = () => {
-    setExamples((prev) => {
-      const newExamples = [...prev];
-      shuffle(newExamples);
-      return newExamples;
-    });
+    setExamples(() => pickRandomPrompts(promptData, 10));
   };
 
   return (
