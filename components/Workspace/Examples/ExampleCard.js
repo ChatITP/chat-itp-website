@@ -94,7 +94,7 @@ const ExampleCard = ({ text, phrases }) => {
       onDrag={onDrag}
       className={`${
         isDragging ? "opacity-0" : ""
-      } mx-3 flex-none border border-white/50 rounded-lg p-4 w-[300px] h-[120px] text-white cursor-pointer text-sm font-sans hover:bg-[#696969] bg-gray2/60 select-none`}
+      } mx-3 flex-none border border-white/50 rounded-lg p-4 w-[300px] h-[120px] text-white cursor-pointer text-sm font-sans hover:bg-[#696969] bg-gray2/60 select-none overflow-auto`}
     >
       {highlightTags(text)}
     </div>
