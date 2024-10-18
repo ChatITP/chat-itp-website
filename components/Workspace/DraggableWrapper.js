@@ -33,16 +33,22 @@ const DraggableWrapper = ({ children, block, viewport }) => {
    */
   const onMouseDown = (event) => {
     event.stopPropagation();
-    // Store the click position relative to the draggable element.
-    // With the offset, we can calculate the new position during dragging.
-    const xOff = event.clientX - x + vx;
-    const yOff = event.clientY - y + vy;
+
+    // Convert mouse position to canvas space considering zoom and viewport offset
+    const mouseCanvasX = event.clientX / scale + vx;
+    const mouseCanvasY = event.clientY / scale + vy;
+
+    // Store the click position relative to the draggable element
+    const xOff = mouseCanvasX - x;
+    const yOff = mouseCanvasY - y;
+
     offsetRef.current = { x: xOff, y: yOff };
-    // Add listeners to window to ensure they catch events even if mouse leaves the component
+
+    // Add listeners to window to handle dragging and releasing
     window.addEventListener("mousemove", onMouseDrag);
     window.addEventListener("mouseup", onMouseUp);
 
-    // Update the z-index of the block to be the highest in the workspace
+    // Update the z-index to bring the dragged block to the front
     setBlockList((blockList) =>
       blockList.map((block) => {
         if (block.id === id) {
@@ -55,14 +61,19 @@ const DraggableWrapper = ({ children, block, viewport }) => {
 
   /**
    * Handles the mouse drag event to update the location of a draggable element.
-   * Called when the mouse is moved while mouse is down.
+   * Called when the mouse is moved while the mouse is down.
    * @param {MouseEvent} event - The mouse event triggered during dragging.
    */
   const onMouseDrag = (event) => {
-    // Calculate the new location of the draggable element based on the mouse movement.
-    const newX = event.clientX - offsetRef.current.x + vx;
-    const newY = event.clientY - offsetRef.current.y + vy;
+    // Convert the current mouse position to canvas space
+    const mouseCanvasX = event.clientX / scale + vx;
+    const mouseCanvasY = event.clientY / scale + vy;
 
+    // Calculate the new position of the draggable element in canvas space
+    const newX = mouseCanvasX - offsetRef.current.x;
+    const newY = mouseCanvasY - offsetRef.current.y;
+
+    // Update the block's position in the blockList
     setBlockList((blockList) =>
       blockList.map((block) => {
         if (block.id === id) {
@@ -105,10 +116,11 @@ const DraggableWrapper = ({ children, block, viewport }) => {
   return (
     <div
       onMouseDown={onMouseDown}
-      className="absolute"
+      className="absolute transform"
       style={{
-        transform: `translate(${x - vx}px, ${y - vy}px) scale(${scale})`,
+        transform: `translate(${(x - vx) * scale}px, ${(y - vy) * scale}px) scale(${scale})`,
         zIndex: z,
+        transformOrigin: "top left",
       }}
     >
       {children}

@@ -40,15 +40,20 @@ const ExampleCard = ({ text, phrases }) => {
     window.addEventListener("mousemove", onMouseDrag);
     window.addEventListener("mouseup", onMouseUp);
   };
+
   const onMouseDrag = (event) => {
     event.preventDefault();
+
+    const mouseCanvasX = event.clientX / viewportPosition.scale + viewportPosition.x;
+    const mouseCanvasY = event.clientY / viewportPosition.scale + viewportPosition.y;
+
     setBlockList((blockList) => {
       return [
         ...blockList,
         createBlock(
           "block",
-          event.clientX - 20 + viewportPosition.x,
-          event.clientY - 20 + viewportPosition.y,
+          mouseCanvasX - 20,
+          mouseCanvasY - 20,
           getHighestZ(blockList) + 1,
           phrases,
           true

@@ -10,29 +10,22 @@ const WorkArea = () => {
   const prevPos = useRef({ x: 0, y: 0 });
 
   const onWheel = (event) => {
-    /* const dScale = event.deltaY * 0.001;
-    const newScale = viewportPosition.scale + dScale;
+    const dScale = event.deltaY * 0.001;
+    const newScale = Math.max(0.1, Math.min(2, viewportPosition.scale + dScale));
 
-    if (newScale < 0.1 || newScale > 2) {
-      return;
-    }
+    let canvasMouseX = event.clientX / viewportPosition.scale + viewportPosition.x;
+    let canvasMouseY = event.clientY / viewportPosition.scale + viewportPosition.y;
 
-    const vw = window.innerWidth / viewportPosition.scale;
-    const vh = window.innerHeight / viewportPosition.scale;
+    let newVX = canvasMouseX - event.clientX / newScale;
+    let newVY = canvasMouseY - event.clientY / newScale;
 
-    const newVw = window.innerWidth / newScale;
-    const newVh = window.innerHeight / newScale;
-
-    const dx = (newVw - vw) / 2;
-    const dy = (newVh - vh) / 2;
-
-    setViewportPosition((prev) => {
+    setViewportPosition(() => {
       return {
-        x: prev.x - dx,
-        y: prev.y - dy,
+        x: newVX,
+        y: newVY,
         scale: newScale,
       };
-    }); */
+    });
   };
 
   const onMouseDown = (event) => {
@@ -56,6 +49,8 @@ const WorkArea = () => {
     });
   };
 
+  console.log(viewportPosition);
+
   const onMouseUp = () => {
     window.removeEventListener("mousemove", onMouseDrag);
     window.removeEventListener("mouseup", onMouseUp);
@@ -63,7 +58,7 @@ const WorkArea = () => {
 
   return (
     <div
-      className="absolute w-screen h-screen top-0 left-0 overflow-hidden"
+      className="absolute w-screen h-screen top-0 left-0 overflow-hidden bg-gray2 -z-10"
       onMouseDown={onMouseDown}
       onWheel={onWheel}
     >
