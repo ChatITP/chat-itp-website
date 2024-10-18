@@ -19,16 +19,16 @@ export default function Background() {
   return (
     // Repeating dotted grid background
     <div
-      className="absolute -z-10 top-0 left-0 w-full h-full bg-gray2 bg"
-      style={
-        scale > 0.5
-          ? {
-              backgroundImage: `radial-gradient(#b7b7b7 ${dotSize}px, transparent ${dotSize}px), radial-gradient(#b7b7b7 ${dotSize}px, transparent ${dotSize}px)`,
-              backgroundSize: `${stepSize}px ${stepSize}px`,
-              backgroundPosition: `${xOff}px ${yOff}px`,
-            }
-          : {}
-      }
+    // className="absolute -z-10 top-0 left-0 w-full h-full bg-gray2 bg"
+    // style={
+    //   scale > 0.5
+    //     ? {
+    //         backgroundImage: `radial-gradient(#b7b7b7 ${dotSize}px, transparent ${dotSize}px), radial-gradient(#b7b7b7 ${dotSize}px, transparent ${dotSize}px)`,
+    //         backgroundSize: `${stepSize}px ${stepSize}px`,
+    //         backgroundPosition: `${xOff}px ${yOff}px`,
+    //       }
+    //     : {}
+    // }
     ></div>
   );
 }
