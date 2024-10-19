@@ -98,7 +98,7 @@ const Message = ({ promptRef }) => {
               className="px-4 py-1 text-xs font-semibold text-white rounded-md flex hover:bg-white/20 items-center border"
             >
               <div className="flex items-center">
-                <div className="pr-2">{hasGeneratedRef.current ? "Ask Again" : "Regenerate"}</div>
+                <div className="pr-2">{hasGeneratedRef.current ? "Regenerate" : "Ask"}</div>
                 <IoSend />
               </div>
             </button>
