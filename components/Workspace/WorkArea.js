@@ -42,14 +42,12 @@ const WorkArea = () => {
 
     setViewportPosition((prev) => {
       return {
-        x: prev.x - dx,
-        y: prev.y - dy,
+        x: prev.x - dx / prev.scale,
+        y: prev.y - dy / prev.scale,
         scale: prev.scale,
       };
     });
   };
-
-  console.log(viewportPosition);
 
   const onMouseUp = () => {
     window.removeEventListener("mousemove", onMouseDrag);
@@ -58,7 +56,7 @@ const WorkArea = () => {
 
   return (
     <div
-      className="absolute w-screen h-screen top-0 left-0 overflow-hidden bg-gray2 -z-10"
+      className="absolute w-screen h-screen top-0 left-0 overflow-hidden -z-10"
       onMouseDown={onMouseDown}
       onWheel={onWheel}
     >
