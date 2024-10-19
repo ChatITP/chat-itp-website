@@ -1,44 +1,72 @@
 "use client";
-import { NextReactP5Wrapper } from "@p5-wrapper/next";
-
-const sketch = (p5) => {
-  let stepSize = 20;
-
-  p5.setup = () => {
-    let w = p5.windowWidth;
-    let h = p5.windowHeight;
-    let cnv = p5.createCanvas(w, h);
-    cnv.parent("p5-workspace-background");
-    p5.noLoop();
-  };
-
-  p5.draw = () => {
-    var cols = p5.windowWidth / stepSize;
-    var rows = p5.windowHeight / stepSize;
-    p5.background(77, 77, 78);
-
-    p5.fill(255);
-    p5.noStroke();
-
-    for (var i = 0; i < cols; i++) {
-      for (var j = 0; j < rows; j++) {
-        p5.ellipse(i * stepSize, j * stepSize, 1);
-      }
-    }
-  };
-
-  p5.windowResized = () => {
-    let w = p5.windowWidth;
-    let h = p5.windowHeight;
-    p5.resizeCanvas(w, h);
-    p5.redraw();
-  };
-};
+import { useRecoilValue } from "recoil";
+import { viewportPositionState } from "../../contexts/workspace";
+import { useEffect, useRef } from "react";
 
 export default function Background() {
+  const viewportPosition = useRecoilValue(viewportPositionState);
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawGrid();
+    };
+
+    const drawGrid = () => {
+      const { x: viewportX, y: viewportY, scale } = viewportPosition;
+      ctx.fillStyle = "#4D4D4E";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const clampedScale = Math.max(0.4, scale);
+      const dotSize = 2 * clampedScale;
+      const gridSpacing = 30;
+      const dotTransparency = scale < 0.8 ? Math.max(scale - 0.4, 0) / 0.5 : 1;
+
+      const dotColor = `rgba(130, 130, 130, ${dotTransparency})`;
+      ctx.fillStyle = dotColor;
+
+      const startX = -(viewportX % gridSpacing) + viewportX;
+      const startY = -(viewportY % gridSpacing) + viewportY;
+
+      for (
+        let dotVX = startX;
+        dotVX < viewportX + canvas.width / clampedScale;
+        dotVX += gridSpacing
+      ) {
+        for (
+          let dotVY = startY;
+          dotVY < viewportY + canvas.height / clampedScale;
+          dotVY += gridSpacing
+        ) {
+          // convert the dots from absolute coordinates to screen coordinates
+          const dotX = (dotVX - viewportX) * clampedScale;
+          const dotY = (dotVY - viewportY) * clampedScale;
+          ctx.beginPath();
+          ctx.arc(dotX, dotY, dotSize, 0, Math.PI * 2, true);
+          ctx.fill();
+        }
+      }
+    };
+
+    drawGrid();
+
+    window.addEventListener("resize", resizeCanvas);
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+    };
+  }, [viewportPosition]);
+
   return (
-    <div id="p5-workspace-background" className="absolute -z-10 top-0 left-0 w-full">
-      <NextReactP5Wrapper sketch={sketch} />
+    <div>
+      <canvas ref={canvasRef} className="absolute top-0 left-0 -z-10"></canvas>
     </div>
   );
 }
