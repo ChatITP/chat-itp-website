@@ -81,7 +81,10 @@ const Message = ({ promptRef }) => {
       )}
       {showMessage && (
         <div>
-          <div className="text-sm max-h-[300px] overflow-y-auto scrollbar-thumb-[#313131] scrollbar-thin scrollbar-track-transparent">
+          <div
+            className="text-sm max-h-[300px] overflow-y-auto scrollbar-thumb-[#313131] scrollbar-thin scrollbar-track-transparent"
+            onWheel={(e) => e.stopPropagation()}
+          >
             <ReactMarkdown>{output}</ReactMarkdown>
             {imageUrl && (
               <div className="mt-4">
