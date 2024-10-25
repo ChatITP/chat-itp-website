@@ -64,7 +64,7 @@ const WorkArea = () => {
 
   const onWheel = (event) => {
     if (event.ctrlKey) {
-      const direction = event.deltaY > 0 ? -1 : 1;
+      const direction = event.deltaY > 0 ? 1 : -1;
       const dScale = Math.min(10, Math.abs(event.deltaY)) * -0.01 * direction;
       const newScale = Math.max(0.1, Math.min(2, viewportPosition.scale + dScale));
 
