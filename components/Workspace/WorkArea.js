@@ -1,5 +1,5 @@
 import DraggableWrapper from "./DraggableWrapper";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import Block from "./Block";
 import { useRecoilState } from "recoil";
 import { blockListState, viewportPositionState } from "../../contexts/workspace";
@@ -9,23 +9,50 @@ const WorkArea = () => {
   const [viewportPosition, setViewportPosition] = useRecoilState(viewportPositionState);
   const prevPos = useRef({ x: 0, y: 0 });
 
+  // Disables default pinch zooming on track pads
+  useEffect(() => {
+    const noPinchZoom = (event) => {
+      event.preventDefault();
+    };
+
+    window.addEventListener("wheel", noPinchZoom, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", noPinchZoom);
+    };
+  });
+
   const onWheel = (event) => {
-    const dScale = event.deltaY * 0.001;
-    const newScale = Math.max(0.1, Math.min(2, viewportPosition.scale + dScale));
+    event.preventDefault();
+    if (event.ctrlKey) {
+      const dScale = event.deltaY * -0.01;
+      const newScale = Math.max(0.1, Math.min(2, viewportPosition.scale + dScale));
 
-    let canvasMouseX = event.clientX / viewportPosition.scale + viewportPosition.x;
-    let canvasMouseY = event.clientY / viewportPosition.scale + viewportPosition.y;
+      let canvasMouseX = event.clientX / viewportPosition.scale + viewportPosition.x;
+      let canvasMouseY = event.clientY / viewportPosition.scale + viewportPosition.y;
 
-    let newVX = canvasMouseX - event.clientX / newScale;
-    let newVY = canvasMouseY - event.clientY / newScale;
+      let newVX = canvasMouseX - event.clientX / newScale;
+      let newVY = canvasMouseY - event.clientY / newScale;
 
-    setViewportPosition(() => {
-      return {
-        x: newVX,
-        y: newVY,
-        scale: newScale,
-      };
-    });
+      setViewportPosition(() => {
+        return {
+          x: newVX,
+          y: newVY,
+          scale: newScale,
+        };
+      });
+    } else {
+      // Track pad panning
+      const dx = event.deltaX;
+      const dy = event.deltaY;
+
+      setViewportPosition((prev) => {
+        return {
+          x: prev.x + dx / prev.scale,
+          y: prev.y + dy / prev.scale,
+          scale: prev.scale,
+        };
+      });
+    }
   };
 
   const onMouseDown = (event) => {
