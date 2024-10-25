@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Tag from "./Tag";
-import shuffle from "@/utils/shuffle";
+import shuffle from "shuffle-array";
 import { tagState } from "../../../contexts/examples";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";

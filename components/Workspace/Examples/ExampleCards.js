@@ -28,6 +28,8 @@ const ExampleCards = () => {
     (a, b) => countTagMatches(b.text) - countTagMatches(a.text)
   );
 
+  const displayExamples = sortedExamples.slice(0, 10);
+
   if (!showExamples) {
     return (
       <div className="flex justify-end">
@@ -38,7 +40,7 @@ const ExampleCards = () => {
   return (
     <div>
       <div className="flex overflow-x-scroll mt-6 pb-2 scrollbar-thumb-[#313131] scrollbar-thin scrollbar-track-transparent w-full">
-        {sortedExamples.map((example, index) => (
+        {displayExamples.map((example, index) => (
           <ExampleCard key={index} text={example.text} phrases={example.phrases} />
         ))}
       </div>

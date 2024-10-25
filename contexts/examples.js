@@ -13,16 +13,11 @@ const showExamplesState = atom({
 //import json file
 import promptData from "public/prompt_data.json";
 
-// function to shuffle and pick 10 random prompts
-const pickRandomPrompts = (prompts, count) => {
-  return [...prompts].sort(() => 0.5 - Math.random()).slice(0, count);
-};
-
 const exampleState = atom({
   key: "examples",
-  default: pickRandomPrompts(promptData, 10).map(prompt => ({
+  default: promptData.map((prompt) => ({
     text: prompt.text,
-    phrases: prompt.text.split(/[\s,]+/).map(word => word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,""))
+    phrases: [prompt.text],
   })),
 });
 
