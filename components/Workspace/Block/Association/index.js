@@ -10,6 +10,20 @@ const AssociationPrompt = ({ promptRef, initialPromptPhrases }) => {
   const [promptPhrases, setPromptPhrases] = useState([]);
 
   useEffect(() => {
+    console.log("initialPromptPhrases", initialPromptPhrases);
+    if (initialPromptPhrases.length === 1) {
+      const phrases = {
+        text: initialPromptPhrases[0],
+        color: colorPalette[0],
+        isSelected: false,
+        isPlaceholder: false,
+        isLoading: true,
+      };
+      setPromptPhrases([phrases]);
+      splitTextInit(initialPromptPhrases[0], 0);
+      return;
+    }
+
     const phrases = initialPromptPhrases.map((phrase, index) => {
       return {
         text: phrase,
@@ -189,6 +203,38 @@ const AssociationPrompt = ({ promptRef, initialPromptPhrases }) => {
       updatedPromptPhrases.splice(insertIndex, 1, ...newPhrases);
       return updatedPromptPhrases;
     });
+    return result;
+  };
+
+  /**
+   * Split the text into phrases, idempotent function call during initialization
+   * @param {*} text
+   */
+  const splitTextInit = async (text, insertIndex) => {
+    const response = await request("post", "/api/llm/split", { text });
+    const result = response.data.split;
+
+    // make sure the color is not the same at the neighbors
+    let leftColor = "#000000";
+    let rightColor = "#000000";
+    if (insertIndex > 0) leftColor = promptPhrases[insertIndex - 1].color;
+
+    if (insertIndex < promptPhrases.length - 1) rightColor = promptPhrases[insertIndex + 1].color;
+    const newPhrases = result.map((phrase) => {
+      // assign a new color to the phrase and update the neighbor colors
+      const colors = colorPalette.filter((color) => color !== leftColor && color !== rightColor);
+      const newColor = colors[Math.floor(Math.random() * colors.length)];
+      leftColor = newColor;
+      return {
+        text: phrase,
+        color: newColor,
+        isSelected: false,
+        isPlaceholder: false,
+        isLoading: false,
+      };
+    });
+
+    setPromptPhrases(() => newPhrases);
     return result;
   };
 
