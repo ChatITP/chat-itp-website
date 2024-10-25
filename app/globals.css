@@ -7,6 +7,7 @@
 body {
   color: whitesmoke;
   background-color: #0d0d0d;
+  overscroll-behavior: none;
 }
 
 html {
