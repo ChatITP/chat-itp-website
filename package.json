@@ -36,6 +36,7 @@
     "react-modal": "^3.16.1",
     "react-spinners": "^0.14.1",
     "recoil": "^0.7.7",
+    "shuffle-array": "^1.0.1",
     "tailwind-merge": "^2.4.0",
     "uniqid": "^5.4.0"
   },
