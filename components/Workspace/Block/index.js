@@ -24,18 +24,18 @@ const Block = ({ initialPromptPhrases, id }) => {
   //     });
   //   }
   // };
+
   return (
     <div
-      className="relative bg-gray w-[550px] rounded-xl drop-shadow-lg flex flex-col"
+      className="relative bg-gray w-[550px] rounded-xl drop-shadow-lg flex flex-col pt-[6px]"
       // onKeyDown={handleKeyDown}
     >
       <button
         onClick={(e) => {
           e.stopPropagation();
-          console.log("Delete button clicked");
           handleDelete();
         }}
-        className="absolute z-20 top-2 right-2 text-white hover:text-red-500"
+        className="absolute z-20 top-2 right-2 text-white hover:bg-white/20 mb-2 p-[1px] rounded-md"
       >
         <IoClose size={20} />
       </button>
